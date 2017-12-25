@@ -1,0 +1,12 @@
+v-container(text-xs-center)
+  v-layout(row wrap)
+    v-flex.mb-3(xs12)
+      h2 Rejection {{ model && model.id? 'edit' : 'create' }}
+    v-flex(xs12)
+      v-form
+        template(v-if='model')
+          //- v-text-field(label='Name' v-model='model.nameFirst' name='nameFirst'
+          //-   v-validate='"required|max:20"' :error-messages='errors.collect("nameFirst")')
+
+          v-btn(@click='submit') submit
+          v-btn( @click='clear') clear

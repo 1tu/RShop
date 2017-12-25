@@ -1,0 +1,24 @@
+{
+  "name": "default",
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "developer",
+  "password": "1q2w3e4r",
+  "database": "rshop_dev",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+    "server/modules/**/*.entity.js"
+  ],
+  "subscribers": [
+    "server/subscribers/*.js"
+  ],
+  "migrations": [
+    "server/migrations/*.js"
+  ],
+  "cli": {
+    "migrationsDir": "server/migrations",
+    "subscribersDir": "server/subscribers"
+  }
+}
