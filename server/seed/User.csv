@@ -1,6 +1,2 @@
-email,password,username,roleId
-admin@ad.min,admin,admin,1
-manager@mana.ger,manager,manager,3
-zz@zz.zz,zzzzzz,zz!zz,2
-aa@aa.aa,aaaaaa,aa!aa,2
-tt@tt.tt,tttttt,tt!tt,2
+email,password,salt,username,roleId
+admin@ad.min,hq8FJWX+MxQ66dlCQwFuti/zENVfo57yE5GMiae5LuD/8mQZTDtTKh+rDPnJYU0JDm7cgDWnkwmZDTPsrxe0C3qV3mHaKHuN+ydsmtQ/N+e2rEf2831WpUdgMGgJ9qszN+JDHUIefhQK4MEcYqe+UiDT1CghZ/ENAxUd/M7Dvbg=,i99QrXkKtRmChNB/z+qSUc2RzJ/SfJltadxBlv2PFt+4/n6eiJ8DFpc3vUR8kIBs0iXmy9lltovM7WxMLfLCy6fzJZkQtSuh6PF4PXdK304z4OA0+BtLU74q6SuOLVGaz4CNkRsls8d0TON6Z/x1ymt6OPYRV3yNDzctr7rrpw0=,admin,1

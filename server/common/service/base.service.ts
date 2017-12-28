@@ -9,6 +9,10 @@ export abstract class AServiceBase<E extends AEntityBase> {
     return this._repository.findOneById(id, opts);
   }
 
+  async getOne(opts: FindOneOptions<E>): Promise<E> {
+    return this._repository.findOne(opts);
+  }
+
   async get(opts?: FindManyOptions<E>): Promise<E[]> {
     return this._repository.find(opts);
   }

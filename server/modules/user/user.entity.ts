@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, BeforeInsert } from 'typeorm';
 import { IsEmail, Length, } from 'class-validator';
 import { AEntityTimestamp } from '../../common/entity';
 import { RoleEntity } from '../role/role.entity';
@@ -6,6 +6,7 @@ import { CustomerEntity } from '../customer/customer.entity';
 import { RemindEntity } from '../remind/remind.entity';
 import { ContactEntity } from '../contact/contact.entity';
 import { OrderEntity } from '../order/order.entity';
+import crypto from 'crypto';
 
 @Entity('user')
 export class UserEntity extends AEntityTimestamp {
@@ -17,9 +18,12 @@ export class UserEntity extends AEntityTimestamp {
   @IsEmail()
   email: string;
 
-  @Column({ length: 200 })
+  @Column({ length: 128 })
   @Length(5, 20)
   password: string;
+
+  @Column()
+  salt: string;
 
   @OneToOne(type => CustomerEntity)
   @JoinColumn()
@@ -36,4 +40,11 @@ export class UserEntity extends AEntityTimestamp {
 
   @OneToMany(type => OrderEntity, order => order.manager)
   orderList: OrderEntity[];
+
+
+  @BeforeInsert()
+  hashPassword() {
+    this.salt = crypto.randomBytes(128).toString('base64');
+    this.password = crypto.pbkdf2Sync(this.password, this.salt, 10000, 128, 'sha512').toString('base64');
+  }
 }

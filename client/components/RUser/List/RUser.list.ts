@@ -3,6 +3,7 @@ import { Component } from 'vue-property-decorator';
 import { UserAction, UserState } from '../../../store/modules/index';
 import { UserEntity } from '../../../../server/modules/user/user.entity';
 import { TableHeader } from '../../../helpers/index';
+import { app } from '../../../main';
 
 @Component({ template: require('./RUser.list.pug') })
 export class RUserList extends Vue {
@@ -14,8 +15,8 @@ export class RUserList extends Vue {
     { value: 'role', text: 'Role' },
     {
       text: 'Actions', sortable: false, actionList: [
-        { name: 'info', icon: 'info', onClick: ((id: number) => this._routeTo(`/user/${id}`)) },
-        { name: 'edit', icon: 'edit', onClick: (id: number) => this._routeTo(`/user/${id}/edit`) },
+        { name: 'info', icon: 'info', onClick: ((id: number) => app.$router.push(`/user/${id}`)) },
+        { name: 'edit', icon: 'edit', onClick: (id: number) => app.$router.push(`/user/${id}/edit`) },
         { name: 'delete', icon: 'delete', onClick: (id: number) => this.delete(id) },
       ]
     },
@@ -25,10 +26,6 @@ export class RUserList extends Vue {
   @UserAction getList;
   public async mounted() {
     await this.getList();
-  }
-
-  private _routeTo(path) {
-    this.$router.push(path);
   }
 }
 

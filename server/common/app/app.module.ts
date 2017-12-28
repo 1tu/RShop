@@ -17,13 +17,11 @@ import { ProductModule } from '../../modules/product/product.module';
 import { RejectionModule } from '../../modules/rejection/rejection.module';
 import { RemindModule } from '../../modules/remind/remind.module';
 import { ShopModule } from '../../modules/shop/shop.module';
-import { AuthModule } from '../../modules/auth/auth.module';
 
 @Module({
   modules: [
     CityModule, ContactModule, CustomerModule, DeliveryServiceModule, ImageModule, OrderModule, OrderProductModule, PaymentModule,
     PaymentServiceModule, PermissionModule, ProductModule, RejectionModule, RemindModule, RoleModule, ShopModule, UserModule,
-    AuthModule
   ],
   controllers: [AppController]
 })

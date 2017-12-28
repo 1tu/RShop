@@ -1,15 +1,32 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-
+import * as passport from 'passport';
 import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
+import * as session from 'express-session';
 import { ApplicationModule } from './common/app/index';
 import { config } from './config/index';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApplicationModule);
+  app.use(cookieParser());
   app.use(bodyParser.json());
+  app.use(session({
+    secret: config.auth.secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      // TODO: when HTTPS
+      // secure: true
+    }
+  }));
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   app.useGlobalPipes(new ValidationPipe());
+
   // TODO: swagger implementation
   // const options = new DocumentBuilder()
   //   .setTitle('RShop')
