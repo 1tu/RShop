@@ -24,7 +24,7 @@ export class PermissionController {
   }
 
   @Put()
-  put( @Body() model: PermissionEntity) {
+  put( @Body() model: Partial<PermissionEntity>) {
     return this._service.put(model);
   }
 

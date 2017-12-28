@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, BeforeInsert } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, BeforeInsert, AfterLoad, AfterInsert, BeforeRemove, AfterUpdate } from 'typeorm';
 import { IsEmail, Length, } from 'class-validator';
 import { AEntityTimestamp } from '../../common/entity';
 import { RoleEntity } from '../role/role.entity';
@@ -6,7 +6,7 @@ import { CustomerEntity } from '../customer/customer.entity';
 import { RemindEntity } from '../remind/remind.entity';
 import { ContactEntity } from '../contact/contact.entity';
 import { OrderEntity } from '../order/order.entity';
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 
 @Entity('user')
 export class UserEntity extends AEntityTimestamp {
@@ -18,11 +18,11 @@ export class UserEntity extends AEntityTimestamp {
   @IsEmail()
   email: string;
 
-  @Column({ length: 128 })
+  @Column({ length: 200, select: false })
   @Length(5, 20)
   password: string;
 
-  @Column()
+  @Column({ nullable: true, select: false })
   salt: string;
 
   @OneToOne(type => CustomerEntity)
@@ -46,5 +46,10 @@ export class UserEntity extends AEntityTimestamp {
   hashPassword() {
     this.salt = crypto.randomBytes(128).toString('base64');
     this.password = crypto.pbkdf2Sync(this.password, this.salt, 10000, 128, 'sha512').toString('base64');
+  }
+
+  checkPassword(password: string) {
+    if (!password) return false;
+    return crypto.pbkdf2Sync(password, this.salt, 10000, 128, 'sha512').toString('base64') === this.password;
   }
 }

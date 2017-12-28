@@ -2,7 +2,6 @@ import * as passport from 'passport';
 import { Strategy } from 'passport-local';
 import { Component, Inject } from '@nestjs/common';
 import { config } from './../../../config/index';
-import { Request } from 'express';
 import { UserEntity } from '../../user/user.entity';
 import { UserService } from '../user.service';
 
@@ -13,9 +12,8 @@ export class LocalStrategy extends Strategy {
       {
         usernameField: 'email',
         passwordField: 'password',
-        passReqToCallback: true,
       },
-      async (req, email, password, next) => await this.verify(req, email, password, next)
+      async (email, password, next) => await this.verify(email, password, next)
     );
 
     passport.serializeUser((user: UserEntity, done) => {
@@ -33,10 +31,10 @@ export class LocalStrategy extends Strategy {
     passport.use(this);
   }
 
-  public async verify(req: Request, email, password, next) {
+  public async verify(email, password, next) {
     try {
-      const user = await this._userService.getOne({ where: { email } });
-      if (!this._userService.checkPassword(user, password)) next(null);
+      const user = await this._userService.getForAuthCheck(email);
+      if (!user.checkPassword(password)) next(null);
       else next(null, user);
     } catch (e) {
       next(e);

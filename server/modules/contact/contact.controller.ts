@@ -24,7 +24,7 @@ export class ContactController {
   }
 
   @Put()
-  put( @Body() model: ContactEntity) {
+  put( @Body() model: Partial<ContactEntity>) {
     return this._service.put(model);
   }
 

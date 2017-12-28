@@ -24,7 +24,7 @@ export class PaymentServiceController {
   }
 
   @Put()
-  put( @Body() model: PaymentServiceEntity) {
+  put( @Body() model: Partial<PaymentServiceEntity>) {
     return this._service.put(model);
   }
 

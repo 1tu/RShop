@@ -24,7 +24,7 @@ export class RemindController {
   }
 
   @Put()
-  put( @Body() model: RemindEntity) {
+  put( @Body() model: Partial<RemindEntity>) {
     return this._service.put(model);
   }
 

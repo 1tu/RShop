@@ -1,31 +1,36 @@
 import { Repository, FindManyOptions, SaveOptions, RemoveOptions, FindOneOptions } from 'typeorm';
 import { Inject } from '@nestjs/common';
 import { AEntityBase } from '../entity/index';
+import { extend } from 'lodash';
 
 export abstract class AServiceBase<E extends AEntityBase> {
-  constructor(private _repository: Repository<E>) { }
+  constructor(protected _repository: Repository<E>) { }
 
-  async getOneById(id, opts?: FindOneOptions<E>): Promise<E> {
+  getOneById(id, opts?: FindOneOptions<E>): Promise<E> {
     return this._repository.findOneById(id, opts);
   }
 
-  async getOne(opts: FindOneOptions<E>): Promise<E> {
+  getOne(opts: FindOneOptions<E>): Promise<E> {
     return this._repository.findOne(opts);
   }
 
-  async get(opts?: FindManyOptions<E>): Promise<E[]> {
+  get(opts?: FindManyOptions<E>): Promise<E[]> {
     return this._repository.find(opts);
   }
 
-  async post(model: Partial<E> | Partial<E>[], opts?: SaveOptions) {
-    return this._repository.insert(model, opts);
+  post(model: Partial<E>, opts?: SaveOptions) {
+    const instance = this._repository.create(model);
+    return this._repository.save(instance, opts);
   }
 
   async put(model: Partial<E>, opts?: SaveOptions) {
-    return this._repository.updateById(model.id, model, opts);
+    let instance = await this._repository.findOneById(model.id);
+    instance = extend(instance, model);
+    return this._repository.save(instance, opts);
   }
 
-  async delete(id: any, opts?: RemoveOptions) {
-    return this._repository.deleteById(id, opts);
+  async delete(id: number, opts?: RemoveOptions) {
+    const instance = await this._repository.findOneById(id);
+    return this._repository.remove(instance, opts);
   }
 }

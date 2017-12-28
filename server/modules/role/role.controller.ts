@@ -24,7 +24,7 @@ export class RoleController {
   }
 
   @Put()
-  put( @Body() model: RoleEntity) {
+  put( @Body() model: Partial<RoleEntity>) {
     return this._service.put(model);
   }
 

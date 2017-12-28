@@ -57,15 +57,14 @@ const actions = action(state, {
   },
   async post({ dispatch }, model: Partial<UserEntity>) {
     await userApi.post(model);
-    await dispatch('getList');
   },
   async put({ getters, commit, dispatch, state }, model: Partial<UserEntity>) {
     await userApi.put(model);
+    commit(types.mutation.item, extend({}, state.item, model));
     if (getters.itemById(model.id)) {
       commit(types.mutation.list, state.list.map(item => item.id === model.id ? extend({}, item, model) : item));
       return;
     }
-    await dispatch('getList');
   },
   async delete({ commit }, id: number): Promise<void> {
     await userApi.delete(id);

@@ -24,7 +24,7 @@ export class ImageController {
   }
 
   @Put()
-  put( @Body() model: ImageEntity) {
+  put( @Body() model: Partial<ImageEntity>) {
     return this._service.put(model);
   }
 

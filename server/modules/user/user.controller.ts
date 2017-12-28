@@ -36,7 +36,7 @@ export class UserController {
   }
 
   @Put()
-  put( @Body() model: UserEntity) {
+  put( @Body() model: Partial<UserEntity>) {
     return this._service.put(model);
   }
 

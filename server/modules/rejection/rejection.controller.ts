@@ -24,7 +24,7 @@ export class RejectionController {
   }
 
   @Put()
-  put( @Body() model: RejectionEntity) {
+  put( @Body() model: Partial<RejectionEntity>) {
     return this._service.put(model);
   }
 

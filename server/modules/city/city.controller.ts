@@ -24,7 +24,7 @@ export class CityController {
   }
 
   @Put()
-  put( @Body() model: CityEntity) {
+  put( @Body() model: Partial<CityEntity>) {
     return this._service.put(model);
   }
 

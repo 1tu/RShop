@@ -24,7 +24,7 @@ export class ProductController {
   }
 
   @Put()
-  put( @Body() model: ProductEntity) {
+  put( @Body() model: Partial<ProductEntity>) {
     return this._service.put(model);
   }
 
