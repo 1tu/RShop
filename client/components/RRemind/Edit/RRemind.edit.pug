@@ -1,7 +1,7 @@
 v-container(text-xs-center)
   v-layout(row wrap)
     v-flex.mb-3(xs12)
-      h2 Remind {{ model && model.id? 'edit' : 'create' }}
+      h2 Remind {{ model.id? 'edit' : 'create' }}
     v-flex(xs12)
       v-form(@submit.prevent='submit')
         template(v-if='model')

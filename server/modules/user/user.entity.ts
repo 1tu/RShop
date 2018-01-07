@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, BeforeInsert, AfterLoad, AfterInsert, BeforeRemove, AfterUpdate } from 'typeorm';
-import { IsEmail, Length, } from 'class-validator';
+import { IsEmail, Length } from 'class-validator';
 import { AEntityTimestamp } from '../../common/entity';
 import { RoleEntity } from '../role/role.entity';
 import { CustomerEntity } from '../customer/customer.entity';

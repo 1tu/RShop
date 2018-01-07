@@ -25,7 +25,8 @@ export abstract class AServiceBase<E extends AEntityBase> {
 
   async put(model: Partial<E>, opts?: SaveOptions) {
     let instance = await this._repository.findOneById(model.id);
-    instance = extend(instance, model);
+    this._repository.merge(instance, model);
+    // instance = extend(instance, model);
     return this._repository.save(instance, opts);
   }
 

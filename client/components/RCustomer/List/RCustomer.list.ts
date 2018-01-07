@@ -10,6 +10,9 @@ export class RCustomerList extends Vue {
   @CustomerState list: CustomerEntity[];
   headers: TableHeader<CustomerEntity>[] = [
     { value: 'id', text: 'Id', align: 'left', sortable: false },
+    { value: 'nameFirst', text: 'Имя' },
+    { value: 'nameLast', text: 'Фамилия' },
+    { value: 'phone', text: 'Тел.' },
     {
       text: 'Actions', sortable: false, actionList: [
         { name: 'info', icon: 'info', onClick: (id: number) => app.$router.push(`/customer/${id}`) },

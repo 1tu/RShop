@@ -5,7 +5,7 @@ import { RemindEntity } from '../remind/remind.entity';
 import { ContactEntity } from '../contact/contact.entity';
 import { CustomerCameFromEnum } from './customer.cameFrom.enum';
 import { CityEntity } from '../city/city.entity';
-import { MaxLength, IsDate, IsMobilePhone, IsNumberString, IsIn,  } from 'class-validator';
+import { MaxLength, IsDate, IsMobilePhone, IsNumberString, IsIn } from 'class-validator';
 import { enum2arr } from '../../../helpers/enum';
 
 @Entity('customer')
@@ -14,7 +14,7 @@ export class CustomerEntity extends AEntityTimestamp {
   @MaxLength(100)
   nameFirst: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 100, nullable: true })
   @MaxLength(100)
   nameSecond: string;
 
@@ -30,29 +30,29 @@ export class CustomerEntity extends AEntityTimestamp {
   @IsMobilePhone('ru-RU')
   phone: string;
 
-  @Column({ length: 50 })
-  @MaxLength(50)
+  @Column({ length: 100, nullable: true })
+  @MaxLength(100)
   address: string;
 
-  @Column({ length: 12 })
+  @Column({ length: 12, nullable: true })
   @MaxLength(12)
   @IsNumberString()
   INN: string;
 
-  @Column({ length: 9 })
+  @Column({ length: 9, nullable: true })
   @MaxLength(9)
   @IsNumberString()
   BIK: string;
 
-  @Column({ length: 20 })
+  @Column({ length: 20, nullable: true })
   @MaxLength(20)
   @IsNumberString()
   accountNumber: string;
 
-  // @Column('enum', { enum: CustomerCameFromEnum })
-  @Column({ enum: CustomerCameFromEnum })
+  // TODO: @Column('enum', { enum: CustomerCameFromEnum })
+  @Column({ enum: CustomerCameFromEnum, nullable: true })
   @IsIn(enum2arr(CustomerCameFromEnum))
-  cameFrom: string;
+  cameFrom: number;
 
   @ManyToOne(type => CityEntity)
   city: CityEntity;
@@ -60,9 +60,6 @@ export class CustomerEntity extends AEntityTimestamp {
   @OneToOne(type => ImageEntity)
   @JoinColumn()
   photo: ImageEntity;
-
-  @OneToMany(type => RemindEntity, remind => remind.customer)
-  remindList: RemindEntity[];
 
   @OneToMany(type => ContactEntity, contact => contact.customer)
   contactList: ContactEntity[];

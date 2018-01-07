@@ -20,8 +20,12 @@ import { ShopModule } from '../../modules/shop/shop.module';
 
 @Module({
   modules: [
-    CityModule, ContactModule, CustomerModule, DeliveryServiceModule, ImageModule, OrderModule, OrderProductModule, PaymentModule,
-    PaymentServiceModule, PermissionModule, ProductModule, RejectionModule, RemindModule, RoleModule, ShopModule, UserModule,
+    // очередь инициализации важна для seeder'а
+    PermissionModule, CityModule, ImageModule, DeliveryServiceModule, RejectionModule, // no deps
+    RoleModule, UserModule, PaymentServiceModule, // one deps
+    ContactModule, RemindModule, PaymentModule, CustomerModule,
+    ShopModule, ProductModule,
+    OrderModule, OrderProductModule,
   ],
   controllers: [AppController]
 })

@@ -3,20 +3,19 @@ import { RoleService } from './role.service';
 import { DatabaseModule } from '../../common/database/database.module';
 import { roleProviders } from './role.providers';
 import { RoleController } from './role.controller';
-import { RoleSeeder } from './role.seeder';
 import { config } from '../../config/index';
+import { DatabaseSeeder } from '../../common/database/database.seeder';
 
 @Module({
   modules: [DatabaseModule],
   components: [
     ...roleProviders,
     RoleService,
-    RoleSeeder
   ],
   controllers: [RoleController]
 })
 export class RoleModule {
-  constructor(seeder: RoleSeeder) {
-    if (config.env === 'dev') seeder.seed();
+  constructor(service: RoleService) {
+    if (config.env === 'dev') new DatabaseSeeder(service, this.constructor.name.replace('Module', ''));
   }
 }

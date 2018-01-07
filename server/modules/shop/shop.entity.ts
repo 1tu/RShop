@@ -19,5 +19,5 @@ export class ShopEntity extends AEntityBase {
 
   @ManyToMany(type => CityEntity)
   @JoinTable()
-  permissionList: CityEntity[];
+  cityList: CityEntity[];
 }

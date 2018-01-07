@@ -10,6 +10,9 @@ export class RShopList extends Vue {
   @ShopState list: ShopEntity[];
   headers: TableHeader<ShopEntity>[] = [
     { value: 'id', text: 'Id', align: 'left', sortable: false },
+    { value: 'name', text: 'Name' },
+    { value: 'domain', text: 'Domain' },
+    { value: 'port', text: 'Server port' },
     {
       text: 'Actions', sortable: false, actionList: [
         { name: 'info', icon: 'info', onClick: (id: number) => app.$router.push(`/shop/${id}`) },

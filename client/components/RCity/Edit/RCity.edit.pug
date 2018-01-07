@@ -1,12 +1,26 @@
 v-container(text-xs-center)
   v-layout(row wrap)
     v-flex.mb-3(xs12)
-      h2 City {{ model && model.id? 'edit' : 'create' }}
+      h2 City {{ model.id? 'edit' : 'create' }}
     v-flex(xs12)
       v-form(@submit.prevent='submit')
         template(v-if='model')
-          //- v-text-field(label='Name' v-model='model.nameFirst' name='nameFirst'
-          //-   v-validate='"required|max:20"' :error-messages='errors.collect("nameFirst")')
+          v-text-field(label='English name' v-model='model.nameEng' name='nameEng'
+            v-validate='"required|max:50"' :error-messages='errors.collect("nameEng")')
+          v-text-field(label='Название' v-model='model.name' name='name'
+            v-validate='"required|max:80"' :error-messages='errors.collect("name")')
+          v-text-field(label='Родительный падеж' v-model='model.nameGenitive' name='nameGenitive'
+            v-validate='"required|max:80"' :error-messages='errors.collect("nameGenitive")')
+          v-text-field(label='Дательный падеж' v-model='model.nameDative' name='nameDative'
+            v-validate='"required|max:80"' :error-messages='errors.collect("nameDative")')
+          v-text-field(label='Винительный падеж' v-model='model.nameAccusative' name='nameAccusative'
+            v-validate='"required|max:80"' :error-messages='errors.collect("nameAccusative")')
+          v-text-field(label='Творительный падеж' v-model='model.nameInstrumental' name='nameInstrumental'
+            v-validate='"required|max:80"' :error-messages='errors.collect("nameInstrumental")')
+          v-text-field(label='Предложный падеж' v-model='model.namePrepositional' name='namePrepositional'
+            v-validate='"required|max:80"' :error-messages='errors.collect("namePrepositional")')
+          v-text-field(label='Популяция' v-model='model.population' name='population'
+            v-validate='"required|numeric"' :error-messages='errors.collect("population")')
 
           v-btn(type='submit') submit
           v-btn( @click='clear') clear

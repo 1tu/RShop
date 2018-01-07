@@ -16,7 +16,4 @@ export class RemindEntity extends AEntityTimestamp {
 
   @ManyToOne(type => UserEntity, user => user.remindList)
   manager: UserEntity;
-
-  @ManyToOne(type => CustomerEntity, customer => customer.remindList)
-  customer: CustomerEntity;
 }
