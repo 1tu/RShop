@@ -5,9 +5,10 @@ v-container(text-xs-center)
     v-flex(xs12)
       v-data-table.elevation-1(:headers="headers" :items="list" hide-actions)
         template(slot="items" slot-scope="props")
-          td(v-for='header in headers'
-              :class='["text-xs-" + (header.value === "id"? "left" : "right")]') {{ props.item[header.value] }}
-            template(v-if='header.actionList' v-for='action in header.actionList')
+          td(v-for='header in headers' :class='["text-xs-" + (header.value === "id"? "left" : "right")]')
+            template(v-if='header.transformer') {{ header.transformer(props.item) }}
+            template(v-else-if='header.value') {{ props.item[header.value] }}
+            template(v-else-if='header.actionList' v-for='action in header.actionList')
               v-btn(flat :icon='!!action.icon' :title='action.name'
                   @click='action.onClick(props.item.id)' ) {{ action.icon? '' : action.name }}
                 v-icon(v-if='action.icon') {{ action.icon }}

@@ -10,5 +10,6 @@ export * from './rejection.api';
 export * from './order.api';
 export * from './product.api';
 export * from './deliveryService.api';
+export * from './delivery.api';
 export * from './city.api';
 export * from './shop.api';

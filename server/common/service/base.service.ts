@@ -1,7 +1,5 @@
 import { Repository, FindManyOptions, SaveOptions, RemoveOptions, FindOneOptions } from 'typeorm';
-import { Inject } from '@nestjs/common';
 import { AEntityBase } from '../entity/index';
-import { extend } from 'lodash';
 
 export abstract class AServiceBase<E extends AEntityBase> {
   constructor(protected _repository: Repository<E>) { }
@@ -26,7 +24,6 @@ export abstract class AServiceBase<E extends AEntityBase> {
   async put(model: Partial<E>, opts?: SaveOptions) {
     let instance = await this._repository.findOneById(model.id);
     this._repository.merge(instance, model);
-    // instance = extend(instance, model);
     return this._repository.save(instance, opts);
   }
 

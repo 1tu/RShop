@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { DeliveryServiceAction, DeliveryServiceGetter } from '../../../store/modules/index';
+import { DeliveryServiceAction, DeliveryServiceGetter, CityAction, CityState } from '../../../store/modules/index';
 import { DeliveryServiceEntity } from '../../../../server/modules/deliveryService/deliveryService.entity';
 import { cloneDeep } from 'lodash';
 
@@ -9,11 +9,15 @@ import { cloneDeep } from 'lodash';
 })
 export class RDeliveryServiceEdit extends Vue {
   public model: Partial<DeliveryServiceEntity> = {};
+  @CityState('list') cityList;
 
   @DeliveryServiceAction get;
   @DeliveryServiceAction put;
   @DeliveryServiceAction post;
+  @CityAction('getList') getListCity;
+
   async mounted() {
+    this.getListCity();
     const id = parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);

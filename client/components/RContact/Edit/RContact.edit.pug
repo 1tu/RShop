@@ -5,8 +5,14 @@ v-container(text-xs-center)
     v-flex(xs12)
       v-form(@submit.prevent='submit')
         template(v-if='model')
-          //- v-text-field(label='Name' v-model='model.nameFirst' name='nameFirst'
-          //-   v-validate='"required|max:20"' :error-messages='errors.collect("nameFirst")')
+          v-text-field(label='Лог' v-model='model.log' multi-line rows='2' auto-grow)
+
+          v-text-field(v-if='!model.id' label='Результат' v-model='model.result' name='result' multi-line rows='1' auto-grow
+            v-validate='"required|max:250"' :error-messages='errors.collect("result")')
+
+          v-select(v-if='!model.id' label='Номер клиента' v-model='model.customer' autocomplete
+            :items='customerList' item-text='phone' item-value='id' return-object
+            name='customer' v-validate='"required"' :error-messages='errors.collect("customer")')
 
           v-btn(type='submit') submit
           v-btn( @click='clear') clear

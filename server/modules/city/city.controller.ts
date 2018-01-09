@@ -1,7 +1,7 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import { CityService } from './city.service';
-import { CityEntity } from './city.entity';
 import { ApiUseTags } from '@nestjs/swagger';
+import { CityPostDto } from './city.dto';
 
 @ApiUseTags('city')
 @Controller('city')
@@ -19,16 +19,16 @@ export class CityController {
   }
 
   @Post()
-  post( @Body() model: CityEntity) {
+  post( @Body() model: CityPostDto) {
     return this._service.post(model);
   }
 
   @Put()
-  put( @Body() model: Partial<CityEntity>) {
+  put( @Body() model: CityPostDto) {
     return this._service.put(model);
   }
 
-  @Delete()
+  @Delete(':id')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

@@ -17,12 +17,13 @@ import { ProductModule } from '../../modules/product/product.module';
 import { RejectionModule } from '../../modules/rejection/rejection.module';
 import { RemindModule } from '../../modules/remind/remind.module';
 import { ShopModule } from '../../modules/shop/shop.module';
+import { DeliveryModule } from '../../modules/delivery/delivery.module';
 
 @Module({
   modules: [
     // очередь инициализации важна для seeder'а
     PermissionModule, CityModule, ImageModule, DeliveryServiceModule, RejectionModule, // no deps
-    RoleModule, UserModule, PaymentServiceModule, // one deps
+    RoleModule, UserModule, PaymentServiceModule, DeliveryModule, // one deps
     ContactModule, RemindModule, PaymentModule, CustomerModule,
     ShopModule, ProductModule,
     OrderModule, OrderProductModule,

@@ -14,6 +14,7 @@ export const routes: { path: string, component: any, title: string }[] = [
   { path: '/rejection', component: require(`./components/RRejection/List`).RRejectionList, title: 'rejection list' },
   { path: '/payment', component: require(`./components/RPayment/List`).RPaymentList, title: 'payment list' },
   { path: '/paymentService', component: require(`./components/RPaymentService/List`).RPaymentServiceList, title: 'paymentService list' },
+  { path: '/delivery', component: require(`./components/RDelivery/List`).RDeliveryList, title: 'delivery list' },
   { path: '/deliveryService', component: require(`./components/RDeliveryService/List`).RDeliveryServiceList, title: 'deliveryService list' },
   { path: '/user', component: require(`./components/RUser/List`).RUserList, title: 'user list' },
 
@@ -43,6 +44,8 @@ const advencedRoutes = [
   { path: '/payment/:id/edit', component: require(`./components/RPayment/Edit`).RPaymentEdit },
   { path: '/paymentService/:id', component: require(`./components/RPaymentService`).RPaymentService },
   { path: '/paymentService/:id/edit', component: require(`./components/RPaymentService/Edit`).RPaymentServiceEdit },
+  { path: '/delivery/:id', component: require(`./components/RDelivery`).RDelivery },
+  { path: '/delivery/:id/edit', component: require(`./components/RDelivery/Edit`).RDeliveryEdit },
   { path: '/deliveryService/:id', component: require(`./components/RDeliveryService`).RDeliveryService },
   { path: '/deliveryService/:id/edit', component: require(`./components/RDeliveryService/Edit`).RDeliveryServiceEdit },
   { path: '/user/:id', component: require(`./components/RUser`).RUser },

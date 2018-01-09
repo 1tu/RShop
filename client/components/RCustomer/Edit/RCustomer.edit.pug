@@ -32,7 +32,7 @@ v-container(text-xs-center)
             v-validate='"required"' :error-messages='errors.collect("city")')
 
           v-text-field(label='Адрес' v-model='model.address' name='address'
-            v-validate='"max:100"' :error-messages='errors.collect("address")')
+            v-validate='"required|max:100"' :error-messages='errors.collect("address")')
 
           v-text-field(label='ИНН' v-model='model.INN' name='INN' mask='#### #### ####'
             v-validate='"min:12"' :error-messages='errors.collect("INN")')

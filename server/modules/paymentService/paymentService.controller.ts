@@ -28,7 +28,7 @@ export class PaymentServiceController {
     return this._service.put(model);
   }
 
-  @Delete()
+  @Delete(':id')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

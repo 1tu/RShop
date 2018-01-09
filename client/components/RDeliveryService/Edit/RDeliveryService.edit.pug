@@ -5,8 +5,18 @@ v-container(text-xs-center)
     v-flex(xs12)
       v-form(@submit.prevent='submit')
         template(v-if='model')
-          //- v-text-field(label='Name' v-model='model.nameFirst' name='nameFirst'
-          //-   v-validate='"required|max:20"' :error-messages='errors.collect("nameFirst")')
+          v-text-field(label='Название' v-model='model.name'
+            name='name' v-validate='"required|max:150"' :error-messages='errors.collect("name")')
+
+          v-text-field(label='Адаптер' v-model='model.adapter'
+            name='adapter' v-validate='"required|max:40"' :error-messages='errors.collect("adapter")')
+
+          v-text-field(label='Максимальный вес' v-model='model.maxWeight' type='number')
+
+          h2 Размеры TODO:
+
+          v-select(label='Города' v-model='model.cityList' multiple autocomplete chips
+            :items='cityList' item-text='name' item-value='id' return-object)
 
           v-btn(type='submit') submit
           v-btn( @click='clear') clear

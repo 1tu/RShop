@@ -1,6 +1,5 @@
 import { Entity, Column, ManyToOne, OneToOne, OneToMany } from 'typeorm';
 import { AEntityTimestamp } from '../../common/entity';
-import { OrderStateEnum } from './order.state.enum';
 import { StateHistory } from './order.stateHistory';
 import { CityEntity } from '../city/city.entity';
 import { ShopEntity } from '../shop/shop.entity';
@@ -9,8 +8,6 @@ import { RejectionEntity } from '../rejection/rejection.entity';
 import { CustomerEntity } from '../customer/customer.entity';
 import { UserEntity } from '../user/user.entity';
 import { DeliveryEntity } from '../delivery/delivery.entity';
-import { IsIn } from 'class-validator';
-import { enum2arr } from '../../../helpers/enum';
 
 @Entity('order')
 export class OrderEntity extends AEntityTimestamp {
@@ -20,9 +17,8 @@ export class OrderEntity extends AEntityTimestamp {
   @Column('decimal', { precision: 14, scale: 2 })
   manufacturingCost: number;
 
-  // @Column('enum', { enum: OrderStateEnum })
-  @Column({ enum: OrderStateEnum })
-  @IsIn(enum2arr(OrderStateEnum))
+  // TODO: @Column('enum', { enum: OrderStateEnum })
+  @Column()
   state: number;
 
   @Column('json')
@@ -30,9 +26,6 @@ export class OrderEntity extends AEntityTimestamp {
 
   @OneToMany(type => PaymentEntity, payment => payment.order)
   paymentList: PaymentEntity[];
-
-  @ManyToOne(type => CityEntity)
-  city: CityEntity;
 
   @ManyToOne(type => ShopEntity)
   shop: ShopEntity;

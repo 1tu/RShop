@@ -2,6 +2,7 @@ import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/co
 import { OrderService } from './order.service';
 import { OrderEntity } from './order.entity';
 import { ApiUseTags } from '@nestjs/swagger';
+import { OrderPostDto } from './order.dto';
 
 @ApiUseTags('order')
 @Controller('order')
@@ -19,16 +20,17 @@ export class OrderController {
   }
 
   @Post()
-  post( @Body() model: OrderEntity) {
+  post( @Body() model: OrderPostDto, @Req() req) {
+    (model as OrderEntity).manager = req.user;
     return this._service.post(model);
   }
 
   @Put()
-  put( @Body() model: Partial<OrderEntity>) {
+  put( @Body() model: OrderPostDto) {
     return this._service.put(model);
   }
 
-  @Delete()
+  @Delete(':id')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

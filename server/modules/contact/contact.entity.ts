@@ -5,7 +5,7 @@ import { CustomerEntity } from '../customer/customer.entity';
 
 @Entity('contact')
 export class ContactEntity extends AEntityTimestamp {
-  @Column('text')
+  @Column('text', { nullable: true })
   log: string;
 
   @Column()

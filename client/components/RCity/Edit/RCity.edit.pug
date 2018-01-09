@@ -19,7 +19,7 @@ v-container(text-xs-center)
             v-validate='"required|max:80"' :error-messages='errors.collect("nameInstrumental")')
           v-text-field(label='Предложный падеж' v-model='model.namePrepositional' name='namePrepositional'
             v-validate='"required|max:80"' :error-messages='errors.collect("namePrepositional")')
-          v-text-field(label='Популяция' v-model='model.population' name='population'
+          v-text-field(label='Популяция' v-model='model.population' name='population' type='number'
             v-validate='"required|numeric"' :error-messages='errors.collect("population")')
 
           v-btn(type='submit') submit

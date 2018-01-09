@@ -1,7 +1,8 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Req, Get, Param, Post, Body, Put, Delete, Session } from '@nestjs/common';
 import { ContactService } from './contact.service';
-import { ContactEntity } from './contact.entity';
 import { ApiUseTags } from '@nestjs/swagger';
+import { ContactPostDto } from './contact.dto';
+import { ContactEntity } from './contact.entity';
 
 @ApiUseTags('contact')
 @Controller('contact')
@@ -19,16 +20,17 @@ export class ContactController {
   }
 
   @Post()
-  post( @Body() model: ContactEntity) {
+  post( @Body() model: ContactPostDto, @Req() req) {
+    (model as ContactEntity).manager = req.user;
     return this._service.post(model);
   }
 
   @Put()
-  put( @Body() model: Partial<ContactEntity>) {
+  put( @Body() model: ContactPostDto) {
     return this._service.put(model);
   }
 
-  @Delete()
+  @Delete(':id')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

@@ -1,6 +1,7 @@
 export * from './city';
 export * from './contact';
 export * from './customer';
+export * from './delivery';
 export * from './deliveryService';
 export * from './order';
 export * from './payment';

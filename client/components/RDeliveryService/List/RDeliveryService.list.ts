@@ -9,7 +9,8 @@ import { app } from '../../../main';
 export class RDeliveryServiceList extends Vue {
   @DeliveryServiceState list: DeliveryServiceEntity[];
   headers: TableHeader<DeliveryServiceEntity>[] = [
-    { value: 'id', text: 'Id', align: 'left', sortable: false },
+    { value: 'name', text: 'Название' },
+    { value: 'adapter', text: 'Адаптер' },
     {
       text: 'Actions', sortable: false, actionList: [
         { name: 'info', icon: 'info', onClick: (id: number) => app.$router.push(`/deliveryService/${id}`) },

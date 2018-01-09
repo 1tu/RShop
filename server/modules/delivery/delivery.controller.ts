@@ -1,7 +1,7 @@
 import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import { DeliveryService } from './delivery.service';
-import { DeliveryEntity } from './delivery.entity';
 import { ApiUseTags } from '@nestjs/swagger';
+import { DeliveryPostDto } from './delivery.dto';
 
 @ApiUseTags('delivery')
 @Controller('delivery')
@@ -19,16 +19,16 @@ export class DeliveryController {
   }
 
   @Post()
-  post( @Body() model: DeliveryEntity) {
+  post( @Body() model: DeliveryPostDto) {
     return this._service.post(model);
   }
 
   @Put()
-  put( @Body() model: Partial<DeliveryEntity>) {
+  put( @Body() model: DeliveryPostDto) {
     return this._service.put(model);
   }
 
-  @Delete()
+  @Delete(':id')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

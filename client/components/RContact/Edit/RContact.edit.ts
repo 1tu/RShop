@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { ContactAction, ContactGetter } from '../../../store/modules/index';
+import { ContactAction, ContactGetter, CustomerAction, CustomerState } from '../../../store/modules/index';
 import { ContactEntity } from '../../../../server/modules/contact/contact.entity';
 import { cloneDeep } from 'lodash';
 
@@ -9,11 +9,15 @@ import { cloneDeep } from 'lodash';
 })
 export class RContactEdit extends Vue {
   public model: Partial<ContactEntity> = {};
+  @CustomerState('list') customerList;
 
   @ContactAction get;
   @ContactAction put;
   @ContactAction post;
+  @CustomerAction('getList') getListCustomer;
+
   async mounted() {
+    this.getListCustomer();
     const id = parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);

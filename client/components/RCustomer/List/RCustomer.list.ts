@@ -9,9 +9,7 @@ import { app } from '../../../main';
 export class RCustomerList extends Vue {
   @CustomerState list: CustomerEntity[];
   headers: TableHeader<CustomerEntity>[] = [
-    { value: 'id', text: 'Id', align: 'left', sortable: false },
-    { value: 'nameFirst', text: 'Имя' },
-    { value: 'nameLast', text: 'Фамилия' },
+    { text: 'ФИО', transformer: (e: CustomerEntity) => `${e.nameLast} ${e.nameFirst} ${e.nameSecond}`, sortable: false },
     { value: 'phone', text: 'Тел.' },
     {
       text: 'Actions', sortable: false, actionList: [

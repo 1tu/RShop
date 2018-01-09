@@ -9,7 +9,6 @@ import { app } from '../../../main';
 export class RCityList extends Vue {
   @CityState list: CityEntity[];
   headers: TableHeader<CityEntity>[] = [
-    { value: 'id', text: 'Id', align: 'left', sortable: false },
     { value: 'name', text: 'Name' },
     { value: 'population', text: 'Population' },
     {

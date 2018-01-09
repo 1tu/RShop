@@ -1,10 +1,7 @@
 import { Entity, Column, ManyToOne } from 'typeorm';
 import { AEntityTimestamp } from '../../common/entity';
-import { CityEntity } from '../city/city.entity';
 import { DeliveryServiceEntity } from '../deliveryService/deliveryService.entity';
-import { DeliveryStateEnum } from './delivery.state.enum';
-import { IsIn } from 'class-validator';
-import { enum2arr } from '../../../helpers/enum';
+import { CityEntity } from '../city/city.entity';
 
 @Entity('delivery')
 export class DeliveryEntity extends AEntityTimestamp {
@@ -28,9 +25,11 @@ export class DeliveryEntity extends AEntityTimestamp {
   deliveryHome: boolean;
 
   // TODO: @Column('enum', { enum: DeliveryStateEnum })
-  @Column({ enum: DeliveryStateEnum })
-  @IsIn(enum2arr(DeliveryStateEnum))
+  @Column()
   state: number;
+
+  @ManyToOne(type => CityEntity)
+  city: CityEntity;
 
   @ManyToOne(type => DeliveryServiceEntity)
   deliveryService: DeliveryServiceEntity;
