@@ -5,8 +5,21 @@ v-container(text-xs-center)
     v-flex(xs12)
       v-form(@submit.prevent='submit')
         template(v-if='model')
-          //- v-text-field(label='Name' v-model='model.nameFirst' name='nameFirst'
-          //-   v-validate='"required|max:20"' :error-messages='errors.collect("nameFirst")')
+          v-text-field(label='Name' v-model='model.description' multi-line rows='2' auto-grow
+            name='description' v-validate='"required|max:250"' :error-messages='errors.collect("description")')
+
+          v-flex(xs3)
+            v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
+              v-text-field(slot="activator" label="Дата напоминания" v-model="model.remindAt" prepend-icon="event")
+              v-date-picker(v-model="model.remindAt" no-title scrollable actions)
+                template(slot-scope="{ save, cancel }")
+                  v-card-actions
+                    v-spacer
+                    v-btn(flat color="primary" @click="cancel") Cancel
+                    v-btn(flat color="primary" @click="save") OK
+
+          v-checkbox(label='Отработано' v-model='model.isStopped')
+
 
           v-btn(type='submit') submit
           v-btn( @click='clear') clear

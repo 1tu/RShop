@@ -5,8 +5,22 @@ v-container(text-xs-center)
     v-flex(xs12)
       v-form(@submit.prevent='submit')
         template(v-if='model')
-          //- v-text-field(label='Name' v-model='model.nameFirst' name='nameFirst'
-          //-   v-validate='"required|max:20"' :error-messages='errors.collect("nameFirst")')
+          v-text-field(label='Сумма' v-model='model.amount' type='number'
+            name='amount' v-validate='"required"' :error-messages='errors.collect("amount")')
+
+          v-select(label='Валюта' v-model='model.currencyCode' :items='currencyList' item-text='name' item-value='id'
+            name='currencyCode' v-validate='"required"' :error-messages='errors.collect("currencyCode")')
+
+          v-select(label='Состояние' v-model='model.state' :items='stateList' item-text='name' item-value='id'
+            name='state' v-validate='"required"' :error-messages='errors.collect("state")')
+
+          v-select(v-if='!model.id' label='Сервис оплаты' v-model='model.paymentService' autocomplete
+            :items='paymentServiceList' item-text='name' item-value='id' return-object
+            name='paymentService' v-validate='"required"' :error-messages='errors.collect("paymentService")')
+
+          v-select(v-if='!model.id' label='Заказ' v-model='model.order' autocomplete
+            :items='orderList' item-text='id' item-value='id' return-object
+            name='order' v-validate='"required"' :error-messages='errors.collect("order")')
 
           v-btn(type='submit') submit
           v-btn( @click='clear') clear

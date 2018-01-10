@@ -1,7 +1,7 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import { ShopService } from './shop.service';
-import { ShopEntity } from './shop.entity';
 import { ApiUseTags } from '@nestjs/swagger';
+import { ShopDto } from './shop.dto';
 
 @ApiUseTags('shop')
 @Controller('shop')
@@ -19,12 +19,12 @@ export class ShopController {
   }
 
   @Post()
-  post( @Body() model: ShopEntity) {
+  post( @Body() model: ShopDto) {
     return this._service.post(model);
   }
 
   @Put()
-  put( @Body() model: Partial<ShopEntity>) {
+  put( @Body() model: ShopDto) {
     return this._service.put(model);
   }
 

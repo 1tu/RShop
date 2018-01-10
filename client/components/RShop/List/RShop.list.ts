@@ -9,7 +9,6 @@ import { app } from '../../../main';
 export class RShopList extends Vue {
   @ShopState list: ShopEntity[];
   headers: TableHeader<ShopEntity>[] = [
-    { value: 'id', text: 'Id', align: 'left', sortable: false },
     { value: 'name', text: 'Name' },
     { value: 'domain', text: 'Domain' },
     { value: 'port', text: 'Server port' },

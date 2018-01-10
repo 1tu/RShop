@@ -1,8 +1,9 @@
 import { Controller, Req, Get, Param, Post, Body, Put, Delete, Res } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserEntity } from './user.entity';
 import { ApiUseTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
+import { UserDto, UserCreateDto } from './user.dto';
+import { UserEntity } from './user.entity';
 
 @ApiUseTags('user')
 @Controller('user')
@@ -31,12 +32,14 @@ export class UserController {
   }
 
   @Post()
-  post( @Body() model: UserEntity) {
+  post( @Body() model: UserCreateDto) {
+    (model as UserEntity).role = { id: 1 } as any;
     return this._service.post(model);
   }
 
   @Put()
-  put( @Body() model: UserEntity) {
+  put( @Body() model: UserDto) {
+    (model as UserEntity).role = { id: 1 } as any;
     return this._service.put(model);
   }
 

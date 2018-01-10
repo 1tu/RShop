@@ -4,12 +4,20 @@ import { PaymentServiceAction, PaymentServiceState } from '../../../store/module
 import { PaymentServiceEntity } from '../../../../server/modules/paymentService/paymentService.entity';
 import { TableHeader } from '../../../helpers/index';
 import { app } from '../../../main';
+import { PaymentServiceTaxTypeEnumMap } from '../../../../server/modules/paymentService/paymentService.taxType.enum';
 
 @Component({ template: require('./RPaymentService.list.pug') })
 export class RPaymentServiceList extends Vue {
   @PaymentServiceState list: PaymentServiceEntity[];
   headers: TableHeader<PaymentServiceEntity>[] = [
-    { value: 'id', text: 'Id', align: 'left', sortable: false },
+    { value: 'name', text: 'Название' },
+    { value: 'tax', text: 'Комиссия' },
+    {
+      value: 'taxType', text: 'Тип комиссии', transformer: (e: PaymentServiceEntity) => {
+        const taxType = PaymentServiceTaxTypeEnumMap.filter(item => item.id === e.taxType)[0];
+        return taxType ? taxType.name : 'ОШИБКА!';
+      }
+    },
     {
       text: 'Actions', sortable: false, actionList: [
         { name: 'info', icon: 'info', onClick: (id: number) => app.$router.push(`/paymentService/${id}`) },

@@ -1,7 +1,7 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import { RejectionService } from './rejection.service';
-import { RejectionEntity } from './rejection.entity';
 import { ApiUseTags } from '@nestjs/swagger';
+import { RejectionDto } from './rejection.dto';
 
 @ApiUseTags('rejection')
 @Controller('rejection')
@@ -19,12 +19,12 @@ export class RejectionController {
   }
 
   @Post()
-  post( @Body() model: RejectionEntity) {
+  post( @Body() model: RejectionDto) {
     return this._service.post(model);
   }
 
   @Put()
-  put( @Body() model: Partial<RejectionEntity>) {
+  put( @Body() model: RejectionDto) {
     return this._service.put(model);
   }
 

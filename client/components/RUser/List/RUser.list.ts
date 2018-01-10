@@ -12,7 +12,7 @@ export class RUserList extends Vue {
     { value: 'id', text: 'Id', align: 'left', sortable: false },
     { value: 'email', text: 'Email' },
     { value: 'username', text: 'Username' },
-    { value: 'role', text: 'Role' },
+    { text: 'Role', transformer: (e: UserEntity) => e.role.name, sortable: false },
     {
       text: 'Actions', sortable: false, actionList: [
         { name: 'info', icon: 'info', onClick: ((id: number) => app.$router.push(`/user/${id}`)) },

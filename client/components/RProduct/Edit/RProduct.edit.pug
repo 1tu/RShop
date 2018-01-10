@@ -24,11 +24,11 @@ v-container(text-xs-center)
           v-btn.text-xs-left(fab dark small color='primary' @click='addProperty()')
             v-icon(dark) add
 
-          v-text-field(label='Описание' v-model='model.description' name='description' multi-line rows='2' auto-grow
-            v-validate='"required"' :error-messages='errors.collect("description")')
+          v-text-field(label='Описание' v-model='model.description' name='description' multi-line rows='2' auto-grow)
 
-          v-select(v-if='!model.id' label='Магазин' v-model='model.shop' name='shop' autocomplete
-            :items='shopList' item-text='name' item-value='id' return-object)
+          v-select(v-if='!model.id' label='Магазин' v-model='model.shop'  autocomplete
+             :items='shopList' item-text='name' item-value='id' return-object
+             name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
 
           v-btn(type='submit') submit
           v-btn( @click='clear') clear

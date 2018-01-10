@@ -3,12 +3,14 @@ import { Component } from 'vue-property-decorator';
 import { RejectionAction, RejectionGetter } from '../../../store/modules/index';
 import { RejectionEntity } from '../../../../server/modules/rejection/rejection.entity';
 import { cloneDeep } from 'lodash';
+import { RejectionReasonEnumMap } from '../../../../server/modules/rejection/rejection.reason.enum';
 
 @Component({
   template: require('./RRejection.edit.pug'),
 })
 export class RRejectionEdit extends Vue {
   public model: Partial<RejectionEntity> = {};
+  public reasonList = RejectionReasonEnumMap;
 
   @RejectionAction get;
   @RejectionAction put;

@@ -1,7 +1,7 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import { PermissionService } from './permission.service';
-import { PermissionEntity } from './permission.entity';
 import { ApiUseTags } from '@nestjs/swagger';
+import { PermissionDto } from './permission.dto';
 
 @ApiUseTags('permission')
 @Controller('permission')
@@ -19,12 +19,12 @@ export class PermissionController {
   }
 
   @Post()
-  post( @Body() model: PermissionEntity) {
+  post( @Body() model: PermissionDto) {
     return this._service.post(model);
   }
 
   @Put()
-  put( @Body() model: Partial<PermissionEntity>) {
+  put( @Body() model: PermissionDto) {
     return this._service.put(model);
   }
 

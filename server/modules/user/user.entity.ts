@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, BeforeInsert, AfterLoad, AfterInsert, BeforeRemove, AfterUpdate } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, BeforeInsert, AfterLoad, AfterInsert, BeforeRemove, AfterUpdate, BeforeUpdate } from 'typeorm';
 import { IsEmail, Length } from 'class-validator';
 import { AEntityTimestamp } from '../../common/entity';
 import { RoleEntity } from '../role/role.entity';
@@ -29,7 +29,7 @@ export class UserEntity extends AEntityTimestamp {
   @JoinColumn()
   customer: CustomerEntity;
 
-  @ManyToOne(type => RoleEntity)
+  @ManyToOne(type => RoleEntity, { eager: true })
   role: RoleEntity;
 
   @OneToMany(type => RemindEntity, remind => remind.manager)
@@ -40,7 +40,6 @@ export class UserEntity extends AEntityTimestamp {
 
   @OneToMany(type => OrderEntity, order => order.manager)
   orderList: OrderEntity[];
-
 
   @BeforeInsert()
   hashPassword() {

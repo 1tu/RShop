@@ -10,9 +10,8 @@ import { ProductProperty } from '../../../../server/modules/product/product.prop
 export class RProductList extends Vue {
   @ProductState list: ProductEntity[];
   headers: TableHeader<ProductEntity>[] = [
-    { value: 'id', text: 'Id', align: 'left', sortable: false },
     { value: 'name', text: 'Название' },
-    { text: 'Свойства', transformer: transformPropertyList, sortable: false },
+    { text: 'Свойства', transformer: (e: ProductEntity) => e.propertyList.map(item => `${item.key} - ${item.value}`).join(', '), sortable: false },
     {
       text: 'Actions', sortable: false, actionList: [
         { name: 'info', icon: 'info', onClick: (id: number) => app.$router.push(`/product/${id}`) },
@@ -27,8 +26,4 @@ export class RProductList extends Vue {
   async mounted() {
     await this.getList();
   }
-}
-
-function transformPropertyList(product: ProductEntity) {
-  return product.propertyList.map(item => `${item.key} - ${item.value}`).join(', ');
 }

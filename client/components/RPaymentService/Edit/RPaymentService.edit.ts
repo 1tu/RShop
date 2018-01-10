@@ -1,19 +1,25 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { PaymentServiceAction, PaymentServiceGetter } from '../../../store/modules/index';
+import { PaymentServiceAction, PaymentServiceGetter, DeliveryServiceAction, DeliveryServiceState } from '../../../store/modules/index';
 import { PaymentServiceEntity } from '../../../../server/modules/paymentService/paymentService.entity';
 import { cloneDeep } from 'lodash';
+import { PaymentServiceTaxTypeEnumMap } from '../../../../server/modules/paymentService/paymentService.taxType.enum';
 
 @Component({
   template: require('./RPaymentService.edit.pug'),
 })
 export class RPaymentServiceEdit extends Vue {
   public model: Partial<PaymentServiceEntity> = {};
+  public taxTypeList = PaymentServiceTaxTypeEnumMap;
+  @DeliveryServiceState('list') deliveryServiceList;
 
   @PaymentServiceAction get;
   @PaymentServiceAction put;
   @PaymentServiceAction post;
+  @DeliveryServiceAction('getList') getListDeliveryService;
+
   async mounted() {
+    this.getListDeliveryService();
     const id = parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);

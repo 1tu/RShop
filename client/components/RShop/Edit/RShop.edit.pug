@@ -5,12 +5,15 @@ v-container(text-xs-center)
     v-flex(xs12)
       v-form(@submit.prevent='submit')
         template(v-if='model')
-          v-text-field(label='Название' v-model='model.name' name='name'
-            v-validate='"required|max:80"' :error-messages='errors.collect("name")')
-          v-text-field(label='Домен' v-model='model.domain' name='domain'
-            v-validate='"required|max:20"' :error-messages='errors.collect("domain")')
-          v-text-field(label='Порт' v-model='model.port' name='port'
-            v-validate='"required|numeric"' :error-messages='errors.collect("port")')
+          v-text-field(label='Название' v-model='model.name'
+            name='name' v-validate='"required|max:100"' :error-messages='errors.collect("name")')
+
+          v-text-field(label='Домен' v-model='model.domain'
+            name='domain' v-validate='"required|max:70"' :error-messages='errors.collect("domain")')
+
+          v-text-field(label='Порт' v-model='model.port' type='number'
+            name='port' v-validate='"required|numeric|max_value:99999|min_value:3000"' :error-messages='errors.collect("port")')
+
           v-select(label='Города' v-model='model.cityList' name='cityList' multiple autocomplete chips
             :items='cityList' item-text='name' item-value='id' return-object)
 

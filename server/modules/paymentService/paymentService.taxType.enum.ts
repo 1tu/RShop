@@ -1,12 +1,13 @@
-import { CurrencyEnum } from '../../../@types/enum/currency.enum';
+import { CurrencyEnumMap } from '../../../@types/enum/currency.enum';
 
-enum E { }
-
-function enumerate<T1 extends typeof E>(e: T1) {
-  enum PaymentServiceTaxTypeEnum {
-    '%' = 0
-  }
-  return PaymentServiceTaxTypeEnum as typeof PaymentServiceTaxTypeEnum & T1;
+export enum PaymentServiceTaxTypeEnum {
+  '%' = 0,
+  RUB = 643,
+  USD = 840,
+  EUR = 978,
 }
 
-export const PaymentServiceTaxTypeEnum = enumerate(CurrencyEnum);
+export const PaymentServiceTaxTypeEnumMap = [
+  { id: 0, name: '%' },
+  ...CurrencyEnumMap
+];

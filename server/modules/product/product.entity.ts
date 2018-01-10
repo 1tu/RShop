@@ -1,7 +1,5 @@
 import { Entity, Column, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
 import { AEntityTimestamp } from '../../common/entity';
-import { UserEntity } from '../user/user.entity';
-import { CustomerEntity } from '../customer/customer.entity';
 import { ShopEntity } from '../shop/shop.entity';
 import { ProductProperty } from './product.property';
 import { ImageEntity } from '../image/image.entity';

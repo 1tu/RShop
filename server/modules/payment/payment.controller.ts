@@ -1,7 +1,7 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import { PaymentService } from './payment.service';
-import { PaymentEntity } from './payment.entity';
 import { ApiUseTags } from '@nestjs/swagger';
+import { PaymentDto } from './payment.dto';
 
 @ApiUseTags('payment')
 @Controller('payment')
@@ -19,12 +19,12 @@ export class PaymentController {
   }
 
   @Post()
-  post( @Body() model: PaymentEntity) {
+  post( @Body() model: PaymentDto) {
     return this._service.post(model);
   }
 
   @Put()
-  put( @Body() model: Partial<PaymentEntity>) {
+  put( @Body() model: PaymentDto) {
     return this._service.put(model);
   }
 
