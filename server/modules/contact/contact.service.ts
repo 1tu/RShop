@@ -10,14 +10,10 @@ export class ContactService extends AServiceBase<ContactEntity> {
   }
 
   getOneById(id, opts?: FindOneOptions<ContactEntity>): Promise<ContactEntity> {
-    return this._repository.findOneById(id, { ...opts, relations: ['customer'] });
-  }
-
-  getOne(opts: FindOneOptions<ContactEntity>): Promise<ContactEntity> {
-    return this._repository.findOne({ ...opts, relations: ['customer'] });
+    return this._repository.findOneById(id, opts);
   }
 
   get(opts?: FindManyOptions<ContactEntity>): Promise<ContactEntity[]> {
-    return this._repository.find({ ...opts, relations: ['customer'] });
+    return this._repository.find(opts);
   }
 }

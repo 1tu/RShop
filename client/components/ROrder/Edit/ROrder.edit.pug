@@ -5,8 +5,39 @@ v-container(text-xs-center)
     v-flex(xs12)
       v-form(@submit.prevent='submit')
         template(v-if='model')
-          //- v-text-field(label='Name' v-model='model.nameFirst' name='nameFirst'
-          //-   v-validate='"required|max:20"' :error-messages='errors.collect("nameFirst")')
+          v-text-field(label='Стоимость' v-model='model.price' type='number'
+            name='price' v-validate='"required"' :error-messages='errors.collect("price")')
 
-          v-btn(type='submit') submit
-          v-btn( @click='clear') clear
+          v-text-field(label='Стоимость производства' v-model='model.manufacturingCost' type='number'
+            name='manufacturingCost' v-validate='"required"' :error-messages='errors.collect("manufacturingCost")')
+
+          v-select(label='Состояние' v-model='model.state' :items='stateList' item-text='name' item-value='id')
+
+          v-select(v-if='!model.id' label='Магазин' v-model='model.shop' autocomplete
+            :items='shopList' item-text='name' item-value='id' return-object
+            name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
+
+          v-select(v-if='!model.id' label='Номер клиента' v-model='model.customer' autocomplete
+            :items='customerList' item-text='phone' item-value='id' return-object
+            name='customer' v-validate='"required"' :error-messages='errors.collect("customer")')
+
+          h2 Товары
+
+          v-layout(row wrap v-for='(productItem, index) in model.productList' :key='index')
+            v-flex(md5 xs12)
+              v-text-field(label='Кол-во' v-model='productItem.count' type='number'
+                :name='"count " + (index + 1)' v-validate='"required|min_value:1"' :error-messages='errors.collect("key " + (index + 1))')
+            v-flex(md5 offset-md1 xs12)
+              v-select(label='Продукт' v-model='productItem.product' autocomplete
+                :items='productList' item-text='name' item-value='id' return-object
+                :name='"product " + (index + 1)' v-validate='"required"' :error-messages='errors.collect("product " + (index + 1))')
+            v-flex(md1 xs12)
+              v-btn(fab dark small color='red' @click='removeProduct(productItem)')
+                v-icon(dark) remove
+
+          v-btn.text-xs-left(fab dark small color='primary' @click='addProduct()')
+            v-icon(dark) add
+
+          v-flex(xs12)
+            v-btn(type='submit') submit
+            v-btn( @click='clear') clear

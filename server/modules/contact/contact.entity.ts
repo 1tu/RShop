@@ -14,6 +14,6 @@ export class ContactEntity extends AEntityTimestamp {
   @ManyToOne(type => UserEntity, user => user.contactList)
   manager: UserEntity;
 
-  @ManyToOne(type => CustomerEntity, customer => customer.contactList)
+  @ManyToOne(type => CustomerEntity, customer => customer.contactList, { eager: true })
   customer: CustomerEntity;
 }

@@ -12,8 +12,4 @@ export class CustomerService extends AServiceBase<CustomerEntity> {
   getOneById(id, opts?: FindOneOptions<CustomerEntity>): Promise<CustomerEntity> {
     return this._repository.findOneById(id, { ...opts, relations: ['city', 'photo'] });
   }
-
-  getOne(opts: FindOneOptions<CustomerEntity>): Promise<CustomerEntity> {
-    return this._repository.findOne({ ...opts, relations: ['city', 'photo'] });
-  }
 }

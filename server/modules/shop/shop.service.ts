@@ -12,8 +12,4 @@ export class ShopService extends AServiceBase<ShopEntity> {
   getOneById(id, opts?: FindOneOptions<ShopEntity>): Promise<ShopEntity> {
     return this._repository.findOneById(id, { ...opts, relations: ['cityList'] });
   }
-
-  getOne(opts: FindOneOptions<ShopEntity>): Promise<ShopEntity> {
-    return this._repository.findOne({ ...opts, relations: ['cityList'] });
-  }
 }

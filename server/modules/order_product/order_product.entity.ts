@@ -7,15 +7,12 @@ import { OrderEntity } from '../order/order.entity';
 
 @Entity('order_product')
 export class OrderProductEntity extends AEntityBase {
-  @Column('json')
-  schema: { [prop: string]: any };
-
   @Column('smallint')
   count: number;
 
-  @ManyToOne(type => ProductEntity)
+  @ManyToOne(type => ProductEntity, { eager: true })
   product: ProductEntity;
 
-  @ManyToOne(type => OrderEntity)
+  @ManyToOne(type => OrderEntity, order => order.productList)
   order: OrderEntity;
 }

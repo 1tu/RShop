@@ -1,0 +1,2 @@
+name,adapter,maxWeight,cityList,maxSize
+DEPS,deps,5000,[{"id":1}],{"height":200."width":150."length":120}

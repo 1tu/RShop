@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, OneToOne, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { AEntityTimestamp } from '../../common/entity';
 import { StateHistory } from './order.stateHistory';
 import { CityEntity } from '../city/city.entity';
@@ -8,6 +8,7 @@ import { RejectionEntity } from '../rejection/rejection.entity';
 import { CustomerEntity } from '../customer/customer.entity';
 import { UserEntity } from '../user/user.entity';
 import { DeliveryEntity } from '../delivery/delivery.entity';
+import { OrderProductEntity } from '../order_product/order_product.entity';
 
 @Entity('order')
 export class OrderEntity extends AEntityTimestamp {
@@ -27,18 +28,39 @@ export class OrderEntity extends AEntityTimestamp {
   @OneToMany(type => PaymentEntity, payment => payment.order)
   paymentList: PaymentEntity[];
 
+  // TODO: при удалении связи экземпляр OrderProductEntity не удаляется из БД
+  @OneToMany(type => OrderProductEntity, op => op.order, {
+    cascadeInsert: true, cascadeUpdate: true, eager: true
+  })
+  productList: OrderProductEntity[];
+
   @ManyToOne(type => ShopEntity)
   shop: ShopEntity;
 
   @ManyToOne(type => UserEntity)
   manager: UserEntity;
 
-  @OneToOne(type => CustomerEntity)
+  @OneToOne(type => CustomerEntity, { eager: true })
+  @JoinColumn()
   customer: CustomerEntity;
 
   @OneToOne(type => RejectionEntity)
+  @JoinColumn()
   rejection: RejectionEntity;
 
   @OneToOne(type => DeliveryEntity)
+  @JoinColumn()
   delivery: DeliveryEntity;
+
+
+  @BeforeInsert()
+  public createHistory() {
+    this.stateHistory = [{ from: null, to: this.state, date: new Date() }];
+  }
+
+  @BeforeUpdate()
+  public updateHistory() {
+    if (this.stateHistory[this.stateHistory.length - 1].to !== this.state)
+      this.stateHistory.push({ from: this.stateHistory[this.stateHistory.length - 1].to, to: this.state, date: new Date() });
+  }
 }

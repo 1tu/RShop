@@ -12,8 +12,4 @@ export class DeliveryServiceService extends AServiceBase<DeliveryServiceEntity> 
   getOneById(id, opts?: FindOneOptions<DeliveryServiceEntity>): Promise<DeliveryServiceEntity> {
     return this._repository.findOneById(id, { ...opts, relations: ['cityList'] });
   }
-
-  getOne(opts: FindOneOptions<DeliveryServiceEntity>): Promise<DeliveryServiceEntity> {
-    return this._repository.findOne({ ...opts, relations: ['cityList'] });
-  }
 }
