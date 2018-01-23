@@ -11,6 +11,7 @@ export * from './ROrder';
 export * from './RPayment';
 export * from './RPaymentService';
 export * from './RProduct';
+export * from './RManufacture';
 export * from './RRejection';
 export * from './RRemind';
 export * from './RShop';

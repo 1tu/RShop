@@ -4,31 +4,30 @@ v-container(text-xs-center)
       h2 Product {{ model.id? 'edit' : 'create' }}
     v-flex(xs12)
       v-form(@submit.prevent='submit')
-        template(v-if='model')
-          v-text-field(label='Название' v-model='model.name' name='name'
-            v-validate='"required|max:100"' :error-messages='errors.collect("name")')
+        v-text-field(label='Название' v-model='model.name' name='name'
+          v-validate='"required|max:100"' :error-messages='errors.collect("name")')
 
-          h2 Свойства
+        h2 Свойства
 
-          v-layout(row wrap v-for='(property, index) in model.propertyList' :key='index')
-            v-flex(md5 xs12)
-              v-text-field(label='Название' v-model='property.key' :name='"key " + (index + 1)'
-                v-validate='"required|max:50"' :error-messages='errors.collect("key " + (index + 1))')
-            v-flex(md5 offset-md1 xs12)
-              v-text-field(label='Значение' v-model='property.value' :name='"value " + (index + 1)'
-                v-validate='"required"' :error-messages='errors.collect("value " + (index + 1))')
-            v-flex(md1 xs12)
-              v-btn(fab dark small color='red' @click='removeProperty(property)')
-                v-icon(dark) remove
+        v-layout(row wrap v-for='(property, index) in model.propertyList' :key='index')
+          v-flex(md5 xs12)
+            v-text-field(label='Название' v-model='property.key' :name='"key " + (index + 1)'
+              v-validate='"required|max:50"' :error-messages='errors.collect("key " + (index + 1))')
+          v-flex(md5 offset-md1 xs12)
+            v-text-field(label='Значение' v-model='property.value' :name='"value " + (index + 1)'
+              v-validate='"required"' :error-messages='errors.collect("value " + (index + 1))')
+          v-flex(md1 xs12)
+            v-btn(fab dark small color='red' @click='removeProperty(property)')
+              v-icon(dark) remove
 
-          v-btn.text-xs-left(fab dark small color='primary' @click='addProperty()')
-            v-icon(dark) add
+        v-btn.text-xs-left(fab dark small color='primary' @click='addProperty()')
+          v-icon(dark) add
 
-          v-text-field(label='Описание' v-model='model.description' name='description' multi-line rows='2' auto-grow)
+        v-text-field(label='Описание' v-model='model.description' name='description' multi-line rows='2' auto-grow)
 
-          v-select(v-if='!model.id' label='Магазин' v-model='model.shop'  autocomplete
-             :items='shopList' item-text='name' item-value='id' return-object
-             name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
+        v-select(v-if='!model.id' label='Магазин' v-model='model.shop'  autocomplete
+            :items='shopList' item-text='name' item-value='id' return-object
+            name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
 
-          v-btn(type='submit') submit
-          v-btn( @click='clear') clear
+        v-btn(type='submit') submit
+        v-btn( @click='clear') clear

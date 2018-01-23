@@ -1,0 +1,54 @@
+v-container(text-xs-center)
+  v-layout(row wrap)
+    v-flex.mb-3(xs12)
+      h2 Manufacture {{ model.id? 'edit' : 'create' }}
+    v-flex(xs12)
+      v-form(@submit.prevent='submit')
+        h2 Схема
+
+        //- v-select(v-if='!model.id' label='Товар' v-model='model.product' autocomplete
+        v-select(label='Товар' v-model='model.product' autocomplete
+            :items='productList' item-text='name' item-value='id' return-object
+            name='product' v-validate='"required"' :error-messages='errors.collect("product")')
+
+        v-btn.text-xs-left(fab dark small color='primary' @click='addSchemaItem()')
+          v-icon(dark) add
+
+        v-layout(row wrap v-for='(schemaItem, index) in model.schema' :key='index')
+          v-flex(md4 xs12)
+            v-text-field(label='Название свойства' v-model='schemaItem.name'
+              :name='"sName " + (index + 1)' v-validate='"required|max:50"' :error-messages='errors.collect("sName " + (index + 1))')
+          v-flex(md4 xs12)
+            v-text-field(label='Ключ (англ)' v-model='schemaItem.key'
+              :name='"sKey " + (index + 1)' v-validate='"required|max:50"' :error-messages='errors.collect("sKey " + (index + 1))')
+          v-flex(md3 xs12)
+            v-select(label='Тип' v-model='schemaItem.type' :items='schemaTypeList' item-text='name' item-value='id'
+              :name='"sType " + (index + 1)' v-validate='"required"' :error-messages='errors.collect("sType " + (index + 1))')
+          v-flex(md1 xs12)
+            v-btn(fab dark small color='red' @click='removeSchemaItem(schemaItem)')
+              v-icon(dark) remove
+
+          h2 Опции
+
+          v-btn.text-xs-left(fab dark small color='primary' @click='addOption(schemaItem)')
+            v-icon(dark) add
+
+          v-layout(row wrap v-for='(option, index2) in schemaItem.optionList' :key='index2')
+            v-flex(md4 xs12)
+              v-text-field(label='Название' v-model='option.name'
+                :name='"oName " + index+" "+(index2 + 1)' v-validate='"required|max:50"' :error-messages='errors.collect("oName " + index+" "+(index2 + 1))')
+            v-flex(md4 xs12)
+              v-text-field(label='Заначение (англ)' v-model='option.value'
+                :name='"oValue " + index+" "+(index2 + 1)' v-validate='"required|max:50"' :error-messages='errors.collect("oValue " + index+" "+(index2 + 1))')
+            v-flex(md3 xs12)
+              v-text-field(label='Стоимость' v-model='option.price' type='number'
+                :name='"oPrice " + index+" "+(index2 + 1)' v-validate='"required"' :error-messages='errors.collect("oPrice " + index+" "+(index2 + 1))')
+            v-flex(md1 xs12)
+              v-btn(fab dark small color='red' @click='removeOption(schemaItem, option)')
+                v-icon(dark) remove
+
+          v-flex(xs12 mb-5)
+            v-divider(v-if='index + 1 < model.schema.length')
+
+        v-btn(type='submit') submit
+        v-btn( @click='clear') clear

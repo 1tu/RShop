@@ -10,16 +10,20 @@ import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
 import { i18n } from './i18n';
-import { router } from './router';
 import { store } from './store';
+import { router } from './router';
 import filters from './filters';
 import { RApp } from './components/RApp';
 
-export const app = new Vue({
-  i18n,
-  router,
-  store,
-  filters,
-  el: '#app',
-  render: h => h(RApp)
+store.dispatch('auth/getUser').then(_ => {
+  new Vue({
+    i18n,
+    router,
+    store,
+    filters,
+    el: '#app',
+    render: h => h(RApp)
+  });
 });
+
+

@@ -26,11 +26,19 @@ v-container(text-xs-center)
           v-layout(row wrap v-for='(productItem, index) in model.productList' :key='index')
             v-flex(md5 xs12)
               v-text-field(label='Кол-во' v-model='productItem.count' type='number'
-                :name='"count " + (index + 1)' v-validate='"required|min_value:1"' :error-messages='errors.collect("key " + (index + 1))')
+                :name='"count-" + (index + 1)' v-validate='"required|min_value:1"' :error-messages='errors.collect("count-" + (index + 1))')
             v-flex(md5 offset-md1 xs12)
-              v-select(label='Продукт' v-model='productItem.product' autocomplete
+              v-select(label='Продукт' v-model='productItem.product' autocomplete @change='onSelectProduct(productItem, $event)'
                 :items='productList' item-text='name' item-value='id' return-object
-                :name='"product " + (index + 1)' v-validate='"required"' :error-messages='errors.collect("product " + (index + 1))')
+                :name='"product-" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("product-" + (index + 1))')
+            v-flex(xs12 v-if='productItem.config && productItem.product.manufacture')
+              v-layout(v-for='(configItem, index2) in productItem.config' :key='configItem.key')
+                v-flex(md5 offset-md1 xs12)
+                  span {{ configItem.name }}
+                v-flex(md6 xs12)
+                  v-select(label='Значение' v-model='configItem.value' autocomplete @blur='update()'
+                    :items='makeSchemaValueList(productItem.product.manufacture.schema[index2])' item-text='name' item-value='value'
+                    :name='"сonfig_value-" + (index + 1) + "-" + (index2 + 1)' v-validate='"required"' :error-messages='errors.collect("сonfig_value-" + (index + 1) + "-" + (index2 + 1))')
             v-flex(md1 xs12)
               v-btn(fab dark small color='red' @click='removeProduct(productItem)')
                 v-icon(dark) remove

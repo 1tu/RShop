@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as passport from 'passport';
 import * as bodyParser from 'body-parser';
@@ -7,6 +7,7 @@ import * as session from 'express-session';
 import { ApplicationModule } from './common/app/index';
 import { config } from './config/index';
 import { ValidationPipe } from '@nestjs/common';
+import { PermissionsGuard } from './guards/permission.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApplicationModule);
@@ -26,6 +27,7 @@ async function bootstrap() {
   app.use(passport.session());
 
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalGuards(new PermissionsGuard(new Reflector()));
 
   // TODO: swagger implementation
   // const options = new DocumentBuilder()

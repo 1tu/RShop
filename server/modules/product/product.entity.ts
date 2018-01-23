@@ -1,8 +1,9 @@
-import { Entity, Column, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, ManyToOne, ManyToMany, JoinTable, OneToOne } from 'typeorm';
 import { AEntityTimestamp } from '../../common/entity';
 import { ShopEntity } from '../shop/shop.entity';
 import { ProductProperty } from './product.property';
 import { ImageEntity } from '../image/image.entity';
+import { ManufactureEntity } from '../manufacture/manufacture.entity';
 
 @Entity('product')
 export class ProductEntity extends AEntityTimestamp {
@@ -21,4 +22,7 @@ export class ProductEntity extends AEntityTimestamp {
 
   @ManyToOne(type => ShopEntity, shop => shop.productList)
   shop: ShopEntity;
+
+  @OneToOne(type => ManufactureEntity, manufacture => manufacture.product)
+  manufacture: ManufactureEntity;
 }

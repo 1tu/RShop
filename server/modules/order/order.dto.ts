@@ -1,6 +1,6 @@
 import { AEntityBase } from '../../common/entity/index';
 import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
-import { IsIn, IsArray, ValidateNested, IsNotEmpty, ValidateIf } from 'class-validator';
+import { IsIn, IsArray, ValidateNested, IsNotEmpty, ValidateIf, ArrayNotEmpty } from 'class-validator';
 import { enum2arr } from '../../../helpers/enum';
 import { OrderStateEnum } from './order.state.enum';
 import { Type } from 'class-transformer';
@@ -23,7 +23,7 @@ export class OrderPostDto extends AEntityBase {
   @IsIn(enum2arr(OrderStateEnum))
   state: number;
 
-  @IsNotEmpty()
+  @ArrayNotEmpty()
   // TODO: create dto for junction table
   // @ValidateNested()
   // @Type(() => DtoBase)

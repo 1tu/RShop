@@ -3,7 +3,7 @@ export interface TableHeader<T> {
   value?: keyof T;
   align?: string;
   sortable?: boolean;
-  actionList?: { name: string, icon?: string, onClick: (...arg: any[]) => void }[];
+  actionList?: { type: string, name: string, icon?: string, onClick: (...arg: any[]) => void }[];
   transformer?: (data: any) => any;
 }
 

@@ -1,3 +1,4 @@
+export * from './auth';
 export * from './city';
 export * from './contact';
 export * from './customer';
@@ -7,6 +8,7 @@ export * from './order';
 export * from './payment';
 export * from './paymentService';
 export * from './product';
+export * from './manufacture';
 export * from './rejection';
 export * from './remind';
 export * from './shop';

@@ -1,5 +1,6 @@
 import { Guard, CanActivate, ExecutionContext, ReflectMetadata } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { UserEntity } from '../modules/user/user.entity';
 
 const GUARD_NAME = 'Permissions';
 
@@ -11,16 +12,18 @@ export class PermissionsGuard implements CanActivate {
 
   public canActivate(req, context: ExecutionContext): boolean {
     const { parent, handler } = context;
-    const permissions = this.reflector.get<string[]>(GUARD_NAME, handler);
-    if (!permissions) {
+    const acceptedPermissionList = this.reflector.get<string[]>(GUARD_NAME, handler);
+    if (!acceptedPermissionList) {
       return true;
     }
 
-    const user = req.user;
-    return user && user.permissions && this._hasPermission(user, permissions);
+    const user: UserEntity = req.user;
+    return user && this._hasPermission(user, acceptedPermissionList);
   }
 
-  private _hasPermission(user: any, permissions: string[]): boolean {
-    return !!user.permissions.find((permission) => !!permissions.find((item) => item === permission));
+  private _hasPermission(user: UserEntity, acceptedPermissionList: string[]): boolean {
+    return !!user.role.permissionList.find(permission =>
+      !!acceptedPermissionList.find(item => item === permission.name)
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { CurrencyEnumMap } from '../../../@types/enum/currency.enum';
+import { CurrencyEnumMap } from '../../../shared/enum/currency.enum';
 
 export enum PaymentServiceTaxTypeEnum {
   '%' = 0,

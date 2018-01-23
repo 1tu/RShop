@@ -3,20 +3,27 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-export const routes: { path: string, component: any, title: string }[] = [
-  { path: '/shop', component: require(`./components/RShop/List`).RShopList, title: 'shop list' },
-  { path: '/city', component: require(`./components/RCity/List`).RCityList, title: 'city list' },
-  { path: '/order', component: require(`./components/ROrder/List`).ROrderList, title: 'order list' },
-  { path: '/customer', component: require(`./components/RCustomer/List`).RCustomerList, title: 'customer list' },
-  { path: '/contact', component: require(`./components/RContact/List`).RContactList, title: 'contact list' },
-  { path: '/product', component: require(`./components/RProduct/List`).RProductList, title: 'product list' },
-  { path: '/remind', component: require(`./components/RRemind/List`).RRemindList, title: 'remind list' },
-  { path: '/rejection', component: require(`./components/RRejection/List`).RRejectionList, title: 'rejection list' },
-  { path: '/payment', component: require(`./components/RPayment/List`).RPaymentList, title: 'payment list' },
-  { path: '/paymentService', component: require(`./components/RPaymentService/List`).RPaymentServiceList, title: 'paymentService list' },
-  { path: '/delivery', component: require(`./components/RDelivery/List`).RDeliveryList, title: 'delivery list' },
-  { path: '/deliveryService', component: require(`./components/RDeliveryService/List`).RDeliveryServiceList, title: 'deliveryService list' },
-  { path: '/user', component: require(`./components/RUser/List`).RUserList, title: 'user list' },
+export interface RouterItem {
+  path: string;
+  component: any;
+  title: string;
+}
+
+export const routes: RouterItem[] = [
+  { path: '/shop', component: require(`./components/RShop/List`).RShopList, title: 'Shop list' },
+  { path: '/city', component: require(`./components/RCity/List`).RCityList, title: 'City list' },
+  { path: '/order', component: require(`./components/ROrder/List`).ROrderList, title: 'Order list' },
+  { path: '/customer', component: require(`./components/RCustomer/List`).RCustomerList, title: 'Customer list' },
+  { path: '/contact', component: require(`./components/RContact/List`).RContactList, title: 'Contact list' },
+  { path: '/product', component: require(`./components/RProduct/List`).RProductList, title: 'Product list' },
+  { path: '/manufacture', component: require(`./components/RManufacture/List`).RManufactureList, title: 'Manufacture list' },
+  { path: '/remind', component: require(`./components/RRemind/List`).RRemindList, title: 'Remind list' },
+  { path: '/rejection', component: require(`./components/RRejection/List`).RRejectionList, title: 'Rejection list' },
+  { path: '/payment', component: require(`./components/RPayment/List`).RPaymentList, title: 'Payment list' },
+  { path: '/paymentService', component: require(`./components/RPaymentService/List`).RPaymentServiceList, title: 'Payment service list' },
+  { path: '/delivery', component: require(`./components/RDelivery/List`).RDeliveryList, title: 'Delivery list' },
+  { path: '/deliveryService', component: require(`./components/RDeliveryService/List`).RDeliveryServiceList, title: 'Delivery service list' },
+  { path: '/user', component: require(`./components/RUser/List`).RUserList, title: 'User list' },
 
   // { path: '/role', title: 'Role' },
   // { path: '/permission', title: 'Permission' },
@@ -36,6 +43,8 @@ const advencedRoutes = [
   { path: '/contact/:id/edit', component: require(`./components/RContact/Edit`).RContactEdit },
   { path: '/product/:id', component: require(`./components/RProduct`).RProduct },
   { path: '/product/:id/edit', component: require(`./components/RProduct/Edit`).RProductEdit },
+  { path: '/manufacture/:id', component: require(`./components/RManufacture`).RManufacture },
+  { path: '/manufacture/:id/edit', component: require(`./components/RManufacture/Edit`).RManufactureEdit },
   { path: '/remind/:id', component: require(`./components/RRemind`).RRemind },
   { path: '/remind/:id/edit', component: require(`./components/RRemind/Edit`).RRemindEdit },
   { path: '/rejection/:id', component: require(`./components/RRejection`).RRejection },

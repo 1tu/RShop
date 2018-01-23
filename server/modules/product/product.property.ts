@@ -1,3 +1,13 @@
+import { IsString } from 'class-validator';
+
 export class ProductProperty {
-  constructor(public key: string = '', public value: string = '') { }
+  @IsString()
+  key: string;
+
+  @IsString()
+  value: string;
+  constructor(key: string = '', value: string = '') {
+    this.key = key;
+    this.value = value;
+  }
 }

@@ -4,7 +4,7 @@ import { PaymentAction, PaymentGetter, OrderAction, PaymentServiceAction, Paymen
 import { PaymentEntity } from '../../../../server/modules/payment/payment.entity';
 import { cloneDeep } from 'lodash';
 import { PaymentStateEnumMap } from '../../../../server/modules/payment/payment.state.enum';
-import { CurrencyEnumMap } from '../../../../@types/enum/currency.enum';
+import { CurrencyEnumMap } from '../../../../shared/enum/currency.enum';
 
 @Component({
   template: require('./RPayment.edit.pug'),

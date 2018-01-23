@@ -17,6 +17,7 @@ export class ProductDto extends AEntityBase {
 
   @ValidateIf((e, value) => value)
   @IsArray()
+  @ValidateNested()
   propertyList: ProductProperty[];
 
   // TODO:

@@ -5,7 +5,7 @@ import { RootState } from './';
 import { keymirror, mutation, decorator, getter, action } from './vuexTypes';
 import {
   user, customer, city, contact, deliveryService, delivery, order,
-  payment, paymentService, product, rejection, remind, shop
+  payment, paymentService, product, rejection, remind, shop, manufacture, auth
 } from './modules';
 
 Vue.use(Vuex);
@@ -28,7 +28,7 @@ export const store = new Vuex.Store({
   state,
   mutations,
   modules: {
-    city, contact, customer, deliveryService, delivery, order,
+    auth, city, contact, customer, deliveryService, delivery, order, manufacture,
     payment, paymentService, product, rejection, remind, shop, user
   },
   strict: process.env.NODE_ENV !== 'production',

@@ -1,28 +1,33 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { ShopAction, ShopState } from '../../../store/modules/index';
+import { ShopAction, ShopState, AuthGetter } from '../../../store/modules/index';
 import { ShopEntity } from '../../../../server/modules/shop/shop.entity';
 import { TableHeader } from '../../../helpers/index';
-import { app } from '../../../main';
 
 @Component({ template: require('./RShop.list.pug') })
 export class RShopList extends Vue {
+  @AuthGetter hasPermission;
   @ShopState list: ShopEntity[];
-  headers: TableHeader<ShopEntity>[] = [
-    { value: 'name', text: 'Name' },
-    { value: 'domain', text: 'Domain' },
-    { value: 'port', text: 'Server port' },
-    {
-      text: 'Actions', sortable: false, actionList: [
-        { name: 'info', icon: 'info', onClick: (id: number) => app.$router.push(`/shop/${id}`) },
-        { name: 'edit', icon: 'edit', onClick: (id: number) => app.$router.push(`/shop/${id}/edit`) },
-        { name: 'delete', icon: 'delete', onClick: (id: number) => this.delete(id) },
-      ]
-    },
-  ];
+  headers: TableHeader<ShopEntity>[];
 
   @ShopAction delete;
   @ShopAction getList;
+
+  created() {
+    this.headers = [
+      { value: 'name', text: 'Name' },
+      { value: 'domain', text: 'Domain' },
+      { value: 'port', text: 'Server port' },
+      {
+        text: 'Actions', sortable: false, actionList: [
+          { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/shop/${id}`) },
+          { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/shop/${id}/edit`) },
+          { type: 'Delete', name: 'delete', icon: 'delete', onClick: (id: number) => this.delete(id) },
+        ].filter(item => this.hasPermission(this.constructor.name.replace(/(^R|List$)/g, '') + item.type))
+      },
+    ];
+  }
+
   async mounted() {
     await this.getList();
   }

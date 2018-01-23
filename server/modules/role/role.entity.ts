@@ -7,7 +7,7 @@ export class RoleEntity extends AEntityBase {
   @Column({ length: 40, unique: true, nullable: false })
   name: string;
 
-  @ManyToMany(type => PermissionEntity)
+  @ManyToMany(type => PermissionEntity, { eager: true })
   @JoinTable()
   permissionList: PermissionEntity[];
 }
