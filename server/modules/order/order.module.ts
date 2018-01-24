@@ -11,6 +11,7 @@ import { OrderProductModule } from '../order_product/order_product.module';
     ...orderProviders,
     OrderService,
   ],
-  controllers: [OrderController]
+  controllers: [OrderController],
+  exports: [OrderService]
 })
 export class OrderModule { }

@@ -23,6 +23,6 @@ export class ProductEntity extends AEntityTimestamp {
   @ManyToOne(type => ShopEntity, shop => shop.productList)
   shop: ShopEntity;
 
-  @OneToOne(type => ManufactureEntity, manufacture => manufacture.product)
+  @OneToOne(type => ManufactureEntity, manufacture => manufacture.product, { eager: true })
   manufacture: ManufactureEntity;
 }

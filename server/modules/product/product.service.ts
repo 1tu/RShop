@@ -10,7 +10,7 @@ export class ProductService extends AServiceBase<ProductEntity> {
   }
 
   get(opts?: FindManyOptions<ProductEntity>): Promise<ProductEntity[]> {
-    return this._repository.find({ ...opts, relations: ['manufacture'] });
+    return this._repository.find(opts);
   }
 
   getOneById(id: number, opts?: FindOneOptions<ProductEntity>): Promise<ProductEntity> {

@@ -42,13 +42,13 @@ const mutations = mutation(state, {
 
 const actions = action(state, {
   async getList({ commit, state }) {
-    const list = await customerApi.getList();
+    const list = await customerApi.getList().catch(e => { console.error(e); });
     commit(types.mutation.list, list);
     return state.list;
   },
   async get({ commit, state }, id: number) {
     if (state.item && state.item.id === id) return state.item;
-    const item = await customerApi.get(id);
+    const item = await customerApi.get(id).catch(e => { console.error(e); });
     commit(types.mutation.item, item);
     return state.item;
   },

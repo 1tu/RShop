@@ -23,6 +23,9 @@ const config: Config = {
     cli: {
       migrationsDir: path.join(__dirname, '/../migrations'),
     }
+  },
+  api: {
+    token: 'b875aba36dc5d56bb32354cd864b1ddcdf52b3fa3eb135cb4a87ca4207d740770f73302e58155f97c441d95a070442a323ab398639ea276358f83602e55d8229'
   }
 };
 

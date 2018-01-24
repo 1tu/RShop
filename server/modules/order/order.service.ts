@@ -3,6 +3,7 @@ import { Component, Inject } from '@nestjs/common';
 import { AServiceBase } from '../../common/service';
 import { OrderEntity } from './order.entity';
 import { OrderProductEntity } from '../order_product/order_product.entity';
+import { isEqual } from 'lodash';
 
 @Component()
 export class OrderService extends AServiceBase<OrderEntity> {
@@ -12,24 +13,17 @@ export class OrderService extends AServiceBase<OrderEntity> {
   ) { super(_repository); }
 
   getOneById(id: number, opts?: FindOneOptions<OrderEntity>): Promise<OrderEntity> {
-    // TODO: return to this when {EAGER: true} will load relations cascade (e => e1 => e2)
-    // return this._repository.findOneById(id, { ...opts, relations: ['shop', 'paymentList',  'rejection', 'delivery'] });
-    return this._repository.createQueryBuilder('order')
-      .leftJoinAndSelect('order.shop', 'shop')
-      .leftJoinAndSelect('order.customer', 'customer')
-      .leftJoinAndSelect('order.rejection', 'rejection')
-      .leftJoinAndSelect('order.delivery', 'delivery')
-      .leftJoinAndSelect('order.paymentList', 'payment')
-      .leftJoinAndSelect('order.productList', 'order_product')
-      .leftJoinAndSelect('order_product.product', 'product')
-      .leftJoinAndSelect('product.manufacture', 'manufacture')
-      .where('order.id = :id', { id })
-      .getOne();
+    return this._repository.findOneById(id, { ...opts, relations: ['shop', 'paymentList', 'rejection', 'delivery'] });
   }
 
   async put(model: Partial<OrderEntity>, opts?: SaveOptions) {
     let instance = await this._repository.findOneById(model.id);
     this._repository.merge(instance, model);
+    // cascade update fix
+    model.productList.forEach((item, index) => {
+      if (item.id) return;
+      instance.productList[index].id = undefined;
+    });
     return this._repository.save(instance, opts);
   }
 

@@ -8,6 +8,7 @@ export class Config {
   auth: { secret: string, expires: number };
   server: { port: number };
   db: ConnectionOptions;
+  api: { token: string };
 }
 
 let cfg: Config;

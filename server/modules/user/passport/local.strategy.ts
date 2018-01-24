@@ -34,7 +34,7 @@ export class LocalStrategy extends Strategy {
   public async verify(email, password, next) {
     try {
       const user = await this._userService.getForAuthCheck(email);
-      if (!user.checkPassword(password)) next(null);
+      if (!user || !user.checkPassword(password)) next(null);
       else next(null, user);
     } catch (e) {
       next(e);

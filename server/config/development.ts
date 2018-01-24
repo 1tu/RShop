@@ -23,6 +23,9 @@ const config: Config = {
     cli: {
       migrationsDir: path.join(__dirname, '/../migrations'),
     }
+  },
+  api: {
+    token: 'testapi'
   }
 };
 
