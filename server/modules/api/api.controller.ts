@@ -9,6 +9,7 @@ import { ShopService } from '../shop/shop.service';
 import { CustomerService } from '../customer/customer.service';
 import { CityService } from '../city/city.service';
 import { CustomerPostDto } from '../customer/customer.dto';
+import { EventGateway } from '../../common/gateway/event.gateway';
 
 @UseGuards(ApiGuard)
 @ApiUseTags('api')
@@ -16,7 +17,8 @@ import { CustomerPostDto } from '../customer/customer.dto';
 export class ApiController {
   constructor(
     private _orderService: OrderService, private _productService: ProductService,
-    private _customerService: CustomerService, private _cityService: CityService
+    private _customerService: CustomerService, private _cityService: CityService,
+    private _event: EventGateway
   ) { }
 
   @Post('order')
@@ -49,7 +51,7 @@ export class ApiController {
       nameLast: '<УТОЧНИТЬ !!!>', address: '<УТОЧНИТЬ !!!>', city,
     };
 
-    const order: any = {
+    const newOrder: any = {
       productList: [{
         count: model.count,
         config: model.config,
@@ -59,7 +61,8 @@ export class ApiController {
       customer,
       state: 0
     };
-    const created = await this._orderService.post(order);
+    const order = await this._orderService.post(newOrder);
+    this._event.server.emit('orderPost', order.id);
     return res.status(HttpStatus.CREATED).send();
   }
 

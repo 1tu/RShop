@@ -6,6 +6,8 @@ import extend from 'lodash/extend';
 import { OrderStoreState } from './order.storeState';
 import { orderApi } from '../../../api';
 import { OrderEntity } from '../../../../server/modules/order/order.entity';
+import { socket } from '../../../socket';
+import { store } from '../../index';
 
 const storeName = 'order';
 const state: OrderStoreState = {
@@ -79,6 +81,10 @@ const types = {
 export const order = {
   namespaced: true, state, getters, mutations, actions
 };
+
+socket.on('orderPost', () => {
+  store.dispatch('order/getList');
+});
 
 export const OrderTypes = types;
 export const OrderState = decorator(namespace(storeName, vState), types.state);

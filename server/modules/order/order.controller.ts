@@ -4,11 +4,12 @@ import { OrderEntity } from './order.entity';
 import { ApiUseTags } from '@nestjs/swagger';
 import { OrderPostDto } from './order.dto';
 import { Permissions } from '../../guards/permission.guard';
+import { EventGateway } from '../../common/gateway/event.gateway';
 
 @ApiUseTags('order')
 @Controller('order')
 export class OrderController {
-  constructor(private _service: OrderService) { }
+  constructor(private _service: OrderService, private _socket: EventGateway) { }
 
   @Get(':id')
   @Permissions('orderGet')
@@ -24,15 +25,19 @@ export class OrderController {
 
   @Post()
   @Permissions('orderPost')
-  post( @Body() model: OrderPostDto, @Req() req) {
+  async post( @Body() model: OrderPostDto, @Req() req) {
     (model as OrderEntity).manager = req.user;
-    return this._service.post(model);
+    const order = await this._service.post(model);
+    this._socket.server.emit('orderPost', order.id);
+    return order;
   }
 
   @Put()
   @Permissions('orderPut')
-  put( @Body() model: OrderPostDto) {
-    return this._service.put(model);
+  async put( @Body() model: OrderPostDto) {
+    const order = await this._service.put(model);
+    this._socket.server.emit('orderPost', order.id);
+    return order;
   }
 
   @Delete(':id')
