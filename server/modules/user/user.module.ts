@@ -14,7 +14,8 @@ import { UserEntity } from './user.entity';
     UserService,
     LocalStrategy
   ],
-  controllers: [UserController]
+  controllers: [UserController],
+  exports: [UserService]
 })
 export class UserModule implements NestModule {
   public configure(consumer: MiddlewaresConsumer) {

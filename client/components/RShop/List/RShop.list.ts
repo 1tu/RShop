@@ -16,7 +16,7 @@ export class RShopList extends Vue {
   created() {
     this.headers = [
       { value: 'name', text: 'Name' },
-      { value: 'domain', text: 'Domain' },
+      { value: 'host', text: 'Host' },
       { value: 'port', text: 'Server port' },
       {
         text: 'Actions', sortable: false, actionList: [

@@ -17,11 +17,11 @@ export class DeliveryServicePostDto extends AEntityBase {
 
   @ValidateIf((e, value) => value)
   @ValidateNested()
-  sizes: DeliveryServiceMaxSizes;
+  sizes?: DeliveryServiceMaxSizes;
 
   @ValidateIf((e, value) => value)
   @IsDecimalString()
-  maxWeight: number;
+  maxWeight?: number;
 
   @IsNotEmpty()
   @ValidateNested()

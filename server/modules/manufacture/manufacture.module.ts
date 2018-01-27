@@ -10,6 +10,7 @@ import { ManufactureController } from './manufacture.controller';
     ...manufactureProviders,
     ManufactureService,
   ],
-  controllers: [ManufactureController]
+  controllers: [ManufactureController],
+  exports: [ManufactureService]
 })
 export class ManufactureModule { }

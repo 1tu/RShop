@@ -10,6 +10,7 @@ import { PaymentServiceController } from './paymentService.controller';
     ...paymentServiceProviders,
     PaymentServiceService,
   ],
-  controllers: [PaymentServiceController]
+  controllers: [PaymentServiceController],
+  exports: [PaymentServiceService]
 })
 export class PaymentServiceModule { }

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { GatewayModule } from '../gateway/gateway.module';
 
 import { ImageModule } from '../../modules/image/image.module';
 import { PermissionModule } from '../../modules/permission/permission.module';
@@ -22,6 +23,7 @@ import { ApiModule } from '../../modules/api/api.module';
 
 @Module({
   modules: [
+    GatewayModule,
     // очередь инициализации важна для seeder'а
     PermissionModule, CityModule, ImageModule, DeliveryServiceModule, RejectionModule, // no deps
     RoleModule, UserModule, PaymentServiceModule, DeliveryModule, ManufactureModule, // one deps

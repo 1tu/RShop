@@ -10,6 +10,7 @@ import { RejectionController } from './rejection.controller';
     ...rejectionProviders,
     RejectionService,
   ],
-  controllers: [RejectionController]
+  controllers: [RejectionController],
+  exports: [RejectionService]
 })
 export class RejectionModule { }

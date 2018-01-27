@@ -14,24 +14,24 @@ export class DeliveryPostDto extends AEntityBase {
 
   @ValidateIf((e, value) => value)
   @IsISO8601()
-  sentAt: Date;
+  sentAt?: Date;
 
   @ValidateIf((e, value) => value)
   @IsISO8601()
-  approximateRecieveAt: Date;
+  approximateRecieveAt?: Date;
 
   @ValidateIf((e, value) => value)
   @IsISO8601()
-  recievedAt: Date;
+  recievedAt?: Date;
 
   @ValidateIf((e, value) => value)
   @IsString()
   @MaxLength(250)
-  deliveryPoint: string;
+  deliveryPoint?: string;
 
   @ValidateIf((e, value) => value)
   @IsBoolean()
-  deliveryHome: boolean;
+  deliveryHome?: boolean;
 
   @IsIn(enum2arr(DeliveryStateEnum))
   state: number;

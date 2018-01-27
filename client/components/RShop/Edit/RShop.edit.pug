@@ -8,8 +8,8 @@ v-container(text-xs-center)
           v-text-field(label='Название' v-model='model.name'
             name='name' v-validate='"required|max:100"' :error-messages='errors.collect("name")')
 
-          v-text-field(label='Домен' v-model='model.domain'
-            name='domain' v-validate='"required|max:70"' :error-messages='errors.collect("domain")')
+          v-text-field(label='Домен' v-model='model.host'
+            name='domain' v-validate='"required|max:100"' :error-messages='errors.collect("host")')
 
           v-text-field(label='Порт' v-model='model.port' type='number'
             name='port' v-validate='"required|numeric|max_value:99999|min_value:3000"' :error-messages='errors.collect("port")')

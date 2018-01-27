@@ -13,12 +13,12 @@ export class ProductDto extends AEntityBase {
 
   @ValidateIf((e, value) => value)
   @IsString()
-  description: string;
+  description?: string;
 
   @ValidateIf((e, value) => value)
   @IsArray()
   @ValidateNested()
-  propertyList: ProductProperty[];
+  propertyList?: ProductProperty[];
 
   // TODO:
   // imageList: ImageEntity;

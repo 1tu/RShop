@@ -10,6 +10,7 @@ import { ShopController } from './shop.controller';
     ...shopProviders,
     ShopService,
   ],
-  controllers: [ShopController]
+  controllers: [ShopController],
+  exports: [ShopService]
 })
 export class ShopModule { }

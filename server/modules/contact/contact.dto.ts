@@ -7,7 +7,7 @@ import { CustomerEntity } from '../customer/customer.entity';
 export class ContactPostDto extends AEntityBase {
   @ValidateIf((e, value) => value)
   @IsString()
-  log: string;
+  log?: string;
 
   @IsString()
   @MaxLength(250)

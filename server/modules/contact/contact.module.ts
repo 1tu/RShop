@@ -10,6 +10,7 @@ import { ContactController } from './contact.controller';
     ...contactProviders,
     ContactService,
   ],
-  controllers: [ContactController]
+  controllers: [ContactController],
+  exports: [ContactService]
 })
 export class ContactModule { }

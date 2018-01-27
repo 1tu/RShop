@@ -11,5 +11,5 @@ export class RemindDto extends AEntityBase {
 
   @ValidateIf((e, value) => value)
   @IsBoolean()
-  isStopped: boolean;
+  isStopped?: boolean;
 }

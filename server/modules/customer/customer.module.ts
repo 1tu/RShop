@@ -10,6 +10,7 @@ import { CustomerController } from './customer.controller';
     ...customerProviders,
     CustomerService,
   ],
-  controllers: [CustomerController]
+  controllers: [CustomerController],
+  exports: [CustomerService]
 })
 export class CustomerModule { }

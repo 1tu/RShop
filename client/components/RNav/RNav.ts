@@ -12,10 +12,8 @@ export class RNav extends Vue {
 
   @State navShow;
   @AuthGetter permissionList: string[];
-  @AuthAction getUser;
 
   async mounted() {
-    await this.getUser();
     this.routes = routes.filter(route => this.permissionList.indexOf(route.path.slice(1) + 'Get') !== -1);
   }
 }

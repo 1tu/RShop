@@ -10,6 +10,7 @@ import { ImageService } from './image.service';
     ...imageProviders,
     ImageService,
   ],
-  controllers: [ImageController]
+  controllers: [ImageController],
+  exports: [ImageService]
 })
 export class ImageModule { }

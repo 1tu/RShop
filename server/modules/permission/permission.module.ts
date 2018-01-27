@@ -10,6 +10,7 @@ import { PermissionController } from './permission.controller';
     ...permissionProviders,
     PermissionService,
   ],
-  controllers: [PermissionController]
+  controllers: [PermissionController],
+  exports: [PermissionService]
 })
 export class PermissionModule { }

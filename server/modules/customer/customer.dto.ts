@@ -14,7 +14,7 @@ export class CustomerPostDto extends AEntityBase {
   @ValidateIf((e, value) => value)
   @IsString()
   @MaxLength(100)
-  nameSecond: string;
+  nameSecond?: string;
 
   @IsString()
   @MaxLength(100)
@@ -22,7 +22,7 @@ export class CustomerPostDto extends AEntityBase {
 
   @ValidateIf((e, value) => value)
   @IsISO8601()
-  birthdate: Date;
+  birthdate?: Date;
 
   @IsMobilePhone('ru-RU')
   phone: string;
@@ -34,21 +34,21 @@ export class CustomerPostDto extends AEntityBase {
   @ValidateIf((e, value) => value)
   @MaxLength(12)
   @IsNumberString()
-  INN: string;
+  INN?: string;
 
   @ValidateIf((e, value) => value)
   @MaxLength(9)
   @IsNumberString()
-  BIK: string;
+  BIK?: string;
 
   @ValidateIf((e, value) => value)
   @MaxLength(20)
   @IsNumberString()
-  accountNumber: string;
+  accountNumber?: string;
 
   @ValidateIf((e, value) => value)
   @IsIn(enum2arr(CustomerCameFromEnum))
-  cameFrom: number;
+  cameFrom?: number;
 
   @ValidateNested()
   @Type(() => DtoBase)

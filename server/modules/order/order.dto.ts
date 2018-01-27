@@ -1,6 +1,9 @@
 import { AEntityBase } from '../../common/entity/index';
 import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
-import { IsIn, IsArray, ValidateNested, IsNotEmpty, ValidateIf, ArrayNotEmpty, IsString, IsMobilePhone } from 'class-validator';
+import {
+  IsIn, IsArray, ValidateNested, IsNotEmpty, ValidateIf,
+  ArrayNotEmpty, IsString, IsMobilePhone, IsNumberString
+} from 'class-validator';
 import { enum2arr } from '../../../helpers/enum';
 import { OrderStateEnum } from './order.state.enum';
 import { Type } from 'class-transformer';
@@ -11,6 +14,7 @@ import { CustomerEntity } from '../customer/customer.entity';
 import { RejectionEntity } from '../rejection/rejection.entity';
 import { DeliveryEntity } from '../delivery/delivery.entity';
 import { OrderProductEntity } from '../order_product/order_product.entity';
+import { ManufactureConfigItem } from '../manufacture/manufacture.config';
 
 export class OrderPostDto extends AEntityBase {
   @IsDecimalString()
@@ -18,7 +22,7 @@ export class OrderPostDto extends AEntityBase {
 
   @ValidateIf((e, value) => value)
   @IsDecimalString()
-  manufacturingCost: number;
+  manufacturingCost?: number;
 
   @IsIn(enum2arr(OrderStateEnum))
   state: number;
@@ -53,12 +57,33 @@ export class OrderPostDto extends AEntityBase {
 }
 
 export class OrderApiPostDto extends AEntityBase {
+  @ValidateIf((e, value) => value)
+  @IsDecimalString()
+  price?: number;
+
+  @ValidateIf((e, value) => value)
+  @IsDecimalString()
+  manufacturingCost?: number;
+
   @IsString()
   productName: string;
 
   @IsString()
-  shopDomain: string;
+  city: string;
+
+  @IsNumberString()
+  count: number;
 
   @IsMobilePhone('ru-RU')
   customerPhone: string;
+
+  @IsString()
+  customerName: string;
+
+  @ValidateIf((e, value) => value)
+  @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested()
+  @Type(() => ManufactureConfigItem)
+  config?: ManufactureConfigItem[];
 }

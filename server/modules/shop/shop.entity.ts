@@ -8,8 +8,8 @@ export class ShopEntity extends AEntityBase {
   @Column({ length: 100 })
   name: string;
 
-  @Column({ length: 70 })
-  domain: string;
+  @Column({ length: 100 })
+  host: string;
 
   @Column('smallint')
   port: number;

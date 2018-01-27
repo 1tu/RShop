@@ -4,13 +4,13 @@ import { ValidateIf } from 'class-validator';
 export class DeliveryServiceMaxSizes {
   @ValidateIf((e, value) => value)
   @IsDecimalString()
-  height: number;
+  height?: number;
 
   @ValidateIf((e, value) => value)
   @IsDecimalString()
-  width: number;
+  width?: number;
 
   @ValidateIf((e, value) => value)
   @IsDecimalString()
-  length: number;
+  length?: number;
 }

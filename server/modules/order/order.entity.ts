@@ -12,14 +12,14 @@ import { OrderProductEntity } from '../order_product/order_product.entity';
 
 @Entity('order')
 export class OrderEntity extends AEntityTimestamp {
-  @Column('decimal', { precision: 14, scale: 2 })
+  @Column('decimal', { precision: 14, scale: 2, nullable: true })
   price: number;
 
-  @Column('decimal', { precision: 14, scale: 2 })
+  @Column('decimal', { precision: 14, scale: 2, nullable: true })
   manufacturingCost: number;
 
   // TODO: @Column('enum', { enum: OrderStateEnum })
-  @Column()
+  @Column({ default: 0 })
   state: number;
 
   @Column('json')
@@ -40,7 +40,7 @@ export class OrderEntity extends AEntityTimestamp {
   @ManyToOne(type => UserEntity)
   manager: UserEntity;
 
-  @OneToOne(type => CustomerEntity, { eager: true })
+  @OneToOne(type => CustomerEntity, { cascadeInsert: true, eager: true })
   @JoinColumn()
   customer: CustomerEntity;
 

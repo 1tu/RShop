@@ -10,6 +10,7 @@ import { RemindController } from './remind.controller';
     ...remindProviders,
     RemindService,
   ],
-  controllers: [RemindController]
+  controllers: [RemindController],
+  exports: [RemindService]
 })
 export class RemindModule { }

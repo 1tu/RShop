@@ -9,5 +9,5 @@ export class RejectionDto extends AEntityBase {
 
   @ValidateIf((e, value) => value)
   @IsString()
-  description: string;
+  description?: string;
 }

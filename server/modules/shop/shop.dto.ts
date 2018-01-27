@@ -8,8 +8,8 @@ export class ShopDto extends AEntityBase {
   name: string;
 
   @IsString()
-  @MaxLength(70)
-  domain: string;
+  @MaxLength(100)
+  host: string;
 
   @IsNumberString()
   port: number;
