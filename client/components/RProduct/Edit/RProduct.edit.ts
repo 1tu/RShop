@@ -40,7 +40,7 @@ export class RProductEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/product');
+      this.$router.push('/Product');
     } catch (e) {
       console.log('product edit error', e.response.data);
     }

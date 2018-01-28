@@ -1,6 +1,6 @@
 import { IsString, IsArray, ArrayNotEmpty, IsIn, ValidateIf, ValidateNested } from 'class-validator';
 import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
-import { enum2arr } from '../../../helpers/enum';
+import { enum2arr } from '../../../helpers/enum.helper';
 import { Type } from 'class-transformer';
 
 export enum ManufactureSchemaTypes {

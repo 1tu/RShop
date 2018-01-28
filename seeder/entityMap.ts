@@ -1,3 +1,6 @@
+import { EntityType } from '../shared/Entity.shared';
+import { AEntityBase } from '../server/common/entity/index';
+
 import { CityEntity } from '../server/modules/city/city.entity';
 import { ShopEntity } from '../server/modules/shop/shop.entity';
 import { OrderEntity } from '../server/modules/order/order.entity';
@@ -16,8 +19,14 @@ import { RoleEntity } from '../server/modules/role/role.entity';
 import { UserEntity } from '../server/modules/user/user.entity';
 import { ImageEntity } from '../server/modules/image/image.entity';
 
+
+interface EntityMapItem {
+  name: EntityType;
+  entity: new (...args: any[]) => AEntityBase;
+}
+
 // SORTED!
-export const entityMap = [
+export const entityMap: EntityMapItem[] = [
   // no deps
   { name: 'Permission', entity: PermissionEntity },
   { name: 'City', entity: CityEntity },

@@ -6,13 +6,12 @@ import extend from 'lodash/extend';
 import { OrderStoreState } from './order.storeState';
 import { orderApi } from '../../../api';
 import { OrderEntity } from '../../../../server/modules/order/order.entity';
-import { socket } from '../../../socket';
-import { store } from '../../index';
 
-const storeName = 'order';
+const storeName = 'Order';
 const state: OrderStoreState = {
   item: undefined,
-  list: []
+  list: [],
+  notifyCount: 0
 };
 
 const getters = getter(state, {
@@ -39,10 +38,17 @@ const mutations = mutation(state, {
   },
   list(state, list: OrderEntity[]) {
     state.list = list;
+  },
+  notify(state, count: number) {
+    state.notifyCount = count;
   }
 });
 
 const actions = action(state, {
+  async addNotify({ commit, state, dispatch }) {
+    commit(types.mutation.notify, state.notifyCount + 1);
+    await dispatch(types.action.getList);
+  },
   async getList({ commit, state }) {
     const list = await orderApi.getList().catch(e => { console.error(e); });
     commit(types.mutation.list, list);
@@ -54,10 +60,10 @@ const actions = action(state, {
     commit(types.mutation.item, item);
     return state.item;
   },
-  async post({ dispatch }, model: Partial<OrderEntity>) {
+  async post(_, model: Partial<OrderEntity>) {
     await orderApi.post(model);
   },
-  async put({ getters, commit, dispatch, state }, model: Partial<OrderEntity>) {
+  async put({ getters, commit, state }, model: Partial<OrderEntity>) {
     await orderApi.put(model);
     commit(types.mutation.item, extend({}, state.item, model));
     if (getters.itemById(model.id)) {
@@ -78,13 +84,9 @@ const types = {
   action: keymirror(actions)
 };
 
-export const order = {
+export const Order = {
   namespaced: true, state, getters, mutations, actions
 };
-
-socket.on('orderPost', () => {
-  store.dispatch('order/getList');
-});
 
 export const OrderTypes = types;
 export const OrderState = decorator(namespace(storeName, vState), types.state);

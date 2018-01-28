@@ -6,8 +6,9 @@ import extend from 'lodash/extend';
 import { ManufactureStoreState } from './manufacture.storeState';
 import { manufactureApi } from '../../../api';
 import { ManufactureEntity } from '../../../../server/modules/manufacture/manufacture.entity';
+import { EntityType } from '../../../../shared/Entity.shared';
 
-const storeName = 'manufacture';
+const storeName: EntityType = 'Manufacture';
 const state: ManufactureStoreState = {
   item: undefined,
   list: []
@@ -76,7 +77,7 @@ const types = {
   action: keymirror(actions)
 };
 
-export const manufacture = {
+export const Manufacture = {
   namespaced: true, state, getters, mutations, actions
 };
 

@@ -6,8 +6,9 @@ import extend from 'lodash/extend';
 import { DeliveryStoreState } from './delivery.storeState';
 import { deliveryApi } from '../../../api';
 import { DeliveryEntity } from '../../../../server/modules/delivery/delivery.entity';
+import { EntityType } from '../../../../shared/Entity.shared';
 
-const storeName = 'delivery';
+const storeName: EntityType = 'Delivery';
 const state: DeliveryStoreState = {
   item: undefined,
   list: []
@@ -76,7 +77,7 @@ const types = {
   action: keymirror(actions)
 };
 
-export const delivery = {
+export const Delivery = {
   namespaced: true, state, getters, mutations, actions
 };
 

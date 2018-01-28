@@ -6,8 +6,9 @@ import extend from 'lodash/extend';
 import { PaymentStoreState } from './payment.storeState';
 import { paymentApi } from '../../../api';
 import { PaymentEntity } from '../../../../server/modules/payment/payment.entity';
+import { EntityType } from '../../../../shared/Entity.shared';
 
-const storeName = 'payment';
+const storeName: EntityType = 'Payment';
 const state: PaymentStoreState = {
   item: undefined,
   list: []
@@ -76,7 +77,7 @@ const types = {
   action: keymirror(actions)
 };
 
-export const payment = {
+export const Payment = {
   namespaced: true, state, getters, mutations, actions
 };
 

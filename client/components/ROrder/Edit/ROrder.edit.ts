@@ -77,7 +77,7 @@ export class ROrderEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/order');
+      this.$router.push('/Order');
     } catch (e) {
       console.log('order edit error', e.response.data);
     }

@@ -46,7 +46,7 @@ export class RManufactureEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/manufacture');
+      this.$router.push('/Manufacture');
     } catch (e) {
       console.log('manufacture edit error', e.response.data);
     }

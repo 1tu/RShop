@@ -6,8 +6,9 @@ import extend from 'lodash/extend';
 import { ContactStoreState } from './contact.storeState';
 import { contactApi } from '../../../api';
 import { ContactEntity } from '../../../../server/modules/contact/contact.entity';
+import { EntityType } from '../../../../shared/Entity.shared';
 
-const storeName = 'contact';
+const storeName: EntityType = 'Contact';
 const state: ContactStoreState = {
   item: undefined,
   list: []
@@ -76,7 +77,7 @@ const types = {
   action: keymirror(actions)
 };
 
-export const contact = {
+export const Contact = {
   namespaced: true, state, getters, mutations, actions
 };
 

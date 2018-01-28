@@ -6,8 +6,9 @@ import extend from 'lodash/extend';
 import { RejectionStoreState } from './rejection.storeState';
 import { rejectionApi } from '../../../api';
 import { RejectionEntity } from '../../../../server/modules/rejection/rejection.entity';
+import { EntityType } from '../../../../shared/Entity.shared';
 
-const storeName = 'rejection';
+const storeName: EntityType = 'Rejection';
 const state: RejectionStoreState = {
   item: undefined,
   list: []
@@ -76,7 +77,7 @@ const types = {
   action: keymirror(actions)
 };
 
-export const rejection = {
+export const Rejection = {
   namespaced: true, state, getters, mutations, actions
 };
 

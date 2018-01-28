@@ -1,6 +1,6 @@
 import { AEntityBase } from '../../common/entity/index';
 import { IsISO8601, IsBoolean, IsString, MaxLength, IsIn, ValidateNested, IsNotEmpty, ValidateIf } from 'class-validator';
-import { enum2arr } from '../../../helpers/enum';
+import { enum2arr } from '../../../helpers/enum.helper';
 import { DeliveryStateEnum } from './delivery.state.enum';
 import { Type } from 'class-transformer';
 import { DtoBase } from '../../common/entity/base.dto';

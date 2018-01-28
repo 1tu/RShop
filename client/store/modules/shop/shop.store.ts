@@ -6,8 +6,9 @@ import extend from 'lodash/extend';
 import { ShopStoreState } from './shop.storeState';
 import { shopApi } from '../../../api';
 import { ShopEntity } from '../../../../server/modules/shop/shop.entity';
+import { EntityType } from '../../../../shared/Entity.shared';
 
-const storeName = 'shop';
+const storeName: EntityType = 'Shop';
 const state: ShopStoreState = {
   item: undefined,
   list: []
@@ -76,7 +77,7 @@ const types = {
   action: keymirror(actions)
 };
 
-export const shop = {
+export const Shop = {
   namespaced: true, state, getters, mutations, actions
 };
 

@@ -19,8 +19,8 @@ export class RCityList extends Vue {
       { value: 'population', text: 'Population' },
       {
         text: 'Actions', sortable: false, actionList: [
-          { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/city/${id}`) },
-          { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/city/${id}/edit`) },
+          { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/City/${id}`) },
+          { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/City/${id}/edit`) },
           { type: 'Delete', name: 'delete', icon: 'delete', onClick: (id: number) => this.delete(id) },
         ].filter(item => this.hasPermission(this.constructor.name.replace(/(^R|List$)/g, '') + item.type))
       },

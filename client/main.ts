@@ -11,6 +11,8 @@ Vue.use(VeeValidate);
 
 import { i18n } from './i18n';
 import { store } from './store';
+import './gateway';
+
 import { router } from './router';
 import filters from './filters';
 import { RApp } from './components/RApp';

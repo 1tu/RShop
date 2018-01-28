@@ -8,17 +8,17 @@ export interface RootState {
   navShow: boolean;
 
   auth?: AuthStoreState;
-  city?: CityStoreState;
-  contact?: ContactStoreState;
-  customer?: CustomerStoreState;
-  deliveryService?: DeliveryServiceStoreState;
-  order?: OrderStoreState;
-  payment?: PaymentStoreState;
-  paymentService?: PaymentServiceStoreState;
-  product?: ProductStoreState;
-  manufacture?: ManufactureStoreState;
-  rejection?: RejectionStoreState;
-  remind?: RemindStoreState;
-  shop?: ShopStoreState;
-  user?: UserStoreState;
+  City?: CityStoreState;
+  Contact?: ContactStoreState;
+  Customer?: CustomerStoreState;
+  DeliveryService?: DeliveryServiceStoreState;
+  Order?: OrderStoreState;
+  Payment?: PaymentStoreState;
+  PaymentService?: PaymentServiceStoreState;
+  Product?: ProductStoreState;
+  Manufacture?: ManufactureStoreState;
+  Rejection?: RejectionStoreState;
+  Remind?: RemindStoreState;
+  Shop?: ShopStoreState;
+  User?: UserStoreState;
 }

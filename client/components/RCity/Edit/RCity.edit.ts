@@ -25,7 +25,7 @@ export class RCityEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/city');
+      this.$router.push('/City');
     } catch (e) {
       console.log('city edit error', e.response.data);
     }

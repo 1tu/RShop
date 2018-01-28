@@ -2,19 +2,27 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import { State } from '../../store/index';
 import { routes, RouterItem } from '../../router';
-import { AuthGetter, AuthAction } from '../../store/modules/index';
+import { AuthGetter, AuthAction, OrderState } from '../../store/modules/index';
+
+interface NavItem {
+  path: string;
+  title: string;
+  // notifyCount: number;
+}
 
 @Component({
   template: require('./RNav.pug')
 })
 export class RNav extends Vue {
-  public routes: RouterItem[] = [];
+  public list: NavItem[] = [];
+  @OrderState notifyCount;
 
   @State navShow;
   @AuthGetter permissionList: string[];
 
   async mounted() {
-    this.routes = routes.filter(route => this.permissionList.indexOf(route.path.slice(1) + 'Get') !== -1);
+    const filteredRoutes = routes.filter(route => this.permissionList.indexOf(route.path.slice(1).toLowerCase() + 'Get') !== -1);
+    this.list = filteredRoutes.map(r => ({ path: r.path, title: r.title }));
   }
 }
 

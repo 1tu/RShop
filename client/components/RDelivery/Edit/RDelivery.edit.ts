@@ -34,7 +34,7 @@ export class RDeliveryEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/delivery');
+      this.$router.push('/Delivery');
     } catch (e) {
       console.log('delivery edit error', e.response.data);
     }

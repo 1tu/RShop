@@ -5,6 +5,7 @@ import { ApiUseTags } from '@nestjs/swagger';
 import { OrderPostDto } from './order.dto';
 import { Permissions } from '../../guards/permission.guard';
 import { EventGateway } from '../../common/gateway/event.gateway';
+import { makeEvent } from '../../../shared/Gateway.shared';
 
 @ApiUseTags('order')
 @Controller('order')
@@ -28,7 +29,7 @@ export class OrderController {
   async post( @Body() model: OrderPostDto, @Req() req) {
     (model as OrderEntity).manager = req.user;
     const order = await this._service.post(model);
-    this._socket.server.emit('orderPost', order.id);
+    this._socket.server.emit(makeEvent('Order', 'Post'), order.id);
     return order;
   }
 
@@ -36,7 +37,7 @@ export class OrderController {
   @Permissions('orderPut')
   async put( @Body() model: OrderPostDto) {
     const order = await this._service.put(model);
-    this._socket.server.emit('orderPost', order.id);
+    this._socket.server.emit(makeEvent('Order', 'Put'), order.id);
     return order;
   }
 

@@ -37,7 +37,7 @@ export class RPaymentEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/payment');
+      this.$router.push('/Payment');
     } catch (e) {
       console.log('payment edit error', e.response.data);
     }

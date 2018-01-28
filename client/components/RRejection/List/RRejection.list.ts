@@ -25,8 +25,8 @@ export class RRejectionList extends Vue {
       { value: 'description', text: 'Описание' },
       {
         text: 'Actions', sortable: false, actionList: [
-          { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/rejection/${id}`) },
-          { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/rejection/${id}/edit`) },
+          { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/Rejection/${id}`) },
+          { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/Rejection/${id}/edit`) },
           { type: 'Delete', name: 'delete', icon: 'delete', onClick: (id: number) => this.delete(id) },
         ].filter(item => this.hasPermission(this.constructor.name.replace(/(^R|List$)/g, '') + item.type))
       },

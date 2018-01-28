@@ -10,6 +10,7 @@ import { CustomerService } from '../customer/customer.service';
 import { CityService } from '../city/city.service';
 import { CustomerPostDto } from '../customer/customer.dto';
 import { EventGateway } from '../../common/gateway/event.gateway';
+import { makeEvent } from '../../../shared/Gateway.shared';
 
 @UseGuards(ApiGuard)
 @ApiUseTags('api')
@@ -62,7 +63,7 @@ export class ApiController {
       state: 0
     };
     const order = await this._orderService.post(newOrder);
-    this._event.server.emit('orderPost', order.id);
+    this._event.server.emit(makeEvent('Order', 'Post'), order.id);
     return res.status(HttpStatus.CREATED).send();
   }
 

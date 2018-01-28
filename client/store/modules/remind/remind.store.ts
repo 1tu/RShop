@@ -6,8 +6,9 @@ import extend from 'lodash/extend';
 import { RemindStoreState } from './remind.storeState';
 import { remindApi } from '../../../api';
 import { RemindEntity } from '../../../../server/modules/remind/remind.entity';
+import { EntityType } from '../../../../shared/Entity.shared';
 
-const storeName = 'remind';
+const storeName: EntityType = 'Remind';
 const state: RemindStoreState = {
   item: undefined,
   list: []
@@ -76,7 +77,7 @@ const types = {
   action: keymirror(actions)
 };
 
-export const remind = {
+export const Remind = {
   namespaced: true, state, getters, mutations, actions
 };
 

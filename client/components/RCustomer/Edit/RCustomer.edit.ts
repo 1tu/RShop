@@ -31,7 +31,7 @@ export class RCustomerEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/customer');
+      this.$router.push('/Customer');
     } catch (e) {
       console.log('customer edit error', e.response.data);
     }

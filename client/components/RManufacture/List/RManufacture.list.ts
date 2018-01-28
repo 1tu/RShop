@@ -18,8 +18,8 @@ export class RManufactureList extends Vue {
       { value: 'schema', text: 'Схема' },
       {
         text: 'Actions', sortable: false, actionList: [
-          { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/manufacture/${id}`) },
-          { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/manufacture/${id}/edit`) },
+          { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/Manufacture/${id}`) },
+          { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/Manufacture/${id}/edit`) },
           { type: 'Delete', name: 'delete', icon: 'delete', onClick: (id: number) => this.delete(id) },
         ].filter(item => this.hasPermission(this.constructor.name.replace(/(^R|List$)/g, '') + item.type))
       },

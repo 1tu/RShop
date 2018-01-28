@@ -30,7 +30,7 @@ export class RShopEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/shop');
+      this.$router.push('/Shop');
     } catch (e) {
       console.log('shop edit error', e.response.data);
     }

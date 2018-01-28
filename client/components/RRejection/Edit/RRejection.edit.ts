@@ -27,7 +27,7 @@ export class RRejectionEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/rejection');
+      this.$router.push('/Rejection');
     } catch (e) {
       console.log('rejection edit error', e.response.data);
     }

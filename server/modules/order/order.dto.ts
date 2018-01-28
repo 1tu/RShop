@@ -4,7 +4,7 @@ import {
   IsIn, IsArray, ValidateNested, IsNotEmpty, ValidateIf,
   ArrayNotEmpty, IsString, IsMobilePhone, IsNumberString
 } from 'class-validator';
-import { enum2arr } from '../../../helpers/enum';
+import { enum2arr } from '../../../helpers/enum.helper';
 import { OrderStateEnum } from './order.state.enum';
 import { Type } from 'class-transformer';
 import { DtoBase } from '../../common/entity/base.dto';

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { OrderAction, OrderState, AuthGetter } from '../../../store/modules/index';
+import { OrderAction, OrderState, AuthGetter, OrderMutation } from '../../../store/modules/index';
 import { OrderEntity } from '../../../../server/modules/order/order.entity';
 import { TableHeader } from '../../../helpers/index';
 import { OrderStateEnumMap } from '../../../../server/modules/order/order.state.enum';
@@ -13,6 +13,7 @@ export class ROrderList extends Vue {
 
   @OrderAction delete;
   @OrderAction getList;
+  @OrderMutation notify;
 
   created() {
     this.headers = [
@@ -26,8 +27,8 @@ export class ROrderList extends Vue {
       },
       {
         text: 'Actions', sortable: false, actionList: [
-          { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/order/${id}`) },
-          { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/order/${id}/edit`) },
+          { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/Order/${id}`) },
+          { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/Order/${id}/edit`) },
           { type: 'Delete', name: 'delete', icon: 'delete', onClick: (id: number) => this.delete(id) },
         ].filter(item => this.hasPermission(this.constructor.name.replace(/(^R|List$)/g, '') + item.type))
       }
@@ -35,6 +36,7 @@ export class ROrderList extends Vue {
   }
 
   async mounted() {
+    this.notify(0);
     await this.getList();
   }
 }

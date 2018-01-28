@@ -25,7 +25,7 @@ export class RRemindEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/remind');
+      this.$router.push('/Remind');
     } catch (e) {
       console.log('remind edit error', e.response.data);
     }

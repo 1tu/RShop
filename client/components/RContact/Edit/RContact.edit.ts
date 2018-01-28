@@ -29,7 +29,7 @@ export class RContactEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/contact');
+      this.$router.push('/Contact');
     } catch (e) {
       console.log('contact edit error', e.response.data);
     }
