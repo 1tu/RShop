@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../../common/database/database.module';
-import { orderProductProviders } from './order_Product.providers';
+import { orderProductProviders } from './order_product.providers';
 
 @Module({
   modules: [DatabaseModule],
