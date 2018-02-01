@@ -1,6 +1,5 @@
 import { Guard, CanActivate } from '@nestjs/common';
-import { config } from '../config/index';
-
+import { config } from '../../config/index';
 
 @Guard()
 export class ApiGuard implements CanActivate {

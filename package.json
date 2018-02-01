@@ -12,7 +12,7 @@
     "build:fe": "cross-env NODE_ENV=production npm run clean && npm run compile:fe",
     "build:fe:parts": "npm run sass && npm run compile",
     "clean": "rimraf public && rimraf coverage",
-    "compile:fe": "webpack --config config/webpack.config.prod.js",
+    "compile:fe": "webpack --config config/webpack/webpack.config.prod.js",
     "lint": "tslint src/**/*.ts",
     "db:drop": "typeorm schema:drop",
     "db:seed": "node seed.js"

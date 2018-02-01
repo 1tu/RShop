@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import { config } from '../server/config/index';
 import { entityMap } from './entityMap';
 import { promisify } from 'util';
 import { readdir } from 'fs';
@@ -8,6 +7,7 @@ import { join } from 'path';
 import { AServiceBase } from '../server/common/service/index';
 import { AEntityBase } from '../server/common/entity/base.entity';
 import { databaseSeeder } from './engine';
+import { config } from '../config/index';
 
 (async function run() {
   const entityNames = entityMap.map(item => item.name);

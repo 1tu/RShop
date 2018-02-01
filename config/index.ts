@@ -5,8 +5,8 @@ import { ConnectionOptions } from 'typeorm';
 
 export class Config {
   env: 'dev' | 'test' | 'prod';
+  server: { protocol: 'http' | 'https', host: string, port: number };
   auth: { secret: string, expires: number };
-  server: { port: number };
   db: ConnectionOptions;
   api: { token: string };
 }

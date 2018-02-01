@@ -34,12 +34,13 @@ webpackConfig.module.rules = [...webpackConfig.module.rules,
       loader: 'css-loader',
       options: {
         minimize: true,
-        sourceMap: true,
+        sourceMap: false,
         importLoaders: 2
       }
     }, {
       loader: 'postcss-loader',
       options: {
+        sourceMap: false,
         plugins: () => [autoprefixer]
       }
     },

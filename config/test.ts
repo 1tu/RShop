@@ -2,8 +2,10 @@ import * as path from 'path';
 import { Config } from './index';
 
 const config: Config = {
-  env: 'dev',
+  env: 'test',
   server: {
+    protocol: 'http',
+    host: '46.36.218.53',
     port: 3003,
   },
   auth: {
