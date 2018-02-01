@@ -11,6 +11,7 @@ database/development.sqlite
 dist/
 src/**/*.map
 coverage/
+public/
 
 # Editor directories and files
 .idea
