@@ -13,9 +13,9 @@ const config: Config = {
     type: 'postgres',
     host: 'localhost',
     port: 5432,
-    username: 'developer',
-    password: '1q2w3e4r',
-    database: 'rshop_dev',
+    username: 'Rshop',
+    password: '213fFAEFE32sd',
+    database: 'rshop',
     synchronize: true,
     entities: [
       path.join(__dirname, '/../modules/**/*.entity.ts'),
