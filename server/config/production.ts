@@ -13,8 +13,8 @@ const config: Config = {
     type: 'postgres',
     host: 'localhost',
     port: 5432,
-    username: 'Rshop',
-    password: '213fFAEFE32sd',
+    username: 'postgres',
+    password: 'Alex132456',
     database: 'rshop',
     synchronize: true,
     entities: [
