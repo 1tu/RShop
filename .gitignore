@@ -6,6 +6,7 @@ tmp
 package-lock.json
 yarn.lock
 *.log
+ormconfig.json
 
 database/development.sqlite
 dist/
