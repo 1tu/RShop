@@ -8,9 +8,12 @@ import { ApplicationModule } from './common/app/index';
 import { config } from './config/index';
 import { ValidationPipe } from '@nestjs/common';
 import { PermissionsGuard } from './guards/permission.guard';
+import * as express from 'express';
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApplicationModule);
+  app.use(express.static(join(__dirname, '../public')));
   app.use(cookieParser());
   app.use(bodyParser.json());
 
