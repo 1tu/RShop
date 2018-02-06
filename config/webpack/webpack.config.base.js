@@ -1,5 +1,6 @@
 const helpers = require('./helpers'),
   CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 let config = {
   entry: {
@@ -41,6 +42,7 @@ let config = {
     }],
   },
   plugins: [
+    new CheckerPlugin(),
     // new CopyWebpackPlugin([{
     //   from: 'src/assets',
     //   to: './assets'

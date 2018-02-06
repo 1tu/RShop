@@ -1,4 +1,4 @@
-import { IsString, IsArray, ArrayNotEmpty, IsIn, ValidateIf, ValidateNested } from 'class-validator';
+import { IsString, IsArray, ArrayNotEmpty, IsIn, ValidateIf, ValidateNested, IsBoolean } from 'class-validator';
 import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 import { enum2arr } from '../../../helpers/enum.helper';
 import { Type } from 'class-transformer';
@@ -21,16 +21,21 @@ export class ManufactureSchemaItem {
   @IsIn(enum2arr(ManufactureSchemaTypes))
   type: number;
 
+  @IsBoolean()
+  isRequired: boolean;
+
+  @ValidateIf((e: ManufactureSchemaItem, value) => e.type !== ManufactureSchemaTypes.TEXT)
   @IsArray()
   @ArrayNotEmpty()
   @ValidateNested()
   @Type(() => ManufactureSchemaOption)
   optionList: ManufactureSchemaOption[];
 
-  constructor(name = '', key = '', type = 0, optionList: ManufactureSchemaOption[] = [new ManufactureSchemaOption()]) {
+  constructor(name = '', key = '', type = 0, isRequired = true, optionList: ManufactureSchemaOption[] = [new ManufactureSchemaOption()]) {
     this.name = name;
     this.key = key;
     this.type = type;
+    this.isRequired = isRequired;
     this.optionList = optionList;
   }
 }
@@ -50,6 +55,8 @@ export class ManufactureSchemaOption {
   @ValidateNested()
   @Type(() => ManufactureSchemaFilter)
   filterList?: ManufactureSchemaFilter[];
+
+
 
   constructor(name = '', value = '', price = 0) {
     this.name = name;

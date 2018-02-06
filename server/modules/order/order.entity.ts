@@ -40,7 +40,7 @@ export class OrderEntity extends AEntityTimestamp {
   @ManyToOne(type => UserEntity)
   manager: UserEntity;
 
-  @OneToOne(type => CustomerEntity, { cascadeInsert: true, eager: true })
+  @OneToOne(type => CustomerEntity, { cascadeInsert: true, cascadeRemove: false, eager: true })
   @JoinColumn()
   customer: CustomerEntity;
 

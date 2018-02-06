@@ -11,6 +11,7 @@ import { CityService } from '../city/city.service';
 import { CustomerPostDto } from '../customer/customer.dto';
 import { EventGateway } from '../../common/gateway/event.gateway';
 import { makeEvent } from '../../../shared/Gateway.shared';
+import { ManufactureSchemaTypes } from '../manufacture/manufacture.schema';
 
 @UseGuards(ApiGuard)
 @ApiUseTags('api')
@@ -23,7 +24,7 @@ export class ApiController {
   ) { }
 
   @Post('order')
-  async post( @Body() model: OrderApiPostDto, @Res() res) {
+  async post(@Body() model: OrderApiPostDto, @Res() res) {
     const city = await this._cityService.getOne({ where: { name: model.city } });
     if (!city)
       return res.status(HttpStatus.BAD_REQUEST).send('Given city not exist');
@@ -33,18 +34,21 @@ export class ApiController {
       return res.status(HttpStatus.BAD_REQUEST).send('Product with given "productName" not exist');
     if (model.config && !product.manufacture)
       return res.status(HttpStatus.BAD_REQUEST).send('Given product havent manufacture');
-    if (model.config.length !== product.manufacture.schema.length)
-      return res.status(HttpStatus.BAD_REQUEST).send('Config not valid');
 
-    const isConfigValid = model.config.every(cfg => {
-      const item = product.manufacture.schema
-        .find(s => s.key === cfg.key && s.optionList.some(o => o.value === cfg.value));
-      if (!item) return false;
-      cfg.name = item.name;
+    const isConfigValid = product.manufacture.schema.every(item => {
+      let cfg = model.config.find(cfg => cfg.key === item.key);
+      if (!cfg) {
+        cfg = { key: item.key, name: item.name, value: null };
+        model.config.push(cfg);
+      }
+      else cfg.name = item.name;
+
+      if (item.isRequired && !cfg.value ||
+        (cfg.value && item.type !== ManufactureSchemaTypes.TEXT && !item.optionList.some(o => o.value === cfg.value))) return false;
       return true;
     });
     if (!isConfigValid)
-      return res.status(HttpStatus.BAD_REQUEST).send('Some config key/value pair wrong');
+      return res.status(HttpStatus.BAD_REQUEST).send('Config not valid');
 
     let customer: CustomerPostDto = await this._customerService.getOne({ where: { phone: model.customerPhone } });
     if (!customer) customer = {

@@ -53,7 +53,7 @@ export class RManufactureEdit extends Vue {
   }
 
   public clear() {
-    this.model = { id: this.model.id };
+    this.model = { id: this.model.id, schema: [] };
     this.$validator.reset();
   }
 }
