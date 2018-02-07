@@ -1,3 +1,3 @@
-email,password,username,role
-admin@ad.min,admin,admin,{"id":2}
-manager@mana.ger,manager,manager,{"id":3}
+email;password;username;role
+admin@ad.min;admin;admin;{"id":2}
+manager@mana.ger;manager;manager;{"id":3}

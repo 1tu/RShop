@@ -1,2 +1,2 @@
-name,host,port,cityList,productList
-Рекламное агентство,reklamnoe-agentstvo.ru,5000,[{"id":1}]
+name;host;port;cityList;productList
+Рекламное агентство;reklamnoe-agentstvo.ru;5000;[{"id":1}]

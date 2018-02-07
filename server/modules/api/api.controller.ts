@@ -35,20 +35,24 @@ export class ApiController {
     if (model.config && !product.manufacture)
       return res.status(HttpStatus.BAD_REQUEST).send('Given product havent manufacture');
 
-    const isConfigValid = product.manufacture.schema.every(item => {
-      let cfg = model.config.find(cfg => cfg.key === item.key);
-      if (!cfg) {
-        cfg = { key: item.key, name: item.name, value: null };
-        model.config.push(cfg);
-      }
-      else cfg.name = item.name;
+    if (model.config) {
+      console.log('CFG', model.config);
+      const isConfigValid = product.manufacture.schema.every(item => {
+        let cfg = model.config.find(cfg => cfg.key === item.key);
+        if (!cfg) {
+          cfg = { key: item.key, name: item.name, value: null };
+          model.config.push(cfg);
+        }
+        else cfg.name = item.name;
 
-      if (item.isRequired && !cfg.value ||
-        (cfg.value && item.type !== ManufactureSchemaTypes.TEXT && !item.optionList.some(o => o.value === cfg.value))) return false;
-      return true;
-    });
-    if (!isConfigValid)
-      return res.status(HttpStatus.BAD_REQUEST).send('Config not valid');
+        if (item.isRequired && !cfg.value ||
+          (cfg.value && item.type !== ManufactureSchemaTypes.TEXT && !item.optionList.some(o => o.value === cfg.value))) return false;
+        return true;
+      });
+      if (!isConfigValid)
+        return res.status(HttpStatus.BAD_REQUEST).send('Config not valid');
+    }
+
 
     let customer: CustomerPostDto = await this._customerService.getOne({ where: { phone: model.customerPhone } });
     if (!customer) customer = {
@@ -57,18 +61,19 @@ export class ApiController {
     };
 
     const newOrder: any = {
-      productList: [{
-        count: model.count,
-        config: model.config,
-        product
-      }],
       shop: product.shop,
       customer,
       state: 0
     };
+
+    if (model.config) newOrder.productList = [{
+      count: model.count,
+      config: model.config,
+      product
+    }];
+
     const order = await this._orderService.post(newOrder);
     this._event.server.emit(makeEvent('Order', 'Post'), order.id);
     return res.status(HttpStatus.CREATED).send();
   }
-
 }

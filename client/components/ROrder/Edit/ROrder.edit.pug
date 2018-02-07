@@ -5,6 +5,10 @@ v-container(text-xs-center)
     v-flex(xs12)
       v-form(@submit.prevent='submit')
         template(v-if='model')
+          template(v-if='model.id')
+            p Заказчик: {{ model.customer.nameFirst + ' ' + model.customer.nameLast + ' (' + model.customer.phone + ')' }}
+            p Магазин: {{ model.shop.name + ' (' + model.shop.host + ')' }}
+
           v-text-field(label='Стоимость' v-model='model.price' type='number'
             name='price' v-validate='"required"' :error-messages='errors.collect("price")')
 

@@ -1,2 +1,2 @@
-nameFirst,nameSecond,nameLast,birthdate,phone,address,INN,BIK,accountNumber,cameFrom,city,photo,remindList,contactList
-Вася,Васёв,Васевич,1999-09-09,89121234545,пушкина 8,,,,,{"id":1}
+nameFirst;nameSecond;nameLast;birthdate;phone;address;INN;BIK;accountNumber;cameFrom;city;photo;remindList;contactList
+Вася;Васёв;Васевич;1999-09-09;89121234545;пушкина 8;;;;;{"id":1}

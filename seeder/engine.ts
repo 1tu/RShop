@@ -18,12 +18,12 @@ class DatabaseSeeder {
 
   private _parse(item: SeederItem) {
     const queue = [];
-    csv({ ignoreEmpty: true })
+    csv({ delimiter: ';', ignoreEmpty: true })
       .fromFile(item.filePath)
       .on('json', json => {
         for (let key in json) {
           if (/^[\[{]/.test(json[key])) {
-            json[key] = JSON.parse(json[key].replace(/\./g, ','));
+            json[key] = JSON.parse(json[key]);
           }
         }
         queue.push(json);
