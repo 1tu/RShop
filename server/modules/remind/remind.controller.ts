@@ -11,32 +11,32 @@ export class RemindController {
   constructor(private _service: RemindService) { }
 
   @Get(':id')
-  @Permissions('remindGet')
+  @Permissions('RemindGet')
   getOneById( @Param('id') id: number, @Req() req) {
     return this._service.getOneById(id, { where: { manager: req.user.id } });
   }
 
   @Get()
-  @Permissions('remindGet')
+  @Permissions('RemindGet')
   get( @Req() req) {
     return this._service.get({ where: { manager: req.user.id } });
   }
 
   @Post()
-  @Permissions('remindPost')
+  @Permissions('RemindPost')
   post( @Body() model: RemindDto, @Req() req) {
     (model as RemindEntity).manager = req.user;
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('remindPut')
+  @Permissions('RemindPut')
   put( @Body() model: RemindDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('remindDelete')
+  @Permissions('RemindDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

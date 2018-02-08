@@ -10,31 +10,31 @@ export class ManufactureController {
   constructor(private _service: ManufactureService) { }
 
   @Get(':id')
-  @Permissions('manufactureGet')
+  @Permissions('ManufactureGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('manufactureGet')
+  @Permissions('ManufactureGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('manufacturePost')
+  @Permissions('ManufacturePost')
   post( @Body() model: ManufactureDto) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('manufacturePut')
+  @Permissions('ManufacturePut')
   put( @Body() model: ManufactureDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('manufactureDelete')
+  @Permissions('ManufactureDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

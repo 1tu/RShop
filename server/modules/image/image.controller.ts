@@ -10,31 +10,31 @@ export class ImageController {
   constructor(private _service: ImageService) { }
 
   @Get(':id')
-  @Permissions('imageGet')
+  @Permissions('ImageGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('imageGet')
+  @Permissions('ImageGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('imagePost')
+  @Permissions('ImagePost')
   post( @Body() model: ImageEntity) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('imagePut')
+  @Permissions('ImagePut')
   put( @Body() model: Partial<ImageEntity>) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('imageDelete')
+  @Permissions('ImageDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

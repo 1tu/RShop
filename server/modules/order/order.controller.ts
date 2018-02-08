@@ -13,19 +13,19 @@ export class OrderController {
   constructor(private _service: OrderService, private _socket: EventGateway) { }
 
   @Get(':id')
-  @Permissions('orderGet')
+  @Permissions('OrderGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('orderGet')
+  @Permissions('OrderGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('orderPost')
+  @Permissions('OrderPost')
   async post( @Body() model: OrderPostDto, @Req() req) {
     (model as OrderEntity).manager = req.user;
     const order = await this._service.post(model);
@@ -34,7 +34,7 @@ export class OrderController {
   }
 
   @Put()
-  @Permissions('orderPut')
+  @Permissions('OrderPut')
   async put( @Body() model: OrderPostDto) {
     const order = await this._service.put(model);
     this._socket.server.emit(makeEvent('Order', 'Put'), order.id);
@@ -42,7 +42,7 @@ export class OrderController {
   }
 
   @Delete(':id')
-  @Permissions('orderDelete')
+  @Permissions('OrderDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

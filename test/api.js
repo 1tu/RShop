@@ -4,6 +4,8 @@ axios.post('http://localhost:3003/api/order?token=testapi', {
   productName: 'Адресная табличка',
   // count: '1',
   city: 'Ставрополь',
+  deliveryServiceName: 'СДЕК',
+  deliveryPrice: 150,
   customerPhone: '89123331212',
   customerName: 'Вася',
   // config: [

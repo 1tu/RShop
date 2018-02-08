@@ -10,31 +10,31 @@ export class PermissionController {
   constructor(private _service: PermissionService) { }
 
   @Get(':id')
-  @Permissions('permissionGet')
+  @Permissions('PermissionGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('permissionGet')
+  @Permissions('PermissionGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('permissionPost')
+  @Permissions('PermissionPost')
   post( @Body() model: PermissionDto) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('permissionPut')
+  @Permissions('PermissionPut')
   put( @Body() model: PermissionDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('permissionDelete')
+  @Permissions('PermissionDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

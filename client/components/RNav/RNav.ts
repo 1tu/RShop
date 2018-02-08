@@ -21,7 +21,7 @@ export class RNav extends Vue {
   @AuthGetter permissionList: string[];
 
   async mounted() {
-    const filteredRoutes = routes.filter(route => this.permissionList.indexOf(route.path.slice(1).toLowerCase() + 'Get') !== -1);
+    const filteredRoutes = routes.filter(route => this.permissionList.indexOf(route.path.slice(1) + 'Get') !== -1);
     this.list = filteredRoutes.map(r => ({ path: r.path, title: r.title }));
   }
 }

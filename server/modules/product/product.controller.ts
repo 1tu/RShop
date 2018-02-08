@@ -10,31 +10,31 @@ export class ProductController {
   constructor(private _service: ProductService) { }
 
   @Get(':id')
-  @Permissions('productGet')
+  @Permissions('ProductGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('productGet')
+  @Permissions('ProductGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('productPost')
+  @Permissions('ProductPost')
   post( @Body() model: ProductDto) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('productPut')
+  @Permissions('ProductPut')
   put( @Body() model: ProductDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('productDelete')
+  @Permissions('ProductDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

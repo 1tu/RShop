@@ -10,31 +10,31 @@ export class PaymentController {
   constructor(private _service: PaymentService) { }
 
   @Get(':id')
-  @Permissions('paymentGet')
+  @Permissions('PaymentGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('paymentGet')
+  @Permissions('PaymentGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('paymentPost')
+  @Permissions('PaymentPost')
   post( @Body() model: PaymentDto) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('paymentPut')
+  @Permissions('PaymentPut')
   put( @Body() model: PaymentDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('paymentDelete')
+  @Permissions('PaymentDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

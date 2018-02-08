@@ -10,31 +10,31 @@ export class DeliveryServiceController {
   constructor(private _service: DeliveryServiceService) { }
 
   @Get(':id')
-  @Permissions('deliveryServiceGet')
+  @Permissions('DeliveryServiceGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('deliveryServiceGet')
+  @Permissions('DeliveryServiceGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('deliveryServicePost')
+  @Permissions('DeliveryServicePost')
   post( @Body() model: DeliveryServicePostDto) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('deliveryServicePut')
+  @Permissions('DeliveryServicePut')
   put( @Body() model: DeliveryServicePostDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('deliveryServiceDelete')
+  @Permissions('DeliveryServiceDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

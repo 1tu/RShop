@@ -10,6 +10,6 @@ export class DeliveryService extends AServiceBase<DeliveryEntity> {
   }
 
   getOneById(id, opts?: FindOneOptions<DeliveryEntity>): Promise<DeliveryEntity> {
-    return this._repository.findOneById(id, { ...opts, relations: ['city'] });
+    return this._repository.findOneById(id, { ...opts, relations: ['city', 'deliveryService'] });
   }
 }

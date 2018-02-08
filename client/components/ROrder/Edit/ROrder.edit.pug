@@ -8,6 +8,7 @@ v-container(text-xs-center)
           template(v-if='model.id')
             p Заказчик: {{ model.customer.nameFirst + ' ' + model.customer.nameLast + ' (' + model.customer.phone + ')' }}
             p Магазин: {{ model.shop.name + ' (' + model.shop.host + ')' }}
+            v-btn(@click='$router.push("/Delivery/"+ model.delivery.id +"/edit")') Доставка
 
           v-text-field(label='Стоимость' v-model='model.price' type='number'
             name='price' v-validate='"required"' :error-messages='errors.collect("price")')

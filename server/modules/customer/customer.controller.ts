@@ -10,31 +10,31 @@ export class CustomerController {
   constructor(private _service: CustomerService) { }
 
   @Get(':id')
-  @Permissions('customerGet')
+  @Permissions('CustomerGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('customerGet')
+  @Permissions('CustomerGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('customerPost')
+  @Permissions('CustomerPost')
   post( @Body() model: CustomerPostDto) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('customerPut')
+  @Permissions('CustomerPut')
   put( @Body() model: CustomerPostDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('customerDelete')
+  @Permissions('CustomerDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

@@ -12,6 +12,10 @@ import { CustomerPostDto } from '../customer/customer.dto';
 import { EventGateway } from '../../common/gateway/event.gateway';
 import { makeEvent } from '../../../shared/Gateway.shared';
 import { ManufactureSchemaTypes } from '../manufacture/manufacture.schema';
+import { DeliveryServiceService } from '../deliveryService/deliveryService.service';
+import { OrderEntity } from '../order/order.entity';
+import { DeepPartial } from 'typeorm/common/DeepPartial';
+import { DeliveryStateEnum } from '../delivery/delivery.state.enum';
 
 @UseGuards(ApiGuard)
 @ApiUseTags('api')
@@ -20,7 +24,7 @@ export class ApiController {
   constructor(
     private _orderService: OrderService, private _productService: ProductService,
     private _customerService: CustomerService, private _cityService: CityService,
-    private _event: EventGateway
+    private _deliveryServiceService: DeliveryServiceService, private _event: EventGateway
   ) { }
 
   @Post('order')
@@ -28,6 +32,9 @@ export class ApiController {
     const city = await this._cityService.getOne({ where: { name: model.city } });
     if (!city)
       return res.status(HttpStatus.BAD_REQUEST).send('Given city not exist');
+    const deliveryService = await this._deliveryServiceService.getOne({ where: { name: model.deliveryServiceName } });
+    if (!deliveryService)
+      return res.status(HttpStatus.BAD_REQUEST).send('Given deliveryService not exist');
 
     const product = await this._productService.getOne({ where: { name: model.productName } });
     if (!product)
@@ -53,18 +60,25 @@ export class ApiController {
         return res.status(HttpStatus.BAD_REQUEST).send('Config not valid');
     }
 
-
     let customer: CustomerPostDto = await this._customerService.getOne({ where: { phone: model.customerPhone } });
     if (!customer) customer = {
       nameFirst: model.customerName, phone: model.customerPhone,
       nameLast: '<УТОЧНИТЬ !!!>', address: '<УТОЧНИТЬ !!!>', city,
     };
 
-    const newOrder: any = {
+    const newOrder: DeepPartial<OrderEntity> = {
       shop: product.shop,
       customer,
-      state: 0
+      state: 0,
+      delivery: {
+        state: DeliveryStateEnum.NEW,
+        deliveryService, city,
+        price: parseFloat(model.deliveryPrice),
+      }
     };
+
+    if (model.price) newOrder.price = parseFloat(model.price);
+    if (model.manufacturingCost) newOrder.manufacturingCost = parseFloat(model.manufacturingCost);
 
     if (model.config) newOrder.productList = [{
       count: model.count,
@@ -72,7 +86,7 @@ export class ApiController {
       product
     }];
 
-    const order = await this._orderService.post(newOrder);
+    const order = await this._orderService.post(newOrder as any);
     this._event.server.emit(makeEvent('Order', 'Post'), order.id);
     return res.status(HttpStatus.CREATED).send();
   }

@@ -48,7 +48,7 @@ export class OrderEntity extends AEntityTimestamp {
   @JoinColumn()
   rejection: RejectionEntity;
 
-  @OneToOne(type => DeliveryEntity)
+  @OneToOne(type => DeliveryEntity, { cascadeInsert: true, cascadeRemove: true })
   @JoinColumn()
   delivery: DeliveryEntity;
 

@@ -10,31 +10,31 @@ export class ShopController {
   constructor(private _service: ShopService) { }
 
   @Get(':id')
-  @Permissions('shopGet')
+  @Permissions('ShopGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('shopGet')
+  @Permissions('ShopGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('shopPost')
+  @Permissions('ShopPost')
   post( @Body() model: ShopDto) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('shopPut')
+  @Permissions('ShopPut')
   put( @Body() model: ShopDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('shopDelete')
+  @Permissions('ShopDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

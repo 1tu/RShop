@@ -10,31 +10,31 @@ export class RejectionController {
   constructor(private _service: RejectionService) { }
 
   @Get(':id')
-  @Permissions('rejectionGet')
+  @Permissions('RejectionGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('rejectionGet')
+  @Permissions('RejectionGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('rejectionPost')
+  @Permissions('RejectionPost')
   post( @Body() model: RejectionDto) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('rejectionPut')
+  @Permissions('RejectionPut')
   put( @Body() model: RejectionDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('rejectionDelete')
+  @Permissions('RejectionDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

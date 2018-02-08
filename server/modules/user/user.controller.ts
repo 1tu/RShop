@@ -30,33 +30,33 @@ export class UserController {
   }
 
   @Get(':id')
-  @Permissions('userGet')
+  @Permissions('UserGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('userGet')
+  @Permissions('UserGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('userGet')
+  @Permissions('UserGet')
   post( @Body() model: UserCreateDto) {
     (model as UserEntity).role = { id: 1 } as any;
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('userGet')
+  @Permissions('UserGet')
   put( @Body() model: UserDto) {
     (model as UserEntity).role = { id: 1 } as any;
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('userGet')
+  @Permissions('UserGet')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

@@ -11,32 +11,32 @@ export class ContactController {
   constructor(private _service: ContactService) { }
 
   @Get(':id')
-  @Permissions('contactGet')
+  @Permissions('ContactGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('contactGet')
+  @Permissions('ContactGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('contactPost')
+  @Permissions('ContactPost')
   post( @Body() model: ContactPostDto, @Req() req) {
     (model as ContactEntity).manager = req.user;
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('contactPut')
+  @Permissions('ContactPut')
   put( @Body() model: ContactPostDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('contactDelete')
+  @Permissions('ContactDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

@@ -10,31 +10,31 @@ export class RoleController {
   constructor(private _service: RoleService) { }
 
   @Get(':id')
-  @Permissions('roleGet')
+  @Permissions('RoleGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('roleGet')
+  @Permissions('RoleGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('rolePost')
+  @Permissions('RolePost')
   post( @Body() model: RoleEntity) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('rolePut')
+  @Permissions('RolePut')
   put( @Body() model: Partial<RoleEntity>) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('roleDelete')
+  @Permissions('RoleDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }

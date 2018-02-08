@@ -59,15 +59,21 @@ export class OrderPostDto extends AEntityBase {
 export class OrderApiPostDto extends AEntityBase {
   @ValidateIf((e, value) => value)
   @IsDecimalString()
-  price?: number;
+  price?: string;
 
   @ValidateIf((e, value) => value)
   @IsDecimalString()
-  manufacturingCost?: number;
+  manufacturingCost?: string;
 
   @ValidateIf((e, value) => value)
   @IsString()
   productName: string;
+
+  @IsString()
+  deliveryServiceName: string;
+
+  @IsDecimalString()
+  deliveryPrice: string;
 
   @IsString()
   city: string;

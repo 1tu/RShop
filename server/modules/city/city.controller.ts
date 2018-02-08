@@ -10,31 +10,31 @@ export class CityController {
   constructor(private _service: CityService) { }
 
   @Get(':id')
-  @Permissions('cityGet')
+  @Permissions('CityGet')
   getOneById( @Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
   @Get()
-  @Permissions('cityGet')
+  @Permissions('CityGet')
   get() {
     return this._service.get();
   }
 
   @Post()
-  @Permissions('cityPost')
+  @Permissions('CityPost')
   post( @Body() model: CityPostDto) {
     return this._service.post(model);
   }
 
   @Put()
-  @Permissions('cityPut')
+  @Permissions('CityPut')
   put( @Body() model: CityPostDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
-  @Permissions('cityDelete')
+  @Permissions('CityDelete')
   delete( @Param('id') id: number) {
     return this._service.delete(id);
   }
