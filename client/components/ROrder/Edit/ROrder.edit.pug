@@ -48,7 +48,7 @@ v-container(text-xs-center)
                     v-validate='productItem.product.manufacture.schema[index2].isRequired ? "required": ""'
                     :name='"сonfig_value-" + (index + 1) + "-" + (index2 + 1)' :error-messages='errors.collect("сonfig_value-" + (index + 1) + "-" + (index2 + 1))')
 
-                  v-text-field(v-if="'productItem.product.manufacture.schema[index2].type === 4" label='Значение' v-model='configItem.value'
+                  v-text-field(v-if='productItem.product.manufacture.schema[index2].type === 4' label='Значение' v-model='configItem.value'
                     v-validate='productItem.product.manufacture.schema[index2].isRequired ? "required": ""'
                     :name='"сonfig_value-" + (index + 1) + "-" + (index2 + 1)'  :error-messages='errors.collect("сonfig_value-" + (index + 1) + "-" + (index2 + 1))')
 
