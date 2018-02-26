@@ -14,6 +14,8 @@ export enum OrderStateEnum {
 
   COMPLETE = 100,
 
+  RECALL = 200,
+
   CANCELED = 500,
   RETURN_SHIPPING = 501,
   REFUSAL = 502,

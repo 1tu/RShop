@@ -16,6 +16,7 @@ import { DeliveryServiceService } from '../deliveryService/deliveryService.servi
 import { OrderEntity } from '../order/order.entity';
 import { DeepPartial } from 'typeorm/common/DeepPartial';
 import { DeliveryStateEnum } from '../delivery/delivery.state.enum';
+import { OrderStateEnum } from '../order/order.state.enum';
 
 @UseGuards(ApiGuard)
 @ApiUseTags('api')
@@ -69,12 +70,12 @@ export class ApiController {
     const newOrder: DeepPartial<OrderEntity> = {
       shop: product.shop,
       customer,
-      state: 0,
-      delivery: {
+      state: model.config ? OrderStateEnum.NEW : OrderStateEnum.RECALL,
+      delivery: model.config ? {
         state: DeliveryStateEnum.NEW,
         deliveryService, city,
         price: parseFloat(model.deliveryPrice),
-      }
+      } : undefined
     };
 
     if (model.price) newOrder.price = parseFloat(model.price);
