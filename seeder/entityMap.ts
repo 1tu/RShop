@@ -38,7 +38,6 @@ export const entityMap: EntityMapItem[] = [
   { name: 'User', entity: UserEntity },
   { name: 'PaymentService', entity: PaymentServiceEntity },
   { name: 'Delivery', entity: DeliveryEntity },
-  { name: 'Manufacture', entity: ManufactureEntity },
   // +
   { name: 'Contact', entity: ContactEntity },
   { name: 'Remind', entity: RemindEntity },
@@ -47,6 +46,7 @@ export const entityMap: EntityMapItem[] = [
   // ++
   { name: 'Shop', entity: ShopEntity },
   { name: 'Product', entity: ProductEntity },
+  { name: 'Manufacture', entity: ManufactureEntity },
   // +++
   { name: 'Order', entity: OrderEntity },
 ];
