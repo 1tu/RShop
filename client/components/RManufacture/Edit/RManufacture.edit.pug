@@ -43,7 +43,7 @@ v-container(text-xs-center)
                   :name='"oName " + index+" "+(index2 + 1)' v-validate='"required|max:50"' :error-messages='errors.collect("oName " + index+" "+(index2 + 1))')
               v-flex(md4 xs12)
                 v-text-field(label='Заначение (англ)' v-model='option.value'
-                  :name='"oValue " + index+" "+(index2 + 1)' v-validate='"required|max:50"' :error-messages='errors.collect("oValue " + index+" "+(index2 + 1))')
+                  :name='"oValue " + index+" "+(index2 + 1)' v-validate='"required|max:200"' :error-messages='errors.collect("oValue " + index+" "+(index2 + 1))')
               v-flex(md3 xs12)
                 v-text-field(label='Стоимость' v-model='option.price' type='number'
                   :name='"oPrice " + index+" "+(index2 + 1)' v-validate='"required"' :error-messages='errors.collect("oPrice " + index+" "+(index2 + 1))')
