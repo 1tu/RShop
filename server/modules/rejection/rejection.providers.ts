@@ -1,4 +1,5 @@
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
+
 import { RejectionEntity } from './rejection.entity';
 
 export const rejectionProviders = [

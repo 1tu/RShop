@@ -1,12 +1,13 @@
-import { AEntityBase } from '../../common/entity/index';
-import { IsString, MaxLength, IsNotEmpty, ValidateNested, ValidateIf } from 'class-validator';
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 import { Type } from 'class-transformer';
+import { IsNotEmpty, IsString, MaxLength, ValidateIf, ValidateNested } from 'class-validator';
+
+import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
+import { AEntityBase } from '../../common/entity';
 import { DtoBase } from '../../common/entity/base.dto';
 import { CityEntity } from '../city/city.entity';
 import { DeliveryServiceMaxSizes } from './deliveryService.maxSizes';
 
-export class DeliveryServicePostDto extends AEntityBase {
+export class DeliveryServicePostDto {
   @IsString()
   @MaxLength(150)
   name: string;

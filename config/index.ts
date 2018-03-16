@@ -1,7 +1,8 @@
-import dev from './development';
-import test from './test';
-import prod from './production';
 import { ConnectionOptions } from 'typeorm';
+
+import dev from './development';
+import prod from './production';
+import test from './test';
 
 export class Config {
   env: 'dev' | 'test' | 'prod';

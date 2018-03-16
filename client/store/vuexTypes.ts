@@ -1,9 +1,14 @@
 import {
-  Getter as vGetter, GetterTree as vGetterTree, MutationTree as vMutationTree,
-  Mutation as vMutation, ActionTree as vActionTree, Action as vAction
+  Action as vAction,
+  ActionTree as vActionTree,
+  Getter as vGetter,
+  GetterTree as vGetterTree,
+  Mutation as vMutation,
+  MutationTree as vMutationTree,
 } from 'vuex';
 import { BindingHelper } from 'vuex-class/lib/bindings';
-import { RootState } from './index';
+
+import { RootState } from '.';
 
 // type alias
 type Getter<S, R> = vGetter<S, R>;

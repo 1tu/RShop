@@ -1,4 +1,5 @@
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
+
 import { ImageEntity } from './image.entity';
 
 export const imageProviders = [

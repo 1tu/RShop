@@ -1,0 +1,32 @@
+v-container(text-xs-center)
+  v-layout(row wrap)
+    v-flex.mb-3(xs12)
+      h2 SeoMeta {{ model.id? 'edit' : 'create' }}
+    v-flex(xs12)
+      v-form(@submit.prevent='submit')
+        template(v-if='model')
+          h2 Ключевые слова
+
+          v-btn.text-xs-left(fab dark small color='primary' @click='addKey()')
+            v-icon(dark) add
+
+          v-layout(row v-for='(key, index) in model.keys' :key='index')
+            v-flex(md10 xs12)
+              v-text-field(label='Ключ' v-model='model.keys[index]'
+                :name='"key-" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("key-" + (index + 1))')
+
+            v-flex(md2 xs12)
+              v-btn(fab dark small color='red' @click='removeKey(index)')
+                v-icon(dark) remove
+
+          v-text-field(label='Keywords' v-model='model.keywords' multi-line rows='2' auto-grow
+            name='keywords' v-validate='"required"' :error-messages='errors.collect("keywords")')
+
+          v-text-field(label='Description' v-model='model.description' multi-line rows='2' auto-grow
+            name='description' v-validate='"required"' :error-messages='errors.collect("description")')
+
+          v-text-field(label='Title' v-model='model.title'
+            name='title' v-validate='"required|max:150"' :error-messages='errors.collect("title")')
+
+          v-btn(type='submit') submit
+          v-btn( @click='clear') clear

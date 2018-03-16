@@ -1,6 +1,7 @@
+import { Component } from '@nestjs/common';
 import * as passport from 'passport';
 import { Strategy } from 'passport-local';
-import { Component, Inject } from '@nestjs/common';
+
 import { UserEntity } from '../../user/user.entity';
 import { UserService } from '../user.service';
 

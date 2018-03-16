@@ -1,8 +1,9 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { ImageService } from './image.service';
-import { ImageEntity } from './image.entity';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
+
 import { Permissions } from '../../guards/permission.guard';
+import { ImageEntity } from './image.entity';
+import { ImageService } from './image.service';
 
 @ApiUseTags('image')
 @Controller('image')

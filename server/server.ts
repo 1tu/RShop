@@ -1,15 +1,15 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as passport from 'passport';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
-import * as session from 'express-session';
-import { ApplicationModule } from './common/app/index';
-import { ValidationPipe } from '@nestjs/common';
-import { PermissionsGuard } from './guards/permission.guard';
 import * as express from 'express';
+import * as session from 'express-session';
+import * as passport from 'passport';
 import { join } from 'path';
-import { config } from '../config/index';
+
+import { config } from '../config';
+import { ApplicationModule } from './common/app';
+import { PermissionsGuard } from './guards/permission.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApplicationModule);

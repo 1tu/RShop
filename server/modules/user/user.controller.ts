@@ -1,11 +1,12 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete, Res, UseGuards } from '@nestjs/common';
-import { UserService } from './user.service';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
-import { UserDto, UserCreateDto } from './user.dto';
-import { UserEntity } from './user.entity';
-import { Permissions } from '../../guards/permission.guard';
+
 import { AuthGuard } from '../../guards/auth.guard';
+import { Permissions } from '../../guards/permission.guard';
+import { UserCreateDto, UserDto } from './user.dto';
+import { UserEntity } from './user.entity';
+import { UserService } from './user.service';
 
 @ApiUseTags('user')
 @Controller('user')

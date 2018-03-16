@@ -1,5 +1,6 @@
-import { Repository, FindOneOptions } from 'typeorm';
 import { Component, Inject } from '@nestjs/common';
+import { FindOneOptions, Repository } from 'typeorm';
+
 import { AServiceBase } from '../../common/service';
 import { DeliveryServiceEntity } from './deliveryService.entity';
 

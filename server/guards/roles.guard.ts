@@ -1,4 +1,4 @@
-import { Guard, CanActivate, ExecutionContext, ReflectMetadata } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Guard, ReflectMetadata } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 const GUARD_NAME = 'Roles';

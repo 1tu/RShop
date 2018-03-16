@@ -1,14 +1,14 @@
-import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+
 import { AEntityTimestamp } from '../../common/entity';
-import { StateHistory } from './order.stateHistory';
-import { CityEntity } from '../city/city.entity';
-import { ShopEntity } from '../shop/shop.entity';
-import { PaymentEntity } from '../payment/payment.entity';
-import { RejectionEntity } from '../rejection/rejection.entity';
 import { CustomerEntity } from '../customer/customer.entity';
-import { UserEntity } from '../user/user.entity';
 import { DeliveryEntity } from '../delivery/delivery.entity';
 import { OrderProductEntity } from '../order_product/order_product.entity';
+import { PaymentEntity } from '../payment/payment.entity';
+import { RejectionEntity } from '../rejection/rejection.entity';
+import { ShopEntity } from '../shop/shop.entity';
+import { UserEntity } from '../user/user.entity';
+import { StateHistory } from './order.stateHistory';
 
 @Entity('order')
 export class OrderEntity extends AEntityTimestamp {

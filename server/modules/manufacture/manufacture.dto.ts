@@ -1,11 +1,12 @@
-import { AEntityBase } from '../../common/entity';
-import { ValidateNested, IsArray, ArrayNotEmpty, IsNotEmpty } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ManufactureSchemaItem } from './manufacture.schema';
-import { ProductEntity } from '../product/product.entity';
-import { DtoBase } from '../../common/entity/base.dto';
+import { ArrayNotEmpty, IsArray, IsNotEmpty, ValidateNested } from 'class-validator';
 
-export class ManufactureDto extends AEntityBase {
+import { AEntityBase } from '../../common/entity';
+import { DtoBase } from '../../common/entity/base.dto';
+import { ProductEntity } from '../product/product.entity';
+import { ManufactureSchemaItem } from './manufacture.schema';
+
+export class ManufactureDto {
   @IsArray()
   @ArrayNotEmpty()
   @ValidateNested()

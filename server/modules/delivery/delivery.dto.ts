@@ -1,14 +1,15 @@
-import { AEntityBase } from '../../common/entity/index';
-import { IsISO8601, IsBoolean, IsString, MaxLength, IsIn, ValidateNested, IsNotEmpty, ValidateIf } from 'class-validator';
-import { enum2arr } from '../../../helpers/enum.helper';
-import { DeliveryStateEnum } from './delivery.state.enum';
 import { Type } from 'class-transformer';
-import { DtoBase } from '../../common/entity/base.dto';
-import { DeliveryServiceEntity } from '../deliveryService/deliveryService.entity';
-import { CityEntity } from '../city/city.entity';
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
+import { IsBoolean, IsIn, IsISO8601, IsNotEmpty, IsString, MaxLength, ValidateIf, ValidateNested } from 'class-validator';
 
-export class DeliveryPostDto extends AEntityBase {
+import { enum2arr } from '../../../helpers/enum.helper';
+import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
+import { AEntityBase } from '../../common/entity';
+import { DtoBase } from '../../common/entity/base.dto';
+import { CityEntity } from '../city/city.entity';
+import { DeliveryServiceEntity } from '../deliveryService/deliveryService.entity';
+import { DeliveryStateEnum } from './delivery.state.enum';
+
+export class DeliveryPostDto {
   @IsDecimalString()
   price: number;
 

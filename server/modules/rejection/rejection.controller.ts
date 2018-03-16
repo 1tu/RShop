@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { RejectionService } from './rejection.service';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { RejectionDto } from './rejection.dto';
+
 import { Permissions } from '../../guards/permission.guard';
+import { RejectionDto } from './rejection.dto';
+import { RejectionService } from './rejection.service';
 
 @ApiUseTags('rejection')
 @Controller('rejection')

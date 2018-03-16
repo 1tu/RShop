@@ -1,0 +1,30 @@
+v-container(text-xs-center)
+  v-layout(row wrap)
+    v-flex.mb-3(xs12)
+      h2 FilteredPage {{ model.id? 'edit' : 'create' }}
+    v-flex(xs12)
+      v-form(@submit.prevent='submit')
+        template(v-if='model')
+          v-text-field(label='Name' v-model='model.name'
+            name='name' v-validate='"required|max:200"' :error-messages='errors.collect("name")')
+
+          v-text-field(label='URL' v-model='model.url' multi-line rows='2' auto-grow)
+
+          v-select(label='Категории' v-model='model.filters.categoryList'
+            multiple autocomplete chips
+            :items='categoryList' item-text='name' item-value='nameTranslit')
+
+          v-select(label='Магазин' v-model='model.shop' autocomplete
+            :items='shopList' item-text='name' item-value='id' return-object
+            name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
+
+          v-select(label='Seo meta' v-model='model.seoMeta' autocomplete
+            :items='seoMetaList' item-text='title' item-value='id' return-object
+            name='seoMeta' v-validate='"required"' :error-messages='errors.collect("seoMeta")')
+
+          v-select(label='Seo template' v-model='model.seoTemplate' autocomplete
+            :items='seoTemplateList' item-text='h1' item-value='id' return-object
+            name='seoTemplate' v-validate='"required"' :error-messages='errors.collect("seoTemplate")')
+
+          v-btn(type='submit') submit
+          v-btn( @click='clear') clear

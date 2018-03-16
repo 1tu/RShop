@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ApiController } from './api.controller';
+
+import { GatewayModule } from '../../common/gateway/gateway.module';
+import { CityModule } from '../city/city.module';
+import { CustomerModule } from '../customer/customer.module';
+import { DeliveryServiceModule } from '../deliveryService/deliveryService.module';
 import { OrderModule } from '../order/order.module';
 import { ProductModule } from '../product/product.module';
-import { CustomerModule } from '../customer/customer.module';
-import { CityModule } from '../city/city.module';
-import { GatewayModule } from '../../common/gateway/gateway.module';
-import { DeliveryServiceModule } from '../deliveryService/deliveryService.module';
+import { ApiController } from './api.controller';
 
 @Module({
   imports: [OrderModule, ProductModule, CityModule, CustomerModule, GatewayModule, DeliveryServiceModule],

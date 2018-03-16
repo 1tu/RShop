@@ -1,4 +1,5 @@
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
+
 import { PaymentServiceEntity } from './paymentService.entity';
 
 export const paymentServiceProviders = [

@@ -1,9 +1,10 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
+
+import { CurrencyEnum } from '../../../shared/enum/currency.enum';
 import { AEntityTimestamp } from '../../common/entity';
+import { OrderEntity } from '../order/order.entity';
 import { PaymentServiceEntity } from '../paymentService/paymentService.entity';
 import { PaymentStateEnum } from './payment.state.enum';
-import { OrderEntity } from '../order/order.entity';
-import { CurrencyEnum } from '../../../shared/enum/currency.enum';
 
 @Entity('payment')
 export class PaymentEntity extends AEntityTimestamp {

@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { PaymentServiceService } from './paymentService.service';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { PaymentServiceDto } from './paymentService.dto';
+
 import { Permissions } from '../../guards/permission.guard';
+import { PaymentServiceDto } from './paymentService.dto';
+import { PaymentServiceService } from './paymentService.service';
 
 @ApiUseTags('paymentService')
 @Controller('paymentService')

@@ -1,9 +1,9 @@
-import { Repository, FindOneOptions, FindManyOptions, RemoveOptions, SaveOptions } from 'typeorm';
 import { Component, Inject } from '@nestjs/common';
+import { FindOneOptions, RemoveOptions, Repository, SaveOptions } from 'typeorm';
+
 import { AServiceBase } from '../../common/service';
-import { OrderEntity } from './order.entity';
 import { OrderProductEntity } from '../order_product/order_product.entity';
-import { isEqual } from 'lodash';
+import { OrderEntity } from './order.entity';
 
 @Component()
 export class OrderService extends AServiceBase<OrderEntity> {

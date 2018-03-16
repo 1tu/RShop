@@ -1,12 +1,13 @@
-import { Entity, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, BeforeInsert, AfterLoad, AfterInsert, BeforeRemove, AfterUpdate, BeforeUpdate } from 'typeorm';
 import { IsEmail, Length } from 'class-validator';
-import { AEntityTimestamp } from '../../common/entity';
-import { RoleEntity } from '../role/role.entity';
-import { CustomerEntity } from '../customer/customer.entity';
-import { RemindEntity } from '../remind/remind.entity';
-import { ContactEntity } from '../contact/contact.entity';
-import { OrderEntity } from '../order/order.entity';
 import * as crypto from 'crypto';
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+
+import { AEntityTimestamp } from '../../common/entity';
+import { ContactEntity } from '../contact/contact.entity';
+import { CustomerEntity } from '../customer/customer.entity';
+import { OrderEntity } from '../order/order.entity';
+import { RemindEntity } from '../remind/remind.entity';
+import { RoleEntity } from '../role/role.entity';
 
 @Entity('user')
 export class UserEntity extends AEntityTimestamp {

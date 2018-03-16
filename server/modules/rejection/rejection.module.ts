@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { RejectionService } from './rejection.service';
+
 import { DatabaseModule } from '../../common/database/database.module';
-import { rejectionProviders } from './rejection.providers';
 import { RejectionController } from './rejection.controller';
+import { rejectionProviders } from './rejection.providers';
+import { RejectionService } from './rejection.service';
 
 @Module({
   modules: [DatabaseModule],

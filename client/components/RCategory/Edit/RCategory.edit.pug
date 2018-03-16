@@ -1,0 +1,44 @@
+v-container(text-xs-center)
+  v-layout(row wrap)
+    v-flex.mb-3(xs12)
+      h2 Category {{ model.id? 'edit' : 'create' }}
+    v-flex(xs12)
+      v-form(@submit.prevent='submit')
+        template(v-if='model')
+          v-text-field(label='Name' v-model='model.name'
+            name='name' v-validate='"required|max:200"' :error-messages='errors.collect("name")')
+
+          v-text-field(label='Name translit' v-model='model.nameTranslit'
+            name='nameTranslit' v-validate='"required|max:200"' :error-messages='errors.collect("nameTranslit")')
+
+          v-select(label='Родительская категория' v-model='model.categoryParent' autocomplete clearable
+            :items='categoryList' item-text='name' item-value='id' return-object
+            name='categoryParent' :error-messages='errors.collect("categoryParent")')
+
+          h2 Category SEO for shop
+
+          v-btn(fab dark small color='primary' @click='addSeo()')
+            v-icon(dark) add
+
+          v-layout(row v-for='(seo, index) in model.seoList' :key='index')
+            v-flex(md3 xs12)
+              v-select(label='Магазин' v-model='seo.shop' autocomplete
+                :items='shopList' item-text='name' item-value='id' return-object
+                :name='"shop" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("shop" + (index + 1))')
+
+            v-flex(md3 xs12)
+              v-select(label='Seo meta' v-model='seo.seoMeta' autocomplete
+                :items='seoMetaList' item-text='title' item-value='id' return-object
+                :name='"seoMeta" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("seoMeta" + (index + 1))')
+
+            v-flex(md3 xs12)
+              v-select(label='Seo template' v-model='seo.seoTemplate' autocomplete
+                :items='seoTemplateList' item-text='h1' item-value='id' return-object
+                :name='"seoTemplate" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("seoTemplate" + (index + 1))')
+
+            v-flex(md3 xs12)
+              v-btn(fab dark small color='red' @click='removeSeo(index)')
+                v-icon(dark) remove
+
+          v-btn(type='submit') submit
+          v-btn( @click='clear') clear

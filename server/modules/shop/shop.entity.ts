@@ -1,6 +1,8 @@
-import { Entity, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+
 import { AEntityBase } from '../../common/entity/base.entity';
 import { CityEntity } from '../city/city.entity';
+import { PreManufactureEntity } from '../preManufacture/preManufacture.entity';
 import { ProductEntity } from '../product/product.entity';
 
 @Entity('shop')
@@ -16,6 +18,9 @@ export class ShopEntity extends AEntityBase {
 
   @OneToMany(type => ProductEntity, product => product.shop)
   productList: ProductEntity[];
+
+  @OneToMany(type => PreManufactureEntity, pm => pm.shop)
+  preManufactureList: PreManufactureEntity[];
 
   @ManyToMany(type => CityEntity)
   @JoinTable()

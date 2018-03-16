@@ -1,5 +1,6 @@
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 import { ValidateIf } from 'class-validator';
+
+import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 
 export class DeliveryServiceMaxSizes {
   @ValidateIf((e, value) => value)

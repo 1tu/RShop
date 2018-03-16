@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { DeliveryService } from './delivery.service';
+
 import { DatabaseModule } from '../../common/database/database.module';
-import { deliveryProviders } from './delivery.providers';
 import { DeliveryController } from './delivery.controller';
+import { deliveryProviders } from './delivery.providers';
+import { DeliveryService } from './delivery.service';
 
 @Module({
   modules: [DatabaseModule],

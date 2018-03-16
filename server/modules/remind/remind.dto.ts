@@ -1,7 +1,8 @@
-import { AEntityBase } from '../../common/entity';
-import { IsString, MaxLength, IsISO8601, IsBoolean, ValidateIf } from 'class-validator';
+import { IsBoolean, IsISO8601, IsString, MaxLength, ValidateIf } from 'class-validator';
 
-export class RemindDto extends AEntityBase {
+import { AEntityBase } from '../../common/entity';
+
+export class RemindDto {
   @IsString()
   @MaxLength(250)
   description: string;

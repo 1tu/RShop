@@ -1,12 +1,22 @@
-import { MaxLength, IsMobilePhone, IsNumberString, IsIn, ValidateNested, IsString, IsISO8601, ValidateIf } from 'class-validator';
-import { AEntityBase } from '../../common/entity/index';
-import { enum2arr } from '../../../helpers/enum.helper';
-import { CustomerCameFromEnum } from './customer.cameFrom.enum';
 import { Type } from 'class-transformer';
+import {
+  IsIn,
+  IsISO8601,
+  IsMobilePhone,
+  IsNumberString,
+  IsString,
+  MaxLength,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator';
+
+import { enum2arr } from '../../../helpers/enum.helper';
+import { AEntityBase } from '../../common/entity';
 import { DtoBase } from '../../common/entity/base.dto';
 import { CityEntity } from '../city/city.entity';
+import { CustomerCameFromEnum } from './customer.cameFrom.enum';
 
-export class CustomerPostDto extends AEntityBase {
+export class CustomerPostDto {
   @IsString()
   @MaxLength(100)
   nameFirst: string;

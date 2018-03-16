@@ -1,5 +1,6 @@
-import { Repository } from 'typeorm';
 import { Component, Inject } from '@nestjs/common';
+import { Repository } from 'typeorm';
+
 import { AServiceBase } from '../../common/service';
 import { RejectionEntity } from './rejection.entity';
 

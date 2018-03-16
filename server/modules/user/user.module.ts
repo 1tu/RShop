@@ -1,11 +1,11 @@
-import { Module, NestModule, MiddlewaresConsumer, RequestMethod } from '@nestjs/common';
-import { UserService } from './user.service';
-import { DatabaseModule } from '../../common/database/database.module';
-import { userProviders } from './user.providers';
-import { UserController } from './user.controller';
-import { LocalStrategy } from './passport/local.strategy';
+import { MiddlewaresConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import * as passport from 'passport';
-import { UserEntity } from './user.entity';
+
+import { DatabaseModule } from '../../common/database/database.module';
+import { LocalStrategy } from './passport/local.strategy';
+import { UserController } from './user.controller';
+import { userProviders } from './user.providers';
+import { UserService } from './user.service';
 
 @Module({
   modules: [DatabaseModule],

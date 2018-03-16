@@ -1,0 +1,17 @@
+v-container(text-xs-center)
+  v-layout(row wrap)
+    v-flex.mb-3(xs12)
+      h2 FilteredPage list
+    v-flex(xs12)
+      v-data-table.elevation-1(:headers="headers" :items="list" hide-actions)
+        template(slot="items" slot-scope="props")
+          td(v-for='header in headers' :class='["text-xs-" + (header.value === "id"? "left" : "right")]')
+            template(v-if='header.transformer') {{ header.transformer(props.item) }}
+            template(v-else-if='header.value') {{ props.item[header.value] }}
+            template(v-else-if='header.actionList' v-for='action in header.actionList')
+              v-btn(flat :icon='!!action.icon' :title='action.name'
+                  @click='action.onClick(props.item.id)' ) {{ action.icon? '' : action.name }}
+                v-icon(v-if='action.icon') {{ action.icon }}
+
+  v-btn(v-if='hasPermission("FilteredPagePost")' fab bottom right color='pink' dark fixed @click='$router.push($route.path + "/0/edit")')
+    v-icon add

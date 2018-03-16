@@ -62,11 +62,7 @@ export class ROrderEdit extends Vue {
   }
 
   private _makeConfig(manufacture: ManufactureEntity): ManufactureConfigItem[] {
-    return manufacture.schema.map(item => ({
-      name: item.name,
-      key: item.key,
-      value: null,
-    }));
+    return manufacture.schema.map(item => new ManufactureConfigItem(item.name, item.key));
   }
 
   public update() {

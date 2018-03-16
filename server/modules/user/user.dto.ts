@@ -1,10 +1,11 @@
-import { IsEmail, Length, IsString, ValidateNested } from 'class-validator';
-import { AEntityBase } from '../../common/entity';
-import { CustomerEntity } from '../customer/customer.entity';
 import { Type } from 'class-transformer';
-import { DtoBase } from '../../common/entity/base.dto';
+import { IsEmail, IsString, Length, ValidateNested } from 'class-validator';
 
-export class UserDto extends AEntityBase {
+import { AEntityBase } from '../../common/entity';
+import { DtoBase } from '../../common/entity/base.dto';
+import { CustomerEntity } from '../customer/customer.entity';
+
+export class UserDto {
   @IsString()
   @Length(5, 50)
   username: string;

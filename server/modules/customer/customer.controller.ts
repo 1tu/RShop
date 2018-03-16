@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { CustomerService } from './customer.service';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { CustomerPostDto } from './customer.dto';
+
 import { Permissions } from '../../guards/permission.guard';
+import { CustomerPostDto } from './customer.dto';
+import { CustomerService } from './customer.service';
 
 @ApiUseTags('customer')
 @Controller('customer')

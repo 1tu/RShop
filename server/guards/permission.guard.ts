@@ -1,5 +1,6 @@
-import { Guard, CanActivate, ExecutionContext, ReflectMetadata } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Guard, ReflectMetadata } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+
 import { UserEntity } from '../modules/user/user.entity';
 
 const GUARD_NAME = 'Permissions';

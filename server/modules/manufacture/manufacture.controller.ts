@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { ManufactureService } from './manufacture.service';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { ManufactureDto } from './manufacture.dto';
+
 import { Permissions } from '../../guards/permission.guard';
+import { ManufactureDto } from './manufacture.dto';
+import { ManufactureService } from './manufacture.service';
 
 @ApiUseTags('manufacture')
 @Controller('manufacture')

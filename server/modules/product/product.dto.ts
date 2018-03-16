@@ -1,12 +1,12 @@
+import { Type } from 'class-transformer';
+import { IsArray, IsNotEmpty, IsString, MaxLength, ValidateIf, ValidateNested } from 'class-validator';
+
 import { AEntityBase } from '../../common/entity';
+import { DtoBase } from '../../common/entity/base.dto';
 import { ShopEntity } from '../shop/shop.entity';
 import { ProductProperty } from './product.property';
-import { ImageEntity } from '../image/image.entity';
-import { IsString, MaxLength, IsArray, ValidateIf, ValidateNested, IsNotEmpty } from 'class-validator';
-import { Type } from 'class-transformer';
-import { DtoBase } from '../../common/entity/base.dto';
 
-export class ProductDto extends AEntityBase {
+export class ProductDto {
   @IsString()
   @MaxLength(100)
   name: string;

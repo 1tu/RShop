@@ -1,5 +1,6 @@
 import * as path from 'path';
-import { Config } from './index';
+
+import { Config } from '.';
 
 const config: Config = {
   env: 'prod',

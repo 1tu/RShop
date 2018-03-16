@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PaymentService } from './payment.service';
+
 import { DatabaseModule } from '../../common/database/database.module';
-import { paymentProviders } from './payment.providers';
 import { PaymentController } from './payment.controller';
+import { paymentProviders } from './payment.providers';
+import { PaymentService } from './payment.service';
 
 @Module({
   modules: [DatabaseModule],

@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { State } from '../../store/index';
-import { routes, RouterItem } from '../../router';
-import { AuthGetter, AuthAction, OrderState } from '../../store/modules/index';
+
+import { routes } from '../../router';
+import { Mutation, State } from '../../store';
+import { AuthGetter, OrderState } from '../../store/modules';
 
 interface NavItem {
   path: string;
@@ -18,7 +19,13 @@ export class RNav extends Vue {
   @OrderState notifyCount;
 
   @State navShow;
+  @Mutation toggleNav;
+
   @AuthGetter permissionList: string[];
+
+  public toggle(state) {
+    if (!state) this.toggleNav();
+  }
 
   async mounted() {
     const filteredRoutes = routes.filter(route => this.permissionList.indexOf(route.path.slice(1) + 'Get') !== -1);

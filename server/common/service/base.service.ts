@@ -1,5 +1,6 @@
-import { Repository, FindManyOptions, SaveOptions, RemoveOptions, FindOneOptions } from 'typeorm';
-import { AEntityBase } from '../entity/index';
+import { FindManyOptions, FindOneOptions, RemoveOptions, Repository, SaveOptions } from 'typeorm';
+
+import { AEntityBase } from '../entity';
 
 export class AServiceBase<E extends AEntityBase> {
   constructor(protected _repository: Repository<E>) { }

@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
+
 import { AEntityTimestamp } from '../../common/entity';
-import { UserEntity } from '../user/user.entity';
 import { CustomerEntity } from '../customer/customer.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Entity('contact')
 export class ContactEntity extends AEntityTimestamp {

@@ -1,10 +1,9 @@
-import Vuex from 'vuex';
-import { State as vState, Getter as vGetter, Mutation as vMutation, Action as vAction, namespace } from 'vuex-class';
-import { getter, mutation, action, decorator, keymirror } from '../../vuexTypes';
+import { Action as vAction, Getter as vGetter, Mutation as vMutation, namespace, State as vState } from 'vuex-class';
 
-import { AuthStoreState } from './auth.storeState';
-import { userApi } from '../../../api';
 import { UserEntity } from '../../../../server/modules/user/user.entity';
+import { userApi } from '../../../api';
+import { action, decorator, getter, keymirror, mutation } from '../../vuexTypes';
+import { AuthStoreState } from './auth.storeState';
 
 const storeName = 'auth';
 const state: AuthStoreState = {

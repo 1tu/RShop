@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
+
 import { AEntityTimestamp } from '../../common/entity';
 import { UserEntity } from '../user/user.entity';
 

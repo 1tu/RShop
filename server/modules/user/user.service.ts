@@ -1,8 +1,8 @@
-import { Repository, SaveOptions } from 'typeorm';
 import { Component, Inject } from '@nestjs/common';
+import { Repository } from 'typeorm';
+
 import { AServiceBase } from '../../common/service';
 import { UserEntity } from './user.entity';
-import * as crypto from 'crypto';
 
 @Component()
 export class UserService extends AServiceBase<UserEntity> {

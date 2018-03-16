@@ -1,4 +1,5 @@
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
+
 import { RoleEntity } from './role.entity';
 
 export const roleProviders = [

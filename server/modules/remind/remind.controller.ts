@@ -1,9 +1,10 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { RemindService } from './remind.service';
-import { RemindEntity } from './remind.entity';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { RemindDto } from './remind.dto';
+
 import { Permissions } from '../../guards/permission.guard';
+import { RemindDto } from './remind.dto';
+import { RemindEntity } from './remind.entity';
+import { RemindService } from './remind.service';
 
 @ApiUseTags('remind')
 @Controller('remind')

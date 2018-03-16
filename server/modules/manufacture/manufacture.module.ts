@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ManufactureService } from './manufacture.service';
+
 import { DatabaseModule } from '../../common/database/database.module';
-import { manufactureProviders } from './manufacture.providers';
 import { ManufactureController } from './manufacture.controller';
+import { manufactureProviders } from './manufacture.providers';
+import { ManufactureService } from './manufacture.service';
 
 @Module({
   modules: [DatabaseModule],

@@ -1,4 +1,5 @@
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
+
 import { RemindEntity } from './remind.entity';
 
 export const remindProviders = [

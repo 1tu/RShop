@@ -1,6 +1,6 @@
+import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Request, Response } from 'express';
 import * as path from 'path';
-import { Controller, Get, Res, Post, Req } from '@nestjs/common';
-import { Response, Request } from 'express';
 
 @Controller()
 export class AppController {

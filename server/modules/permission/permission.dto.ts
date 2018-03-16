@@ -1,7 +1,8 @@
-import { AEntityBase } from '../../common/entity';
 import { IsString, MaxLength } from 'class-validator';
 
-export class PermissionDto extends AEntityBase {
+import { AEntityBase } from '../../common/entity';
+
+export class PermissionDto {
   @IsString()
   @MaxLength(100)
   name: string;

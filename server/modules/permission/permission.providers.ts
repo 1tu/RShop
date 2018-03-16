@@ -1,4 +1,5 @@
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
+
 import { PermissionEntity } from './permission.entity';
 
 export const permissionProviders = [

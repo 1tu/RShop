@@ -13,5 +13,5 @@ v-container(text-xs-center)
                   @click='action.onClick(props.item.id)' ) {{ action.icon? '' : action.name }}
                 v-icon(v-if='action.icon') {{ action.icon }}
 
-  v-btn(v-if='hasPermission("paymentPost")' fab bottom right color='pink' dark fixed @click='$router.push($route.path + "/0/edit")')
+  v-btn(v-if='hasPermission("PaymentPost")' fab bottom right color='pink' dark fixed @click='$router.push($route.path + "/0/edit")')
     v-icon add

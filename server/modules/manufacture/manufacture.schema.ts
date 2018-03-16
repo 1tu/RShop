@@ -1,7 +1,8 @@
-import { IsString, IsArray, ArrayNotEmpty, IsIn, ValidateIf, ValidateNested, IsBoolean } from 'class-validator';
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
-import { enum2arr } from '../../../helpers/enum.helper';
 import { Type } from 'class-transformer';
+import { ArrayNotEmpty, IsArray, IsBoolean, IsIn, IsString, ValidateIf, ValidateNested } from 'class-validator';
+
+import { enum2arr } from '../../../helpers/enum.helper';
+import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 
 export enum ManufactureSchemaTypes {
   SELECT = 0,
@@ -55,8 +56,6 @@ export class ManufactureSchemaOption {
   @ValidateNested()
   @Type(() => ManufactureSchemaFilter)
   filterList?: ManufactureSchemaFilter[];
-
-
 
   constructor(name = '', value = '', price = 0) {
     this.name = name;

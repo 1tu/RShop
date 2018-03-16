@@ -2,12 +2,12 @@ import { IsString } from 'class-validator';
 
 export class ProductProperty {
   @IsString()
-  key: string;
+  name: string;
 
   @IsString()
   value: string;
-  constructor(key: string = '', value: string = '') {
-    this.key = key;
+  constructor(name: string = '', value: string = '') {
+    this.name = name;
     this.value = value;
   }
 }

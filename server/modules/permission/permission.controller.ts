@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { PermissionService } from './permission.service';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { PermissionDto } from './permission.dto';
+
 import { Permissions } from '../../guards/permission.guard';
+import { PermissionDto } from './permission.dto';
+import { PermissionService } from './permission.service';
 
 @ApiUseTags('permission')
 @Controller('permission')

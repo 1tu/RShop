@@ -1,8 +1,9 @@
+import { IsArray, IsNumberString, IsString, MaxLength } from 'class-validator';
+
 import { AEntityBase } from '../../common/entity/base.entity';
 import { CityEntity } from '../city/city.entity';
-import { IsString, MaxLength, IsNumberString, ValidateNested, IsArray } from 'class-validator';
 
-export class ShopDto extends AEntityBase {
+export class ShopDto {
   @IsString()
   @MaxLength(100)
   name: string;

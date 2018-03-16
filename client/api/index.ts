@@ -14,3 +14,8 @@ export * from './deliveryService.api';
 export * from './delivery.api';
 export * from './city.api';
 export * from './shop.api';
+export * from './category.api';
+export * from './filteredPage.api';
+export * from './preManufacture.api';
+export * from './seoMeta.api';
+export * from './seoTemplate.api';

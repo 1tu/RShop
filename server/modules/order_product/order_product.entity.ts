@@ -1,10 +1,9 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
-import { AEntityTimestamp, AEntityBase } from '../../common/entity';
-import { UserEntity } from '../user/user.entity';
-import { CustomerEntity } from '../customer/customer.entity';
-import { ProductEntity } from '../product/product.entity';
-import { OrderEntity } from '../order/order.entity';
+import { Column, Entity, ManyToOne } from 'typeorm';
+
+import { AEntityBase } from '../../common/entity';
 import { ManufactureConfigItem } from '../manufacture/manufacture.config';
+import { OrderEntity } from '../order/order.entity';
+import { ProductEntity } from '../product/product.entity';
 
 @Entity('order_product')
 export class OrderProductEntity extends AEntityBase {

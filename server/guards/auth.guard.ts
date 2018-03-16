@@ -1,4 +1,4 @@
-import { Guard, CanActivate } from '@nestjs/common';
+import { CanActivate, Guard } from '@nestjs/common';
 
 @Guard()
 export class AuthGuard implements CanActivate {

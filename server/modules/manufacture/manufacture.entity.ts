@@ -1,7 +1,9 @@
-import { Entity, Column, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
+
 import { AEntityTimestamp } from '../../common/entity';
-import { ManufactureSchemaItem } from './manufacture.schema';
+import { PreManufactureEntity } from '../preManufacture/preManufacture.entity';
 import { ProductEntity } from '../product/product.entity';
+import { ManufactureSchemaItem } from './manufacture.schema';
 
 @Entity('manufacture')
 export class ManufactureEntity extends AEntityTimestamp {
@@ -11,4 +13,7 @@ export class ManufactureEntity extends AEntityTimestamp {
   @OneToOne(type => ProductEntity, product => product.manufacture)
   @JoinColumn()
   product: ProductEntity;
+
+  @OneToMany(type => PreManufactureEntity, pm => pm.manufacture)
+  preManufactureList: PreManufactureEntity[];
 }

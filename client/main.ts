@@ -1,21 +1,21 @@
-import Vue from 'vue';
 import './api/_interceptor';
 import './charts';
-
+import './gateway';
 import './stylus/main.styl';
-import Vuetify from 'vuetify';
-Vue.use(Vuetify);
 
 import VeeValidate from 'vee-validate';
-Vue.use(VeeValidate);
+import Vue from 'vue';
+import Vuetify from 'vuetify';
 
-import { i18n } from './i18n';
-import { store } from './store';
-import './gateway';
-
-import { router } from './router';
-import filters from './filters';
 import { RApp } from './components/RApp';
+import filters from './filters';
+import { i18n } from './i18n';
+import { router } from './router';
+import { store } from './store';
+
+Vue.use(Vuetify);
+
+Vue.use(VeeValidate);
 
 store.dispatch('auth/getUser').then(_ => {
   new Vue({

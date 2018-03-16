@@ -1,8 +1,9 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { CityService } from './city.service';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { CityPostDto } from './city.dto';
+
 import { Permissions } from '../../guards/permission.guard';
+import { CityPostDto } from './city.dto';
+import { CityService } from './city.service';
 
 @ApiUseTags('city')
 @Controller('city')

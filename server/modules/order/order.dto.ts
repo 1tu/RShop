@@ -1,22 +1,30 @@
-import { AEntityBase } from '../../common/entity/index';
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
-import {
-  IsIn, IsArray, ValidateNested, IsNotEmpty, ValidateIf,
-  ArrayNotEmpty, IsString, IsMobilePhone, IsNumberString
-} from 'class-validator';
-import { enum2arr } from '../../../helpers/enum.helper';
-import { OrderStateEnum } from './order.state.enum';
 import { Type } from 'class-transformer';
-import { DtoBase } from '../../common/entity/base.dto';
-import { ShopEntity } from '../shop/shop.entity';
-import { PaymentEntity } from '../payment/payment.entity';
-import { CustomerEntity } from '../customer/customer.entity';
-import { RejectionEntity } from '../rejection/rejection.entity';
-import { DeliveryEntity } from '../delivery/delivery.entity';
-import { OrderProductEntity } from '../order_product/order_product.entity';
-import { ManufactureConfigItem } from '../manufacture/manufacture.config';
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsIn,
+  IsMobilePhone,
+  IsNotEmpty,
+  IsNumberString,
+  IsString,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator';
 
-export class OrderPostDto extends AEntityBase {
+import { enum2arr } from '../../../helpers/enum.helper';
+import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
+import { AEntityBase } from '../../common/entity';
+import { DtoBase } from '../../common/entity/base.dto';
+import { CustomerEntity } from '../customer/customer.entity';
+import { DeliveryEntity } from '../delivery/delivery.entity';
+import { ManufactureConfigItem } from '../manufacture/manufacture.config';
+import { OrderProductEntity } from '../order_product/order_product.entity';
+import { PaymentEntity } from '../payment/payment.entity';
+import { RejectionEntity } from '../rejection/rejection.entity';
+import { ShopEntity } from '../shop/shop.entity';
+import { OrderStateEnum } from './order.state.enum';
+
+export class OrderPostDto {
   @IsDecimalString()
   price: number;
 
@@ -56,7 +64,7 @@ export class OrderPostDto extends AEntityBase {
   delivery: DeliveryEntity;
 }
 
-export class OrderApiPostDto extends AEntityBase {
+export class OrderApiPostDto {
   @ValidateIf((e, value) => value)
   @IsDecimalString()
   price?: string;

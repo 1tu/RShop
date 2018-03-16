@@ -9,4 +9,10 @@ export class ManufactureConfigItem {
 
   @IsString()
   value: string;
+
+  constructor(name = null, key = null, value = null) {
+    this.name = name;
+    this.key = key;
+    this.value = value;
+  }
 }

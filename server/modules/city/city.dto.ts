@@ -1,7 +1,8 @@
-import { IsString, MaxLength, IsNumberString } from 'class-validator';
-import { AEntityBase } from '../../common/entity/index';
+import { IsNumberString, IsString, MaxLength } from 'class-validator';
 
-export class CityPostDto extends AEntityBase {
+import { AEntityBase } from '../../common/entity';
+
+export class CityPostDto {
   @IsString()
   @MaxLength(80)
   readonly nameEng: string;

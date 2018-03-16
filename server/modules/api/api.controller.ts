@@ -1,22 +1,21 @@
-import { Controller, Post, Body, UseGuards, Res, HttpStatus } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { Permissions } from '../../guards/permission.guard';
-import { OrderService } from '../order/order.service';
-import { OrderApiPostDto } from '../order/order.dto';
+import { DeepPartial } from 'typeorm/common/DeepPartial';
+
+import { makeEvent } from '../../../shared/Gateway.shared';
+import { EventGateway } from '../../common/gateway/event.gateway';
 import { ApiGuard } from '../../guards/api.guard';
-import { ProductService } from '../product/product.service';
-import { ShopService } from '../shop/shop.service';
-import { CustomerService } from '../customer/customer.service';
 import { CityService } from '../city/city.service';
 import { CustomerPostDto } from '../customer/customer.dto';
-import { EventGateway } from '../../common/gateway/event.gateway';
-import { makeEvent } from '../../../shared/Gateway.shared';
-import { ManufactureSchemaTypes } from '../manufacture/manufacture.schema';
-import { DeliveryServiceService } from '../deliveryService/deliveryService.service';
-import { OrderEntity } from '../order/order.entity';
-import { DeepPartial } from 'typeorm/common/DeepPartial';
+import { CustomerService } from '../customer/customer.service';
 import { DeliveryStateEnum } from '../delivery/delivery.state.enum';
+import { DeliveryServiceService } from '../deliveryService/deliveryService.service';
+import { ManufactureSchemaTypes } from '../manufacture/manufacture.schema';
+import { OrderApiPostDto } from '../order/order.dto';
+import { OrderEntity } from '../order/order.entity';
+import { OrderService } from '../order/order.service';
 import { OrderStateEnum } from '../order/order.state.enum';
+import { ProductService } from '../product/product.service';
 
 @UseGuards(ApiGuard)
 @ApiUseTags('api')

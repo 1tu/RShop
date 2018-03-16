@@ -1,10 +1,11 @@
-import { AEntityBase } from '../../common/entity/base.entity';
 import { Type } from 'class-transformer';
-import { IsString, ValidateNested, IsNotEmpty, MaxLength, ValidateIf } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength, ValidateIf, ValidateNested } from 'class-validator';
+
 import { DtoBase } from '../../common/entity/base.dto';
+import { AEntityBase } from '../../common/entity/base.entity';
 import { CustomerEntity } from '../customer/customer.entity';
 
-export class ContactPostDto extends AEntityBase {
+export class ContactPostDto {
   @ValidateIf((e, value) => value)
   @IsString()
   log?: string;

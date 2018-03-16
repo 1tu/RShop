@@ -1,4 +1,5 @@
-import { Entity, Column } from 'typeorm';
+import { Column, Entity } from 'typeorm';
+
 import { AEntityBase } from '../../common/entity';
 
 @Entity('permission')

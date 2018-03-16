@@ -1,4 +1,5 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
+
 import { AEntityTimestamp } from '../../common/entity';
 import { RejectionReasonEnum } from './rejection.reason.enum';
 

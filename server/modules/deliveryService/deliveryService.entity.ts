@@ -1,4 +1,5 @@
-import { Entity, Column, JoinTable, ManyToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
+
 import { AEntityTimestamp } from '../../common/entity';
 import { CityEntity } from '../city/city.entity';
 import { DeliveryServiceMaxSizes } from './deliveryService.maxSizes';

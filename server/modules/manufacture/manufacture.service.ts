@@ -1,5 +1,6 @@
-import { Repository, FindOneOptions } from 'typeorm';
 import { Component, Inject } from '@nestjs/common';
+import { FindOneOptions, Repository, FindManyOptions } from 'typeorm';
+
 import { AServiceBase } from '../../common/service';
 import { ManufactureEntity } from './manufacture.entity';
 
@@ -11,5 +12,9 @@ export class ManufactureService extends AServiceBase<ManufactureEntity> {
 
   getOneById(id: number, opts?: FindOneOptions<ManufactureEntity>): Promise<ManufactureEntity> {
     return this._repository.findOneById(id, { ...opts, relations: ['product'] });
+  }
+
+  get(opts?: FindManyOptions<ManufactureEntity>): Promise<ManufactureEntity[]> {
+    return this._repository.find({ ...opts, relations: ['product'] });
   }
 }

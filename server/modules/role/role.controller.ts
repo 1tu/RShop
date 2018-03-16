@@ -1,8 +1,9 @@
-import { Controller, Req, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
-import { RoleService } from './role.service';
-import { RoleEntity } from './role.entity';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
+
 import { Permissions } from '../../guards/permission.guard';
+import { RoleEntity } from './role.entity';
+import { RoleService } from './role.service';
 
 @ApiUseTags('role')
 @Controller('role')
