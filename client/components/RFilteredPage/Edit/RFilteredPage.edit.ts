@@ -19,7 +19,7 @@ import {
   template: require('./RFilteredPage.edit.pug'),
 })
 export class RFilteredPageEdit extends Vue {
-  public model: Partial<FilteredPageEntity> = { filters: { categoryList: [], propertyKeyList: [] } };
+  public model: Partial<FilteredPageEntity> = { filters: { categoryIdList: [], propertyKeyList: [] } };
   public filteredPageList: FilteredPageEntity[] = [];
   @ShopState('list') shopList;
   @SeoMetaState('list') seoMetaList;
@@ -58,7 +58,7 @@ export class RFilteredPageEdit extends Vue {
   }
 
   public clear() {
-    this.model = { id: this.model.id, filters: { categoryList: [], propertyKeyList: [] } };
+    this.model = { id: this.model.id, filters: { categoryIdList: [], propertyKeyList: [] } };
     this.$validator.reset();
   }
 }

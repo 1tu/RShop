@@ -27,12 +27,4 @@ export class FilteredPageEntity extends AEntityTimestamp {
 
   @ManyToOne(type => ShopEntity)
   shop: ShopEntity;
-
-  // @BeforeInsert()
-  // @BeforeUpdate()
-  // public createUrl() {
-  //   if (this.url) return;
-  //   this.url = `/catalog/${this.filters.categoryList.join(',')}`
-  //     + (this.filters.propertyKeyList && this.filters.propertyKeyList.length ? '/' + this.filters.categoryList.join(',') : '');
-  // }
 }
