@@ -17,22 +17,22 @@ export class FilteredPageEntity extends AEntityTimestamp {
   @Column('json')
   filters: FilteredPageFilters;
 
-  @OneToOne(type => SeoTemplateEntity)
+  @OneToOne(type => SeoTemplateEntity, { eager: true })
   @JoinColumn()
   seoTemplate: SeoTemplateEntity;
 
-  @OneToOne(type => SeoTemplateEntity)
+  @OneToOne(type => SeoTemplateEntity, { eager: true })
   @JoinColumn()
   seoMeta: SeoMetaEntity;
 
   @ManyToOne(type => ShopEntity)
   shop: ShopEntity;
 
-  @BeforeInsert()
-  @BeforeUpdate()
-  public createUrl() {
-    if (this.url) return;
-    this.url = `/catalog/${this.filters.categoryList.join(',')}`
-      + (this.filters.propertyKeyList && this.filters.propertyKeyList.length ? '/' + this.filters.categoryList.join(',') : '');
-  }
+  // @BeforeInsert()
+  // @BeforeUpdate()
+  // public createUrl() {
+  //   if (this.url) return;
+  //   this.url = `/catalog/${this.filters.categoryList.join(',')}`
+  //     + (this.filters.propertyKeyList && this.filters.propertyKeyList.length ? '/' + this.filters.categoryList.join(',') : '');
+  // }
 }

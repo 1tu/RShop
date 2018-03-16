@@ -10,9 +10,9 @@ v-container(text-xs-center)
 
           v-text-field(label='URL' v-model='model.url' multi-line rows='2' auto-grow)
 
-          v-select(label='Категории' v-model='model.filters.categoryList'
+          v-select(label='Категории' v-model='model.filters.categoryIdList'
             multiple autocomplete chips
-            :items='categoryList' item-text='name' item-value='nameTranslit')
+            :items='categoryList' item-text='name' item-value='id')
 
           v-select(label='Магазин' v-model='model.shop' autocomplete
             :items='shopList' item-text='name' item-value='id' return-object

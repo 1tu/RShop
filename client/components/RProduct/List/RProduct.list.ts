@@ -17,7 +17,7 @@ export class RProductList extends Vue {
   created() {
     this.headers = [
       { value: 'name', text: 'Название' },
-      { text: 'Свойства', transformer: (e: ProductEntity) => e.propertyList.map(item => `${item.key} - ${item.value}`).join(', '), sortable: false },
+      { text: 'Свойства', transformer: (e: ProductEntity) => e.propertyList.map(item => `${item.name} - ${item.value}`).join(', '), sortable: false },
       {
         text: 'Actions', sortable: false, actionList: [
           { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/Product/${id}`) },

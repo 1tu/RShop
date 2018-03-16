@@ -3,7 +3,7 @@ import { IsArray, ArrayNotEmpty, ValidateIf } from 'class-validator';
 export class FilteredPageFilters {
   @IsArray()
   @ArrayNotEmpty()
-  categoryList: string[];
+  categoryIdList: number[];
 
   @ValidateIf((e, value) => value)
   @IsArray()

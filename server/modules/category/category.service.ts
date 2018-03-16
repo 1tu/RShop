@@ -23,4 +23,8 @@ export class CategoryService extends AServiceBase<CategoryEntity> {
     }
     return this._repository.remove(instance, opts);
   }
+
+  getByIds(ids: number[]) {
+    return this._repository.findByIds(ids);
+  }
 }
