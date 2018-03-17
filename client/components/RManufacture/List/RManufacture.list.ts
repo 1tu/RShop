@@ -15,7 +15,7 @@ export class RManufactureList extends Vue {
 
   created() {
     this.headers = [
-      { value: 'schema', text: 'Схема' },
+      { text: 'Продукт', transformer: (e: ManufactureEntity) => e.product.name, sortable: false },
       {
         text: 'Actions', sortable: false, actionList: [
           { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/Manufacture/${id}`) },

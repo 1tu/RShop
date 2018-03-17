@@ -1,18 +1,19 @@
-v-container(text-xs-center)
-  v-layout(row wrap)
-    v-flex.mb-3(xs12)
-      h2 Contact {{ model.id? 'edit' : 'create' }}
-    v-flex(xs12)
-      v-form(@submit.prevent='submit')
-        template(v-if='model')
-          v-text-field(label='Лог' v-model='model.log' multi-line rows='2' auto-grow)
+v-container(fluid grid-list-lg text-xs-center)
+  h2.mb-4 Contact {{ model.id? 'edit' : 'create' }}
+  v-form(@submit.prevent='submit')
+    v-layout(row wrap v-if='model')
+      v-flex(md4 xs12)
+        v-select(v-if='!model.id' label='Номер клиента' v-model='model.customer' autocomplete
+          :items='customerList' item-text='phone' item-value='id' return-object
+          name='customer' v-validate='"required"' :error-messages='errors.collect("customer")')
 
-          v-text-field(v-if='!model.id' label='Результат' v-model='model.result' name='result' multi-line rows='1' auto-grow
-            v-validate='"required|max:250"' :error-messages='errors.collect("result")')
+      v-flex(md8 xs12)
+        v-text-field(v-if='!model.id' label='Результат' v-model='model.result' name='result' multi-line rows='1' auto-grow
+          v-validate='"required|max:250"' :error-messages='errors.collect("result")')
 
-          v-select(v-if='!model.id' label='Номер клиента' v-model='model.customer' autocomplete
-            :items='customerList' item-text='phone' item-value='id' return-object
-            name='customer' v-validate='"required"' :error-messages='errors.collect("customer")')
+      v-flex(xs12)
+        v-text-field(label='Лог беседы' v-model='model.log' multi-line rows='2' auto-grow)
 
-          v-btn(type='submit') submit
-          v-btn( @click='clear') clear
+      v-flex(xs12 text-xs-center)
+        v-btn(type='submit') submit
+        v-btn( @click='clear') clear

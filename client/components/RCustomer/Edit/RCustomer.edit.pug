@@ -1,46 +1,57 @@
-v-container(text-xs-center)
-  v-layout(row wrap)
-    v-flex.mb-3(xs12)
-      h2 Customer {{ model.id? 'edit' : 'create' }}
-    v-flex(xs12)
-      v-form(@submit.prevent='submit')
-        template(v-if='model')
-          v-text-field(label='Фамилия' v-model='model.nameLast' name='nameLast'
-            v-validate='"required|max:100"' :error-messages='errors.collect("nameLast")')
+v-container(fluid grid-list-lg text-xs-center)
+  h2.mb-4 Customer {{ model.id? 'edit' : 'create' }}
+  v-form(@submit.prevent='submit')
+    v-layout(row wrap v-if='model')
+      v-flex(lg3 md4 sm6 xs12)
+        v-text-field(label='Фамилия' v-model='model.nameLast' name='nameLast'
+          v-validate='"required|max:100"' :error-messages='errors.collect("nameLast")')
 
-          v-text-field(label='Имя' v-model='model.nameFirst' name='nameFirst'
-            v-validate='"required|max:100"' :error-messages='errors.collect("nameFirst")')
+      v-flex(lg3 md4 sm6 xs12)
+        v-text-field(label='Имя' v-model='model.nameFirst' name='nameFirst'
+          v-validate='"required|max:100"' :error-messages='errors.collect("nameFirst")')
 
-          v-text-field(label='Отчество' v-model='model.nameSecond' name='nameSecond'
-            v-validate='"max:100"' :error-messages='errors.collect("nameSecond")')
+      v-flex(lg3 md4 sm6 xs12)
+        v-text-field(label='Отчество' v-model='model.nameSecond' name='nameSecond'
+          v-validate='"max:100"' :error-messages='errors.collect("nameSecond")')
 
-          v-flex(xs3)
-            v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
-              v-text-field(slot="activator" label="День рождения" v-model="model.birthdate" prepend-icon="event")
-              v-date-picker(v-model="model.birthdate" no-title scrollable actions)
-                template(slot-scope="{ save, cancel }")
-                  v-card-actions
-                    v-spacer
-                    v-btn(flat color="primary" @click="cancel") Cancel
-                    v-btn(flat color="primary" @click="save") OK
+      v-flex(lg3 md4 sm6 xs12)
+        v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
+          v-text-field(slot="activator" label="День рождения" v-model="model.birthdate" prepend-icon="event")
+          v-date-picker(v-model="model.birthdate" no-title scrollable actions)
+            template(slot-scope="{ save, cancel }")
+              v-card-actions
+                v-spacer
+                v-btn(flat color="primary" @click="cancel") Cancel
+                v-btn(flat color="primary" @click="save") OK
 
-          v-text-field(label='Телефон' v-model='model.phone' name='phone' mask='# (###) ### - ####'
-            v-validate='"required|min:11"' :error-messages='errors.collect("phone")')
+      v-flex(sm3 xs12)
+        v-text-field(label='Телефон' v-model='model.phone' name='phone' mask='# (###) ### - ####'
+          v-validate='"required|min:11"' :error-messages='errors.collect("phone")')
 
-          v-select(label='Город' v-model='model.city' autocomplete name='city'
-            :items='cityList' item-text='name' item-value='id' return-object
-            v-validate='"required"' :error-messages='errors.collect("city")')
 
-          v-text-field(label='Адрес' v-model='model.address' name='address'
-            v-validate='"required|max:100"' :error-messages='errors.collect("address")')
+      v-flex(lg3 md6 sm3 xs12)
+        v-select(label='Город' v-model='model.city' autocomplete name='city'
+          :items='cityList' item-text='name' item-value='id' return-object
+          v-validate='"required"' :error-messages='errors.collect("city")')
 
-          v-text-field(label='ИНН' v-model='model.INN' name='INN' mask='#### #### ####'
-            v-validate='"min:12"' :error-messages='errors.collect("INN")')
+      v-flex(sm6 xs12)
+        v-text-field(label='Адрес' v-model='model.address' name='address'
+          v-validate='"required|max:100"' :error-messages='errors.collect("address")')
 
-          v-text-field(label='БИК' v-model='model.BIK' name='BIK'  mask='### ### ###'
-            v-validate='"min:9"' :error-messages='errors.collect("BIK")')
+      v-flex(xs12)
+        v-select(label='Откуда пришел' v-model='model.cameFrom' :items='cameFromList' item-text='name' item-value='id')
+        v-divider
 
-          v-select(label='Откуда пришел' v-model='model.cameFrom' :items='cameFromList' item-text='name' item-value='id')
+      v-flex(sm6 xs12)
+        v-text-field(label='ИНН' v-model='model.INN' name='INN' mask='#### #### ####'
+          v-validate='"min:12"' :error-messages='errors.collect("INN")')
 
-          v-btn(type='submit') submit
-          v-btn( @click='clear') clear
+      v-flex(sm6 xs12)
+        v-text-field(label='БИК' v-model='model.BIK' name='BIK'  mask='### ### ###'
+          v-validate='"min:9"' :error-messages='errors.collect("BIK")')
+
+
+
+      v-flex(xs12 text-xs-center)
+        v-btn(type='submit') submit
+        v-btn( @click='clear') clear

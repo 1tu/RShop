@@ -1,47 +1,60 @@
-v-container(text-xs-center)
-  v-layout(row wrap)
-    v-flex.mb-3(xs12)
-      h2 Order {{ model.id? 'edit' : 'create' }}
-    v-flex(xs12)
-      v-form(@submit.prevent='submit')
-        template(v-if='model')
-          template(v-if='model.id')
-            p Заказчик: {{ model.customer.nameFirst + ' ' + model.customer.nameLast + ' (' + model.customer.phone + ')' }}
-            p Магазин: {{ model.shop.name + ' (' + model.shop.host + ')' }}
-            v-btn(@click='$router.push("/Delivery/"+ model.delivery.id +"/edit")') Доставка
+v-container(fluid grid-list-lg text-xs-center)
+  h2.mb-4 Order {{ model.id? 'edit' : 'create' }}
+  v-form(@submit.prevent='submit')
+    v-layout(row wrap v-if='model')
+      v-flex(xs12 v-if='model.id')
+        p Заказчик: {{ model.customer.nameFirst + ' ' + model.customer.nameLast + ' (' + model.customer.phone + ')' }}
+        p Магазин: {{ model.shop.name + ' (' + model.shop.host + ')' }}
+        v-btn(@click='$router.push("/Delivery/"+ model.delivery.id +"/edit")') Доставка
 
-          v-text-field(label='Стоимость' v-model='model.price' type='number'
-            name='price' v-validate='"required"' :error-messages='errors.collect("price")')
+      v-flex(sm6 xs12)
+        v-select(v-if='!model.id' label='Номер клиента' v-model='model.customer' autocomplete
+          :items='customerList' item-text='phone' item-value='id' return-object
+          name='customer' v-validate='"required"' :error-messages='errors.collect("customer")')
 
-          v-text-field(label='Стоимость производства' v-model='model.manufacturingCost' type='number'
-            name='manufacturingCost' v-validate='"required"' :error-messages='errors.collect("manufacturingCost")')
+      v-flex(sm6 xs12)
+        v-select(label='Состояние' v-model='model.state' :items='stateList' item-text='name' item-value='id')
 
-          v-select(label='Состояние' v-model='model.state' :items='stateList' item-text='name' item-value='id')
+      v-flex(sm4 xs12)
+        v-text-field(label='Стоимость' v-model='model.price' type='number'
+          name='price' v-validate='"required"' :error-messages='errors.collect("price")')
 
-          v-select(v-if='!model.id' label='Магазин' v-model='model.shop' autocomplete
-            :items='shopList' item-text='name' item-value='id' return-object
-            name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
+      v-flex(sm4 xs12)
+        v-text-field(label='Стоимость производства' v-model='model.manufacturingCost' type='number'
+          name='manufacturingCost' v-validate='"required"' :error-messages='errors.collect("manufacturingCost")')
 
-          v-select(v-if='!model.id' label='Номер клиента' v-model='model.customer' autocomplete
-            :items='customerList' item-text='phone' item-value='id' return-object
-            name='customer' v-validate='"required"' :error-messages='errors.collect("customer")')
+      v-flex(sm4 xs12)
+        v-select(v-if='!model.id' label='Магазин' v-model='model.shop' autocomplete
+          :items='shopList' item-text='name' item-value='id' return-object
+          name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
 
-          h2 Товары
+      v-flex(xs12)
+        h2.d-inline-block.mr-3 Товары
+        v-btn(fab dark small color='primary' @click='addProduct()')
+          v-icon(dark) add
 
-          v-layout(row wrap v-for='(productItem, index) in model.productList' :key='index')
-            v-flex(md5 xs12)
-              v-text-field(label='Кол-во' v-model='productItem.count' type='number'
-                :name='"count-" + (index + 1)' v-validate='"required|min_value:1"' :error-messages='errors.collect("count-" + (index + 1))')
-            v-flex(md5 offset-md1 xs12)
-              v-select(label='Продукт' v-model='productItem.product' autocomplete @change='onSelectProduct(productItem, $event)'
-                :items='productList' item-text='name' item-value='id' return-object
-                :name='"product-" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("product-" + (index + 1))')
+      v-flex(xs12)
+        v-layout.mb-3(row wrap v-for='(productItem, index) in model.productList' :key='index' :class='index % 2 === 0? "grey lighten-3" : null')
+          v-flex(sm3 xs12)
+            v-text-field(label='Кол-во' v-model='productItem.count' type='number'
+              :name='"count-" + (index + 1)' v-validate='"required|min_value:1"' :error-messages='errors.collect("count-" + (index + 1))')
 
-            v-flex(xs12 v-if='productItem.config && productItem.product.manufacture')
-              v-layout(v-for='(configItem, index2) in productItem.config' :key='configItem.key')
-                v-flex(md5 offset-md1 xs12)
+          v-flex(sm7 xs12)
+            v-select(label='Продукт' v-model='productItem.product' autocomplete @change='onSelectProduct(productItem, $event)'
+              :items='productList' item-text='name' item-value='id' return-object
+              :name='"product-" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("product-" + (index + 1))')
+
+          v-flex(sm2 xs12)
+            v-btn(fab dark small color='red' @click='removeProduct(productItem)')
+              v-icon(dark) remove
+
+          template(v-if='productItem.config && productItem.product.manufacture'
+            v-for='(configItem, index2) in productItem.config' )
+            v-flex(lg4 md6 xs12 :key='configItem.key')
+              v-layout(row wrap align-baseline)
+                v-flex(sm4 xs12)
                   span {{ configItem.name }}
-                v-flex(md6 xs12)
+                v-flex(sm8 xs12)
                   v-select(v-if='productItem.product.manufacture.schema[index2].type !== 4'
                     label='Значение' v-model='configItem.value' autocomplete @blur='update()' :clearable='!productItem.product.manufacture.schema[index2].isRequired'
                     :items='makeSchemaValueList(productItem.product.manufacture.schema[index2])' item-text='name' item-value='value'
@@ -52,13 +65,8 @@ v-container(text-xs-center)
                     v-validate='productItem.product.manufacture.schema[index2].isRequired ? "required": ""'
                     :name='"сonfig_value-" + (index + 1) + "-" + (index2 + 1)'  :error-messages='errors.collect("сonfig_value-" + (index + 1) + "-" + (index2 + 1))')
 
-            v-flex(md1 xs12)
-              v-btn(fab dark small color='red' @click='removeProduct(productItem)')
-                v-icon(dark) remove
 
-          v-btn.text-xs-left(fab dark small color='primary' @click='addProduct()')
-            v-icon(dark) add
 
-          v-flex(xs12)
-            v-btn(type='submit') submit
-            v-btn( @click='clear') clear
+      v-flex(xs12 text-xs-center)
+        v-btn(type='submit') submit
+        v-btn( @click='clear') clear

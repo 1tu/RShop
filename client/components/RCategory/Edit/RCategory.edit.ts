@@ -3,22 +3,33 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
 import { CategoryEntity } from '../../../../server/modules/category/category.entity';
+import { CategoryShopEntity } from '../../../../server/modules/category_shop/category_shop.entity';
+import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
+import { SeoTemplateEntity } from '../../../../server/modules/seoTemplate/seoTemplate.entity';
 import {
   CategoryAction,
   SeoMetaAction,
+  SeoMetaMutation,
   SeoMetaState,
   SeoTemplateAction,
+  SeoTemplateMutation,
   SeoTemplateState,
   ShopAction,
   ShopState,
 } from '../../../store/modules';
+import { RSeoMetaEdit } from '../../RSeoMeta';
+import { RSeoTemplateEdit } from '../../RSeoTemplate';
 
 @Component({
   template: require('./RCategory.edit.pug'),
+  components: { RSeoMetaEdit, RSeoTemplateEdit },
 })
 export class RCategoryEdit extends Vue {
   @Prop() onSubmit: (model: CategoryEntity) => void;
   @Prop() id: number;
+
+  public dialogSeoMeta = false;
+  public dialogSeoTemplate = false;
 
   public model: Partial<CategoryEntity> = { seoList: [{}] as any };
   public categoryList: CategoryEntity[] = [];
@@ -35,6 +46,11 @@ export class RCategoryEdit extends Vue {
   @SeoMetaAction('getList') getListSeoMeta;
   @SeoTemplateAction('getList') getListSeoTemplate;
 
+  @SeoMetaMutation('listAdd') listAddSeoMeta;
+  @SeoTemplateMutation('listAdd') listAddSeoTemplate;
+
+  private _lastSeoItem: CategoryShopEntity;
+
   async mounted() {
     this.getListShop();
     this.getListSeoMeta();
@@ -46,6 +62,23 @@ export class RCategoryEdit extends Vue {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
     }
+  }
+
+  public openDialog(type: 'Template' | 'Meta', seoItem: CategoryShopEntity) {
+    this._lastSeoItem = seoItem;
+    this['dialogSeo' + type] = true;
+  }
+
+  public onSeoMetaSubmit(model: SeoMetaEntity) {
+    this.listAddSeoMeta(model);
+    this._lastSeoItem.seoMeta = model;
+    this.dialogSeoMeta = false;
+  }
+
+  public onSeoTemplateSubmit(model: SeoTemplateEntity) {
+    this.listAddSeoTemplate(model);
+    this._lastSeoItem.seoTemplate = model;
+    this.dialogSeoTemplate = false;
   }
 
   public addSeo() {

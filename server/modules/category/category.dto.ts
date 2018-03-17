@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString, MaxLength, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength, ValidateNested, ValidateIf } from 'class-validator';
 
 import { DtoBase } from '../../common/entity/base.dto';
 import { CategoryShopDto } from '../category_shop/category_shop.dto';
@@ -19,7 +19,7 @@ export class CategoryPostDto {
   @Type(() => CategoryShopDto)
   seoList: CategoryShopEntity[];
 
-  @IsNotEmpty()
+  @ValidateIf((e, value) => value)
   @ValidateNested()
   @Type(() => DtoBase)
   categoryParent: CategoryEntity;

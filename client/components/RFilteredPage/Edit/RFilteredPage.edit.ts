@@ -4,6 +4,7 @@ import { Component, Prop } from 'vue-property-decorator';
 
 import { FilteredPageEntity } from '../../../../server/modules/filteredPage/filteredPage.entity';
 import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
+import { SeoTemplateEntity } from '../../../../server/modules/seoTemplate/seoTemplate.entity';
 import {
   CategoryAction,
   CategoryState,
@@ -15,12 +16,14 @@ import {
   SeoTemplateState,
   ShopAction,
   ShopState,
+  SeoTemplateMutation,
 } from '../../../store/modules';
 import { RSeoMetaEdit } from '../../RSeoMeta';
+import { RSeoTemplateEdit } from '../../RSeoTemplate';
 
 @Component({
   template: require('./RFilteredPage.edit.pug'),
-  components: { RSeoMetaEdit },
+  components: { RSeoMetaEdit, RSeoTemplateEdit },
 })
 export class RFilteredPageEdit extends Vue {
   @Prop() onSubmit: (model: FilteredPageEntity) => void;
@@ -29,6 +32,7 @@ export class RFilteredPageEdit extends Vue {
   public model: Partial<FilteredPageEntity> = { filters: { categoryIdList: [], propertyKeyList: [] } };
   public filteredPageList: FilteredPageEntity[] = [];
   public dialogSeoMeta = false;
+  public dialogSeoTemplate = false;
 
   @ShopState('list') shopList;
   @SeoMetaState('list') seoMetaList;
@@ -45,6 +49,7 @@ export class RFilteredPageEdit extends Vue {
   @CategoryAction('getList') getListCategory;
 
   @SeoMetaMutation('listAdd') listAddSeoMeta;
+  @SeoTemplateMutation('listAdd') listAddSeoTemplate;
 
   async mounted() {
     this.getListShop();
@@ -59,9 +64,15 @@ export class RFilteredPageEdit extends Vue {
   }
 
   public onSeoMetaSubmit(model: SeoMetaEntity) {
-    this.listAddSeoMeta(this.seoMetaList.concat(model));
+    this.listAddSeoMeta(model);
     this.model.seoMeta = model;
     this.dialogSeoMeta = false;
+  }
+
+  public onSeoTemplateSubmit(model: SeoTemplateEntity) {
+    this.listAddSeoTemplate(model);
+    this.model.seoTemplate = model;
+    this.dialogSeoTemplate = false;
   }
 
   public async submit() {

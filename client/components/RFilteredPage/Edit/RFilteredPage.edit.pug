@@ -1,48 +1,51 @@
-v-container(grid-list-lg text-xs-center)
-  v-layout(row wrap)
-    v-flex.mb-3(xs12)
-      h2 FilteredPage {{ model.id? 'edit' : 'create' }}
-    v-flex(xs12)
-      v-form(@submit.prevent='submit')
-        v-layout(row wrap v-if='model')
-          v-flex(md6 xs12)
-            v-text-field(label='Name' v-model='model.name'
-              name='name' v-validate='"required|max:200"' :error-messages='errors.collect("name")')
+v-container(fluid grid-list-lg text-xs-center)
+  h2.mb-4 FilteredPage {{ model.id? 'edit' : 'create' }}
+  v-form(@submit.prevent='submit')
+    v-layout(row wrap v-if='model')
+      v-flex(md6 xs12)
+        v-text-field(label='Name' v-model='model.name'
+          name='name' v-validate='"required|max:200"' :error-messages='errors.collect("name")')
 
-          v-flex(md6 xs12)
-            v-text-field(label='URL' v-model='model.url' multi-line rows='2' auto-grow)
+      v-flex(md6 xs12)
+        v-text-field(label='URL' v-model='model.url' multi-line rows='2' auto-grow)
 
-          v-flex(xs6)
-            v-select(label='Магазин' v-model='model.shop' autocomplete
-              :items='shopList' item-text='name' item-value='id' return-object
-              name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
+      v-flex(sm6 xs12)
+        v-select(label='Магазин' v-model='model.shop' autocomplete
+          :items='shopList' item-text='name' item-value='id' return-object
+          name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
 
-          v-flex(xs6)
-            v-select(label='Категории' v-model='model.filters.categoryIdList'
-              multiple autocomplete chips
-              :items='categoryList' item-text='name' item-value='id')
+      v-flex(sm6 xs12)
+        v-select(label='Категории' v-model='model.filters.categoryIdList'
+          multiple autocomplete chips
+          :items='categoryList' item-text='name' item-value='id')
 
-          v-flex(sm4 xs10)
-            v-select(label='Seo meta' v-model='model.seoMeta' autocomplete
-              :items='seoMetaList' item-text='title' item-value='id' return-object
-              name='seoMeta' v-validate='"required"' :error-messages='errors.collect("seoMeta")')
+      v-flex(sm4 xs10)
+        v-select(label='Seo meta' v-model='model.seoMeta' autocomplete
+          :items='seoMetaList' item-text='title' item-value='id' return-object
+          name='seoMeta' v-validate='"required"' :error-messages='errors.collect("seoMeta")')
 
-          v-flex(xs2)
-            v-btn(color='primary' fab small dark @click='dialogSeoMeta = true')
-              v-icon add
+      v-flex(xs2)
+        v-btn(color='primary' fab small dark @click='dialogSeoMeta = true')
+          v-icon add
 
-          v-flex(sm4 xs10)
-            v-select(label='Seo template' v-model='model.seoTemplate' autocomplete
-              :items='seoTemplateList' item-text='h1' item-value='id' return-object
-              name='seoTemplate' v-validate='"required"' :error-messages='errors.collect("seoTemplate")')
+      v-flex(sm4 xs10)
+        v-select(label='Seo template' v-model='model.seoTemplate' autocomplete
+          :items='seoTemplateList' item-text='h1' item-value='id' return-object
+          name='seoTemplate' v-validate='"required"' :error-messages='errors.collect("seoTemplate")')
 
-          v-flex(xs2)
-            v-btn(color='primary' fab small dark)
-              v-icon add
+      v-flex(xs2)
+        v-btn(color='primary' fab small dark @click='dialogSeoTemplate = true')
+          v-icon add
 
-          v-btn(type='submit') submit
-          v-btn( @click='clear') clear
+      v-flex(xs12 text-xs-center)
+        v-btn(type='submit') submit
+        v-btn( @click='clear') clear
 
   v-dialog(v-model='dialogSeoMeta' transition='dialog-bottom-transition')
-    div(style='background-color: white')
+    .bg__white
       r-seo-meta-edit(:id='0' :onSubmit='onSeoMetaSubmit')
+
+  v-dialog(v-model='dialogSeoTemplate' transition='dialog-bottom-transition')
+    .bg__white
+      r-seo-template-edit(:id='0' :onSubmit='onSeoTemplateSubmit')
+

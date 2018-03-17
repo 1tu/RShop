@@ -1,17 +1,18 @@
-v-container(text-xs-center)
-  v-layout(row wrap)
-    v-flex.mb-3(xs12)
-      h2 SeoTemplate {{ model.id? 'edit' : 'create' }}
-    v-flex(xs12)
-      v-form(@submit.prevent='submit')
-        template(v-if='model')
-          v-text-field(label='H1' v-model='model.h1' multi-line rows='2' auto-grow
-            name='h1' v-validate='"required"' :error-messages='errors.collect("h1")')
+v-container(fluid grid-list-lg text-xs-center)
+  h2.mb-4 SeoTemplate {{ model.id? 'edit' : 'create' }}
+  v-form(@submit.prevent='submit')
+    v-layout(row wrap v-if='model' align-end)
+      v-flex(md8 xs12)
+        v-text-field(label='H1' v-model='model.h1' multi-line rows='2' auto-grow
+          name='h1' v-validate='"required"' :error-messages='errors.collect("h1")')
 
-          v-text-field(label='Content' v-model='model.content' multi-line rows='2' auto-grow)
+      v-flex(md4 xs12)
+        v-text-field(label='Video' v-model='model.video'
+          name='video' v-validate='"max:200"' :error-messages='errors.collect("video")')
 
-          v-text-field(label='Video' v-model='model.video'
-            name='video' v-validate='"max:200"' :error-messages='errors.collect("video")')
+      v-flex(xs12)
+        v-text-field(label='Content' v-model='model.content' multi-line rows='2' auto-grow)
 
-          v-btn(type='submit') submit
-          v-btn( @click='clear') clear
+      v-flex(xs12 text-xs-center)
+        v-btn(type='submit') submit
+        v-btn( @click='clear') clear

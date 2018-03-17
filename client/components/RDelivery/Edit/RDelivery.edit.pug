@@ -1,58 +1,62 @@
-v-container(text-xs-center)
-  v-layout(row wrap)
-    v-flex.mb-3(xs12)
-      h2 Delivery {{ model.id? 'edit' : 'create' }}
-    v-flex(xs12)
-      v-form(@submit.prevent='submit')
-        template(v-if='model')
-          v-text-field(label='Стоимость' v-model='model.price' type='number'
-            name='price' v-validate='"required"' :error-messages='errors.collect("price")')
+v-container(fluid grid-list-lg text-xs-center)
+  h2.mb-4 Delivery {{ model.id? 'edit' : 'create' }}
+  v-form(@submit.prevent='submit')
+    v-layout(row wrap v-if='model')
+      v-flex(sm6 xs12)
+        v-text-field(label='Стоимость' v-model='model.price' type='number'
+          name='price' v-validate='"required"' :error-messages='errors.collect("price")')
 
-          v-flex(xs3)
-            v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
-              v-text-field(slot="activator" label="Дата отправки" v-model="model.sentAt" prepend-icon="event")
-              v-date-picker(v-model="model.sentAt" no-title scrollable actions)
-                template(slot-scope="{ save, cancel }")
-                  v-card-actions
-                    v-spacer
-                    v-btn(flat color="primary" @click="cancel") Cancel
-                    v-btn(flat color="primary" @click="save") OK
+      v-flex(sm6 xs12)
+        v-select(label='Состояние' v-model='model.state' :items='stateList' item-text='name' item-value='id')
 
-          v-flex(xs3)
-            v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
-              v-text-field(slot="activator" label="Ожидаемая дата доставки" v-model="model.approximateRecieveAt" prepend-icon="event")
-              v-date-picker(v-model="model.approximateRecieveAt" no-title scrollable actions)
-                template(slot-scope="{ save, cancel }")
-                  v-card-actions
-                    v-spacer
-                    v-btn(flat color="primary" @click="cancel") Cancel
-                    v-btn(flat color="primary" @click="save") OK
+      v-flex(sm4 xs12)
+        v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
+          v-text-field(slot="activator" label="Дата отправки" v-model="model.sentAt" prepend-icon="event")
+          v-date-picker(v-model="model.sentAt" no-title scrollable actions)
+            template(slot-scope="{ save, cancel }")
+              v-card-actions
+                v-spacer
+                v-btn(flat color="primary" @click="cancel") Cancel
+                v-btn(flat color="primary" @click="save") OK
 
-          v-flex(xs3)
-            v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
-              v-text-field(slot="activator" label="Дата получения" v-model="model.recievedAt" prepend-icon="event")
-              v-date-picker(v-model="model.recievedAt" no-title scrollable actions)
-                template(slot-scope="{ save, cancel }")
-                  v-card-actions
-                    v-spacer
-                    v-btn(flat color="primary" @click="cancel") Cancel
-                    v-btn(flat color="primary" @click="save") OK
+      v-flex(sm4 xs12)
+        v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
+          v-text-field(slot="activator" label="Ожидаемая дата доставки" v-model="model.approximateRecieveAt" prepend-icon="event")
+          v-date-picker(v-model="model.approximateRecieveAt" no-title scrollable actions)
+            template(slot-scope="{ save, cancel }")
+              v-card-actions
+                v-spacer
+                v-btn(flat color="primary" @click="cancel") Cancel
+                v-btn(flat color="primary" @click="save") OK
+
+      v-flex(sm4 xs12)
+        v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
+          v-text-field(slot="activator" label="Дата получения" v-model="model.recievedAt" prepend-icon="event")
+          v-date-picker(v-model="model.recievedAt" no-title scrollable actions)
+            template(slot-scope="{ save, cancel }")
+              v-card-actions
+                v-spacer
+                v-btn(flat color="primary" @click="cancel") Cancel
+                v-btn(flat color="primary" @click="save") OK
 
 
-          v-text-field(label='Куда' v-model='model.deliveryPoint' multi-line rows='1' auto-grow
-            name='deliveryPoint' v-validate='"max:250"' :error-messages='errors.collect("deliveryPoint")')
+      v-flex(sm4 xs12)
+        v-select(label='Город' v-model='model.city' autocomplete
+          :items='cityList' item-text='name' item-value='id' return-object
+          name='city' v-validate='"required"' :error-messages='errors.collect("city")')
 
-          v-checkbox(label='Доставка до дома' v-model='model.deliveryHome')
+      v-flex(sm8 xs12)
+        v-text-field(label='Адрес' v-model='model.deliveryPoint' multi-line rows='1' auto-grow
+        name='deliveryPoint' v-validate='"max:250"' :error-messages='errors.collect("deliveryPoint")')
 
-          v-select(label='Состояние' v-model='model.state' :items='stateList' item-text='name' item-value='id')
+      v-flex(sm4 xs12)
+        v-checkbox(label='Доставка до дома' v-model='model.deliveryHome')
 
-          v-select(label='Город' v-model='model.city' autocomplete
-            :items='cityList' item-text='name' item-value='id' return-object
-            name='city' v-validate='"required"' :error-messages='errors.collect("city")')
+      v-flex(sm8 xs12)
+        v-select(label='Сервис доставки' v-model='model.deliveryService' autocomplete
+          :items='deliveryServiceList' item-text='name' item-value='id' return-object
+          name='deliveryService' v-validate='"required"' :error-messages='errors.collect("deliveryService")')
 
-          v-select(label='Сервис доставки' v-model='model.deliveryService' autocomplete
-            :items='deliveryServiceList' item-text='name' item-value='id' return-object
-            name='deliveryService' v-validate='"required"' :error-messages='errors.collect("deliveryService")')
-
-          v-btn(type='submit') submit
-          v-btn( @click='clear') clear
+      v-flex(xs12 text-xs-center)
+        v-btn(type='submit') submit
+        v-btn( @click='clear') clear

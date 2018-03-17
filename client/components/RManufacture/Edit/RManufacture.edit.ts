@@ -17,7 +17,7 @@ export class RManufactureEdit extends Vue {
   @Prop() onSubmit: (model: ManufactureEntity) => void;
   @Prop() id: number;
 
-  public model: Partial<ManufactureEntity> = { schema: [] };
+  public model: Partial<ManufactureEntity> = { schema: [new ManufactureSchemaItem()] };
   public schemaTypeList = ManufactureSchemaTypesMap;
   @ProductState('list') productList;
 
