@@ -1,14 +1,18 @@
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import { CustomerAction, CustomerGetter, CityAction, CityState } from '../../../store/modules/index';
-import { CustomerEntity } from '../../../../server/modules/customer/customer.entity';
 import { cloneDeep } from 'lodash';
+import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
+
 import { CustomerCameFromEnumMap } from '../../../../server/modules/customer/customer.cameFrom.enum';
+import { CustomerEntity } from '../../../../server/modules/customer/customer.entity';
+import { CityAction, CityState, CustomerAction } from '../../../store/modules';
 
 @Component({
   template: require('./RCustomer.edit.pug'),
 })
 export class RCustomerEdit extends Vue {
+  @Prop() onSubmit: (model: CustomerEntity) => void;
+  @Prop() id: number;
+
   public model: Partial<CustomerEntity> = {};
   public cameFromList = CustomerCameFromEnumMap;
   @CityState('list') cityList;
@@ -20,7 +24,7 @@ export class RCustomerEdit extends Vue {
 
   async mounted() {
     this.getListCity();
-    const id = parseInt(this.$route.params.id);
+    const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
@@ -30,8 +34,9 @@ export class RCustomerEdit extends Vue {
   public async submit() {
     if (!await this.$validator.validateAll()) return;
     try {
-      await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/Customer');
+      const res = await this[this.model.id ? 'put' : 'post'](this.model);
+      if (this.onSubmit) this.onSubmit(res);
+      else this.$router.push('/Customer');
     } catch (e) {
       console.log('customer edit error', e.response.data);
     }

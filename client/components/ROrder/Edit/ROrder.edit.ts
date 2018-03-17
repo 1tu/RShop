@@ -1,20 +1,32 @@
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import { OrderAction, OrderGetter, ShopState, ShopAction, CustomerState, CustomerAction, ProductState, ProductAction } from '../../../store/modules/index';
-import { OrderEntity } from '../../../../server/modules/order/order.entity';
 import { cloneDeep } from 'lodash';
-import { OrderStateEnumMap } from '../../../../server/modules/order/order.state.enum';
-import { ManufactureEntity } from '../../../../server/modules/manufacture/manufacture.entity';
-import { OrderProductEntity } from '../../../../server/modules/order_product/order_product.entity';
-import { ManufactureConfigItem } from '../../../../server/modules/manufacture/manufacture.config';
-import { ProductEntity } from '../../../../server/modules/product/product.entity';
-import { ManufactureSchemaItem } from '../../../../server/modules/manufacture/manufacture.schema';
 import { setTimeout } from 'timers';
+import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
+
+import { ManufactureConfigItem } from '../../../../server/modules/manufacture/manufacture.config';
+import { ManufactureEntity } from '../../../../server/modules/manufacture/manufacture.entity';
+import { ManufactureSchemaItem } from '../../../../server/modules/manufacture/manufacture.schema';
+import { OrderEntity } from '../../../../server/modules/order/order.entity';
+import { OrderStateEnumMap } from '../../../../server/modules/order/order.state.enum';
+import { OrderProductEntity } from '../../../../server/modules/order_product/order_product.entity';
+import { ProductEntity } from '../../../../server/modules/product/product.entity';
+import {
+  CustomerAction,
+  CustomerState,
+  OrderAction,
+  ProductAction,
+  ProductState,
+  ShopAction,
+  ShopState,
+} from '../../../store/modules';
 
 @Component({
   template: require('./ROrder.edit.pug'),
 })
 export class ROrderEdit extends Vue {
+  @Prop() onSubmit: (model: OrderEntity) => void;
+  @Prop() id: number;
+
   public model: Partial<OrderEntity> = { productList: [{ count: 1 } as any] };
   public stateList = OrderStateEnumMap;
   @ShopState('list') shopList;
@@ -31,7 +43,7 @@ export class ROrderEdit extends Vue {
 
   async mounted() {
     this.getListProduct();
-    const id = parseInt(this.$route.params.id);
+    const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
@@ -72,8 +84,9 @@ export class ROrderEdit extends Vue {
   public async submit() {
     if (!await this.$validator.validateAll()) return;
     try {
-      await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/Order');
+      const res = await this[this.model.id ? 'put' : 'post'](this.model);
+      if (this.onSubmit) this.onSubmit(res);
+      else this.$router.push('/Order');
     } catch (e) {
       console.log('order edit error', e.response.data);
     }

@@ -31,11 +31,11 @@ export class CommonApi<M extends AEntityBase> {
     return axios.get(`/${this.modelName}/${id}`).then(res => res.data);
   }
 
-  async post(model: Partial<M>): Promise<number> {
+  async post(model: Partial<M>): Promise<M> {
     return axios.post(`/${this.modelName}`, model).then(res => res.data);
   }
 
-  async put(model: Partial<M>): Promise<number> {
+  async put(model: Partial<M>): Promise<M> {
     return axios.put(`/${this.modelName}`, model).then(res => res.data);
   }
 

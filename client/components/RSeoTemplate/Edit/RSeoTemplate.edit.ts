@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 
 import { SeoTemplateEntity } from '../../../../server/modules/seoTemplate/seoTemplate.entity';
 import { SeoTemplateAction } from '../../../store/modules';
@@ -9,13 +9,16 @@ import { SeoTemplateAction } from '../../../store/modules';
   template: require('./RSeoTemplate.edit.pug'),
 })
 export class RSeoTemplateEdit extends Vue {
+  @Prop() onSubmit: (model: SeoTemplateEntity) => void;
+  @Prop() id: number;
+
   public model: Partial<SeoTemplateEntity> = { };
 
   @SeoTemplateAction get;
   @SeoTemplateAction put;
   @SeoTemplateAction post;
   async mounted() {
-    const id = parseInt(this.$route.params.id);
+    const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
@@ -25,8 +28,9 @@ export class RSeoTemplateEdit extends Vue {
   public async submit() {
     if (!await this.$validator.validateAll()) return;
     try {
-      await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/SeoTemplate');
+      const res = await this[this.model.id ? 'put' : 'post'](this.model);
+      if (this.onSubmit) this.onSubmit(res);
+      else this.$router.push('/SeoTemplate');
     } catch (e) {
       console.log('seoTemplate edit error', e.response.data);
     }

@@ -1,18 +1,19 @@
 import { cloneDeep } from 'lodash';
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 
+import { ManufactureEntity } from '../../../../server/modules/manufacture/manufacture.entity';
 import { PreManufactureConfigItem } from '../../../../server/modules/preManufacture/preManufacture.configItem';
 import { PreManufactureEntity } from '../../../../server/modules/preManufacture/preManufacture.entity';
-import { PreManufactureAction, ShopAction, ShopState, ManufactureAction, ManufactureState } from '../../../store/modules';
-import { OrderProductEntity } from '../../../../server/modules/order_product/order_product.entity';
-import { ProductEntity } from '../../../../server/modules/product/product.entity';
-import { ManufactureEntity } from '../../../../server/modules/manufacture/manufacture.entity';
+import { ManufactureAction, ManufactureState, PreManufactureAction } from '../../../store/modules';
 
 @Component({
   template: require('./RPreManufacture.edit.pug'),
 })
 export class RPreManufactureEdit extends Vue {
+  @Prop() onSubmit: (model: PreManufactureEntity) => void;
+  @Prop() id: number;
+
   public model: Partial<PreManufactureEntity> = { config: [] };
   @ManufactureState('list') manufactureList;
 
@@ -23,7 +24,7 @@ export class RPreManufactureEdit extends Vue {
 
   async mounted() {
     this.getListManufacture();
-    const id = parseInt(this.$route.params.id);
+    const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
@@ -43,7 +44,7 @@ export class RPreManufactureEdit extends Vue {
     if (!await this.$validator.validateAll()) return;
     try {
       this.model.config = this.model.config.filter(i => i.value != null);
-      await this[this.model.id ? 'put' : 'post'](this.model);
+      const res = await this[this.model.id ? 'put' : 'post'](this.model);
       this.$router.push('/PreManufacture');
     } catch (e) {
       console.log('preManufacture edit error', e.response.data);

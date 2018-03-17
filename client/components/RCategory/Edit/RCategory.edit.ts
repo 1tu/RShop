@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 
 import { CategoryEntity } from '../../../../server/modules/category/category.entity';
 import {
@@ -17,6 +17,9 @@ import {
   template: require('./RCategory.edit.pug'),
 })
 export class RCategoryEdit extends Vue {
+  @Prop() onSubmit: (model: CategoryEntity) => void;
+  @Prop() id: number;
+
   public model: Partial<CategoryEntity> = { seoList: [{}] as any };
   public categoryList: CategoryEntity[] = [];
   @ShopState('list') shopList;
@@ -37,7 +40,7 @@ export class RCategoryEdit extends Vue {
     this.getListSeoMeta();
     this.getListSeoTemplate();
     this.categoryList = await this.getListCategory();
-    const id = parseInt(this.$route.params.id);
+    const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       this.categoryList = this.categoryList.filter(c => c.id !== id);
       const item = await this.get(id);
@@ -56,8 +59,9 @@ export class RCategoryEdit extends Vue {
   public async submit() {
     if (!await this.$validator.validateAll()) return;
     try {
-      await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/Category');
+      const res = await this[this.model.id ? 'put' : 'post'](this.model);
+      if (this.onSubmit) this.onSubmit(res);
+      else this.$router.push('/Category');
     } catch (e) {
       console.log('category edit error', e.response.data);
     }

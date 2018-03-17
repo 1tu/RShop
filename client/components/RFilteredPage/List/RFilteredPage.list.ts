@@ -19,7 +19,7 @@ export class RFilteredPageList extends Vue {
       { value: 'url', text: 'Url' },
       {
         text: 'Filters', sortable: false,
-        transformer: (e: FilteredPageEntity) => `Категории: ${e.filters.categoryList.join(', ')}; Свойства: ${e.filters.propertyKeyList.join(', ')}`
+        transformer: (e: FilteredPageEntity) => `Категории: ${e.filters.categoryIdList.join(', ')}; Свойства: ${e.filters.propertyKeyList.join(', ')}`
       },
       {
         text: 'Actions', sortable: false, actionList: [

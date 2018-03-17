@@ -1,14 +1,22 @@
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import { ManufactureAction, ProductState, ProductAction } from '../../../store/modules/index';
-import { ManufactureEntity } from '../../../../server/modules/manufacture/manufacture.entity';
 import { cloneDeep } from 'lodash';
-import { ManufactureSchemaTypesMap, ManufactureSchemaItem, ManufactureSchemaOption } from '../../../../server/modules/manufacture/manufacture.schema';
+import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
+
+import { ManufactureEntity } from '../../../../server/modules/manufacture/manufacture.entity';
+import {
+  ManufactureSchemaItem,
+  ManufactureSchemaOption,
+  ManufactureSchemaTypesMap,
+} from '../../../../server/modules/manufacture/manufacture.schema';
+import { ManufactureAction, ProductAction, ProductState } from '../../../store/modules';
 
 @Component({
   template: require('./RManufacture.edit.pug'),
 })
 export class RManufactureEdit extends Vue {
+  @Prop() onSubmit: (model: ManufactureEntity) => void;
+  @Prop() id: number;
+
   public model: Partial<ManufactureEntity> = { schema: [] };
   public schemaTypeList = ManufactureSchemaTypesMap;
   @ProductState('list') productList;
@@ -20,7 +28,7 @@ export class RManufactureEdit extends Vue {
 
   async mounted() {
     this.getListProduct();
-    const id = parseInt(this.$route.params.id);
+    const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
@@ -45,8 +53,9 @@ export class RManufactureEdit extends Vue {
   public async submit() {
     if (!await this.$validator.validateAll()) return;
     try {
-      await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/Manufacture');
+      const res = await this[this.model.id ? 'put' : 'post'](this.model);
+      if (this.onSubmit) this.onSubmit(res);
+      else this.$router.push('/Manufacture');
     } catch (e) {
       console.log('manufacture edit error', e.response.data);
     }

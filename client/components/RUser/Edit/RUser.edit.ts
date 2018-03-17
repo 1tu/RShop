@@ -1,20 +1,24 @@
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import { UserAction, UserGetter } from '../../../store/modules/index';
-import { UserEntity } from '../../../../server/modules/user/user.entity';
 import { cloneDeep } from 'lodash';
+import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
+
+import { UserEntity } from '../../../../server/modules/user/user.entity';
+import { UserAction } from '../../../store/modules';
 
 @Component({
   template: require('./RUser.edit.pug'),
 })
 export class RUserEdit extends Vue {
+  @Prop() onSubmit: (model: UserEntity) => void;
+  @Prop() id: number;
+
   public model: Partial<UserEntity> = {};
 
   @UserAction get;
   @UserAction put;
   @UserAction post;
   async mounted() {
-    const id = parseInt(this.$route.params.id);
+    const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
@@ -24,8 +28,9 @@ export class RUserEdit extends Vue {
   public async submit() {
     if (!await this.$validator.validateAll()) return;
     try {
-      await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/user');
+      const res = await this[this.model.id ? 'put' : 'post'](this.model);
+      if (this.onSubmit) this.onSubmit(res);
+      else this.$router.push('/user');
     } catch (e) {
       console.log('user edit error', e.response.data);
     }

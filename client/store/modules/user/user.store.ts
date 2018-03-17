@@ -41,6 +41,9 @@ const mutations = mutation(state, {
   },
   list(state, list: UserEntity[]) {
     state.list = list;
+  },
+  listAdd(state, e: UserEntity) {
+    state.list = state.list.concat(e);
   }
 });
 
@@ -57,15 +60,15 @@ const actions = action(state, {
     return state.item;
   },
   async post({ dispatch }, model: Partial<UserEntity>) {
-    await userApi.post(model);
+    return userApi.post(model);
   },
   async put({ getters, commit, dispatch, state }, model: Partial<UserEntity>) {
-    await userApi.put(model);
-    commit(types.mutation.item, extend({}, state.item, model));
+    model = await userApi.put(model);
+    commit(types.mutation.item, model);
     if (getters.itemById(model.id)) {
-      commit(types.mutation.list, state.list.map(item => item.id === model.id ? extend({}, item, model) : item));
-      return;
+      commit(types.mutation.list, state.list.map(item => item.id === model.id ? model : item));
     }
+    return model;
   },
   async delete({ commit }, id: number): Promise<void> {
     await userApi.delete(id);

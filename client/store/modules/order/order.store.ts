@@ -39,6 +39,9 @@ const mutations = mutation(state, {
   list(state, list: OrderEntity[]) {
     state.list = list;
   },
+  listAdd(state, e: OrderEntity) {
+    state.list = state.list.concat(e);
+  },
   notify(state, count: number) {
     state.notifyCount = count;
   }
@@ -60,16 +63,16 @@ const actions = action(state, {
     commit(types.mutation.item, item);
     return state.item;
   },
-  async post(_, model: Partial<OrderEntity>) {
-    await orderApi.post(model);
+  async post({ dispatch }, model: Partial<OrderEntity>) {
+    return orderApi.post(model);
   },
   async put({ getters, commit, state }, model: Partial<OrderEntity>) {
-    await orderApi.put(model);
-    commit(types.mutation.item, extend({}, state.item, model));
+    model = await orderApi.put(model);
+    commit(types.mutation.item, model);
     if (getters.itemById(model.id)) {
-      commit(types.mutation.list, state.list.map(item => item.id === model.id ? extend({}, item, model) : item));
-      return;
+      commit(types.mutation.list, state.list.map(item => item.id === model.id ? model : item));
     }
+    return model;
   },
   async delete({ commit }, id: number): Promise<void> {
     await orderApi.delete(id);

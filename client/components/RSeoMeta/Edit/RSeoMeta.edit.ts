@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 
 import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
 import { SeoMetaAction } from '../../../store/modules';
@@ -9,13 +9,16 @@ import { SeoMetaAction } from '../../../store/modules';
   template: require('./RSeoMeta.edit.pug'),
 })
 export class RSeoMetaEdit extends Vue {
+  @Prop() onSubmit: (model: SeoMetaEntity) => void;
+  @Prop() id: number;
+
   public model: Partial<SeoMetaEntity> = { keys: ['', ''] };
 
   @SeoMetaAction get;
   @SeoMetaAction put;
   @SeoMetaAction post;
   async mounted() {
-    const id = parseInt(this.$route.params.id);
+    const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
@@ -34,8 +37,9 @@ export class RSeoMetaEdit extends Vue {
   public async submit() {
     if (!await this.$validator.validateAll()) return;
     try {
-      await this[this.model.id ? 'put' : 'post'](this.model);
-      this.$router.push('/SeoMeta');
+      const res = await this[this.model.id ? 'put' : 'post'](this.model);
+      if (this.onSubmit) this.onSubmit(res);
+      else this.$router.push('/SeoMeta');
     } catch (e) {
       console.log('seoMeta edit error', e.response.data);
     }

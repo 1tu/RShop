@@ -21,7 +21,7 @@ export class FilteredPageEntity extends AEntityTimestamp {
   @JoinColumn()
   seoTemplate: SeoTemplateEntity;
 
-  @OneToOne(type => SeoTemplateEntity, { eager: true })
+  @OneToOne(type => SeoMetaEntity, { eager: true })
   @JoinColumn()
   seoMeta: SeoMetaEntity;
 
