@@ -1,17 +1,26 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsIn, IsISO8601, IsNotEmpty, IsString, MaxLength, ValidateIf, ValidateNested } from 'class-validator';
+import {
+  IsBoolean,
+  IsIn,
+  IsISO8601,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  MaxLength,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator';
 
 import { enum2arr } from '../../../helpers/enum.helper';
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
-import { AEntityBase } from '../../common/entity';
 import { DtoBase } from '../../common/entity/base.dto';
 import { CityEntity } from '../city/city.entity';
 import { DeliveryServiceEntity } from '../deliveryService/deliveryService.entity';
 import { DeliveryStateEnum } from './delivery.state.enum';
+import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 
 export class DeliveryPostDto {
   @IsDecimalString()
-  price: number;
+  price: string;
 
   @ValidateIf((e, value) => value)
   @IsISO8601()

@@ -14,11 +14,11 @@ export class CategoryShopEntity extends AEntityBase {
   @ManyToOne(type => CategoryEntity, c => c.seoList)
   category: CategoryEntity;
 
-  @OneToOne(type => SeoTemplateEntity, { eager: true, cascadeAll: true })
+  @OneToOne(type => SeoTemplateEntity, { eager: true })
   @JoinColumn()
   seoTemplate: SeoTemplateEntity;
 
-  @OneToOne(type => SeoMetaEntity, { eager: true, cascadeAll: true })
+  @OneToOne(type => SeoMetaEntity, { eager: true })
   @JoinColumn()
   seoMeta: SeoMetaEntity;
 }

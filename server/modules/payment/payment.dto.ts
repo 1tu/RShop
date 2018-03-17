@@ -4,7 +4,6 @@ import { IsIn, IsNotEmpty, ValidateNested } from 'class-validator';
 import { enum2arr } from '../../../helpers/enum.helper';
 import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 import { CurrencyEnum } from '../../../shared/enum/currency.enum';
-import { AEntityBase } from '../../common/entity';
 import { DtoBase } from '../../common/entity/base.dto';
 import { OrderEntity } from '../order/order.entity';
 import { PaymentServiceEntity } from '../paymentService/paymentService.entity';

@@ -17,11 +17,6 @@ export class CategoryShopDto {
 
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => DtoBase)
-  category: CategoryEntity;
-
-  @IsNotEmpty()
-  @ValidateNested()
   @Type(() => SeoTemplatePostDto)
   seoTemplate: SeoTemplateEntity;
 

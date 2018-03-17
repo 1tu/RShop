@@ -10,34 +10,37 @@ v-container(fluid grid-list-lg text-xs-center)
         v-select(label='Состояние' v-model='model.state' :items='stateList' item-text='name' item-value='id')
 
       v-flex(sm4 xs12)
-        v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
+        v-menu(lazy ref='sent' v-model='datePickers.sent' :return-value.sync='model.sentAt'
+          bottom offset-y :close-on-content-click="false" transition="scale-transition")
           v-text-field(slot="activator" label="Дата отправки" v-model="model.sentAt" prepend-icon="event")
           v-date-picker(v-model="model.sentAt" no-title scrollable actions)
             template(slot-scope="{ save, cancel }")
               v-card-actions
                 v-spacer
-                v-btn(flat color="primary" @click="cancel") Cancel
-                v-btn(flat color="primary" @click="save") OK
+                v-btn(flat color="primary" @click="datePickers.sent = false") Cancel
+                v-btn(flat color="primary" @click="$refs.sent.save(model.sentAt)") OK
 
       v-flex(sm4 xs12)
-        v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
+        v-menu(lazy ref='approximate' v-model='datePickers.approximate' :return-value.sync='model.approximateRecieveAt'
+          bottom offset-y :close-on-content-click="false" transition="scale-transition")
           v-text-field(slot="activator" label="Ожидаемая дата доставки" v-model="model.approximateRecieveAt" prepend-icon="event")
           v-date-picker(v-model="model.approximateRecieveAt" no-title scrollable actions)
             template(slot-scope="{ save, cancel }")
               v-card-actions
                 v-spacer
-                v-btn(flat color="primary" @click="cancel") Cancel
-                v-btn(flat color="primary" @click="save") OK
+                v-btn(flat color="primary" @click="datePickers.approximate = false") Cancel
+                v-btn(flat color="primary" @click="$refs.approximate.save(model.approximateRecieveAt)") OK
 
       v-flex(sm4 xs12)
-        v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
+        v-menu(lazy ref='recieved' v-model='datePickers.recieved' :return-value.sync='model.recievedAt'
+          bottom offset-y :close-on-content-click="false" transition="scale-transition")
           v-text-field(slot="activator" label="Дата получения" v-model="model.recievedAt" prepend-icon="event")
           v-date-picker(v-model="model.recievedAt" no-title scrollable actions)
             template(slot-scope="{ save, cancel }")
               v-card-actions
                 v-spacer
-                v-btn(flat color="primary" @click="cancel") Cancel
-                v-btn(flat color="primary" @click="save") OK
+                v-btn(flat color="primary" @click="datePickers.recieved = false") Cancel
+                v-btn(flat color="primary" @click="$refs.recieved.save(model.recievedAt)") OK
 
 
       v-flex(sm4 xs12)

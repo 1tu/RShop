@@ -11,8 +11,8 @@ v-container(fluid grid-list-lg text-xs-center)
           name='domain' v-validate='"required|max:100"' :error-messages='errors.collect("host")')
 
       v-flex(md4 sm6 xs12)
-        v-text-field(label='Порт' v-model='model.port' type='number'
-          name='port' v-validate='"required|numeric|max_value:99999|min_value:3000"' :error-messages='errors.collect("port")')
+        v-text-field(label='Порт' v-model.number='model.port' type='number'
+          name='port' v-validate='"required|numeric|max_value:65535|min_value:3000"' :error-messages='errors.collect("port")')
 
       v-flex(xs12)
         v-select(label='Города' v-model='model.cityList' name='cityList' multiple autocomplete chips

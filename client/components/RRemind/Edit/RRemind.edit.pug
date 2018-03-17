@@ -7,14 +7,15 @@ v-container(fluid grid-list-lg text-xs-center)
         name='description' v-validate='"required|max:250"' :error-messages='errors.collect("description")')
 
       v-flex(md3 xs8)
-        v-menu(lazy :close-on-content-click="false" transition="scale-transition" bottom offset-y)
+        v-menu(lazy ref='datePicker' v-model='datePicker' :return-value.sync='model.remindAt'
+          bottom offset-y :close-on-content-click="false" transition="scale-transition")
           v-text-field(slot="activator" label="Дата напоминания" v-model="model.remindAt" prepend-icon="event")
           v-date-picker(v-model="model.remindAt" no-title scrollable actions)
             template(slot-scope="{ save, cancel }")
               v-card-actions
                 v-spacer
-                v-btn(flat color="primary" @click="cancel") Cancel
-                v-btn(flat color="primary" @click="save") OK
+                v-btn(flat color="primary" @click="datePicker = false") Cancel
+                v-btn(flat color="primary" @click="$refs.datePicker.save(model.remindAt)") OK
 
       v-flex(md3 xs4)
         v-checkbox(label='Отработано' v-model='model.isStopped')

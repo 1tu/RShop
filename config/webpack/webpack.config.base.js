@@ -24,21 +24,26 @@ let config = {
       test: /\.ts$/,
       exclude: /node_modules/,
       enforce: 'pre',
-      loader: 'tslint-loader'
+      use: 'tslint-loader'
     }, {
       test: /\.ts$/,
       exclude: /node_modules/,
-      loader: 'awesome-typescript-loader',
-      options: {
-        configFileName: 'tsconfig.client.json',
-      }
+      use: {
+        loader: 'awesome-typescript-loader',
+        options: { configFileName: 'tsconfig.client.json', }
+      },
     }, {
       test: /\.pug$/,
-      loader: ['html-loader', 'pug-html-loader'],
+      use: ['html-loader', {
+        loader: 'pug-html-loader',
+        options: {
+          doctype: 'html'
+        }
+      }],
       exclude: /node_modules/,
     }, {
       test: /\.json$/,
-      loader: 'json-loader'
+      use: 'json-loader'
     }],
   },
   plugins: [

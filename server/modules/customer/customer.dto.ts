@@ -1,17 +1,7 @@
 import { Type } from 'class-transformer';
-import {
-  IsIn,
-  IsISO8601,
-  IsMobilePhone,
-  IsNumberString,
-  IsString,
-  MaxLength,
-  ValidateIf,
-  ValidateNested,
-} from 'class-validator';
+import { IsIn, IsInt, IsISO8601, IsMobilePhone, IsString, MaxLength, ValidateIf, ValidateNested, IsNumberString } from 'class-validator';
 
 import { enum2arr } from '../../../helpers/enum.helper';
-import { AEntityBase } from '../../common/entity';
 import { DtoBase } from '../../common/entity/base.dto';
 import { CityEntity } from '../city/city.entity';
 import { CustomerCameFromEnum } from './customer.cameFrom.enum';

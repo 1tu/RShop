@@ -7,7 +7,7 @@ import { DeliveryServiceEntity } from '../deliveryService/deliveryService.entity
 @Entity('delivery')
 export class DeliveryEntity extends AEntityTimestamp {
   @Column('decimal', { precision: 14, scale: 2 })
-  price: number;
+  price: string;
 
   @Column('date', { nullable: true })
   sentAt: Date;

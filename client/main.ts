@@ -1,5 +1,6 @@
 import './api/_interceptor';
 import './charts';
+import './directives';
 import './gateway';
 import './stylus/main.styl';
 
@@ -19,12 +20,8 @@ Vue.use(VeeValidate);
 
 store.dispatch('auth/getUser').then(_ => {
   new Vue({
-    i18n,
-    router,
-    store,
-    filters,
-    el: '#app',
-    render: h => h(RApp)
+    i18n, router, store, filters,
+    el: '#app', render: h => h(RApp)
   });
 });
 

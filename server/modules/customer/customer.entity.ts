@@ -41,7 +41,7 @@ export class CustomerEntity extends AEntityTimestamp {
   @ManyToOne(type => CityEntity)
   city: CityEntity;
 
-  @OneToOne(type => ImageEntity)
+  @OneToOne(type => ImageEntity, { onDelete: 'CASCADE' })
   @JoinColumn()
   photo: ImageEntity;
 

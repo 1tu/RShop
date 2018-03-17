@@ -1,11 +1,10 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString, MaxLength, ValidateIf, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, MaxLength, ValidateIf, ValidateNested } from 'class-validator';
 
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
-import { AEntityBase } from '../../common/entity';
 import { DtoBase } from '../../common/entity/base.dto';
 import { CityEntity } from '../city/city.entity';
 import { DeliveryServiceMaxSizes } from './deliveryService.maxSizes';
+import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 
 export class DeliveryServicePostDto {
   @IsString()
@@ -22,7 +21,7 @@ export class DeliveryServicePostDto {
 
   @ValidateIf((e, value) => value)
   @IsDecimalString()
-  maxWeight?: number;
+  maxWeight?: string;
 
   @IsNotEmpty()
   @ValidateNested()

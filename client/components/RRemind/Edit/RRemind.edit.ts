@@ -12,6 +12,8 @@ export class RRemindEdit extends Vue {
   @Prop() onSubmit: (model: RemindEntity) => void;
   @Prop() id: number;
 
+  public datePicker = false;
+
   public model: Partial<RemindEntity> = {};
 
   @RemindAction get;

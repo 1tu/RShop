@@ -13,7 +13,7 @@ export class ShopEntity extends AEntityBase {
   @Column({ length: 100 })
   host: string;
 
-  @Column('smallint')
+  @Column('int')
   port: number;
 
   @OneToMany(type => ProductEntity, product => product.shop)

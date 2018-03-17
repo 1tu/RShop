@@ -13,6 +13,8 @@ export class RCustomerEdit extends Vue {
   @Prop() onSubmit: (model: CustomerEntity) => void;
   @Prop() id: number;
 
+  public datePicker = false;
+
   public model: Partial<CustomerEntity> = {};
   public cameFromList = CustomerCameFromEnumMap;
   @CityState('list') cityList;

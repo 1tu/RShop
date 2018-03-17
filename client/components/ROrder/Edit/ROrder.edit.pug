@@ -1,16 +1,15 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Order {{ model.id? 'edit' : 'create' }}
   v-form(@submit.prevent='submit')
-    v-layout(row wrap v-if='model')
+    v-layout(row wrap v-if='model' align-center)
       v-flex(xs12 v-if='model.id')
-        p Заказчик: {{ model.customer.nameFirst + ' ' + model.customer.nameLast + ' (' + model.customer.phone + ')' }}
-        p Магазин: {{ model.shop.name + ' (' + model.shop.host + ')' }}
         v-btn(@click='$router.push("/Delivery/"+ model.delivery.id +"/edit")') Доставка
 
-      v-flex(sm6 xs12)
+      v-flex(sm6 xs12 text-xs-left)
         v-select(v-if='!model.id' label='Номер клиента' v-model='model.customer' autocomplete
           :items='customerList' item-text='phone' item-value='id' return-object
           name='customer' v-validate='"required"' :error-messages='errors.collect("customer")')
+        p(v-if='model.id') Заказчик: {{ model.customer.nameFirst + ' ' + model.customer.nameLast + ' (' + model.customer.phone + ')' }}
 
       v-flex(sm6 xs12)
         v-select(label='Состояние' v-model='model.state' :items='stateList' item-text='name' item-value='id')
@@ -20,13 +19,13 @@ v-container(fluid grid-list-lg text-xs-center)
           name='price' v-validate='"required"' :error-messages='errors.collect("price")')
 
       v-flex(sm4 xs12)
-        v-text-field(label='Стоимость производства' v-model='model.manufacturingCost' type='number'
-          name='manufacturingCost' v-validate='"required"' :error-messages='errors.collect("manufacturingCost")')
+        v-text-field(label='Стоимость производства' v-model='model.manufacturingCost' type='number')
 
       v-flex(sm4 xs12)
         v-select(v-if='!model.id' label='Магазин' v-model='model.shop' autocomplete
           :items='shopList' item-text='name' item-value='id' return-object
           name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
+        p(v-if='model.id') Магазин: {{ model.shop.name + ' (' + model.shop.host + ')' }}
 
       v-flex(xs12)
         h2.d-inline-block.mr-3 Товары
@@ -36,7 +35,7 @@ v-container(fluid grid-list-lg text-xs-center)
       v-flex(xs12)
         v-layout.mb-3(row wrap v-for='(productItem, index) in model.productList' :key='index' :class='index % 2 === 0? "grey lighten-3" : null')
           v-flex(sm3 xs12)
-            v-text-field(label='Кол-во' v-model='productItem.count' type='number'
+            v-text-field(label='Кол-во' v-model.number='productItem.count' type='number'
               :name='"count-" + (index + 1)' v-validate='"required|min_value:1"' :error-messages='errors.collect("count-" + (index + 1))')
 
           v-flex(sm7 xs12)

@@ -46,7 +46,7 @@ v-container(fluid grid-list-lg text-xs-center)
                   v-text-field(label='Заначение (англ)' v-model='option.value'
                     :name='"oValue " + index+" "+(index2 + 1)' v-validate='"required|max:200"' :error-messages='errors.collect("oValue " + index+" "+(index2 + 1))')
                 v-flex(md3 sm8 xs9)
-                  v-text-field(label='Стоимость' v-model='option.price' type='number'
+                  v-text-field(label='Стоимость' v-model.number='option.price' type='number'
                     :name='"oPrice " + index+" "+(index2 + 1)' v-validate='"required"' :error-messages='errors.collect("oPrice " + index+" "+(index2 + 1))')
                 v-flex(md1 sm4 xs3)
                   v-btn(fab dark small color='red' @click='removeOption(schemaItem, option)')

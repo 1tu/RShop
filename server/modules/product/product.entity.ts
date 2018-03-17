@@ -19,9 +19,6 @@ export class ProductEntity extends AEntityTimestamp {
   @Column('json', { default: [] })
   propertyList: ProductProperty[];
 
-  @ManyToMany(type => CategoryEntity)
-  category: CategoryEntity;
-
   @ManyToMany(type => ImageEntity)
   @JoinTable()
   imageList: ImageEntity;
@@ -30,7 +27,7 @@ export class ProductEntity extends AEntityTimestamp {
   shop: ShopEntity;
 
   @OneToOne(type => ManufactureEntity, m => m.product, { eager: true })
-  manufacture: ManufactureEntity;
+  manufacture?: ManufactureEntity;
 
   // TODO: при удалении связи экземпляр ProductCategoryEntity не удаляется из БД
   @OneToMany(type => ProductCategoryEntity, pc => pc.product, {

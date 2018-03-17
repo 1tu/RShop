@@ -1,6 +1,5 @@
-import { IsArray, IsNumberString, IsString, MaxLength } from 'class-validator';
+import { IsArray, IsInt, IsString, MaxLength } from 'class-validator';
 
-import { AEntityBase } from '../../common/entity/base.entity';
 import { CityEntity } from '../city/city.entity';
 
 export class ShopDto {
@@ -12,7 +11,7 @@ export class ShopDto {
   @MaxLength(100)
   host: string;
 
-  @IsNumberString()
+  @IsInt()
   port: number;
 
   @IsArray()

@@ -1,6 +1,4 @@
-import { IsNumberString, IsString, MaxLength } from 'class-validator';
-
-import { AEntityBase } from '../../common/entity';
+import { IsInt, IsString, MaxLength } from 'class-validator';
 
 export class CityPostDto {
   @IsString()
@@ -31,6 +29,6 @@ export class CityPostDto {
   @MaxLength(80)
   readonly namePrepositional: string;
 
-  @IsNumberString()
+  @IsInt()
   readonly population: number;
 }

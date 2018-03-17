@@ -3,17 +3,16 @@ import {
   ArrayNotEmpty,
   IsArray,
   IsIn,
+  IsInt,
   IsMobilePhone,
   IsNotEmpty,
-  IsNumberString,
+  IsNumber,
   IsString,
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
 
 import { enum2arr } from '../../../helpers/enum.helper';
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
-import { AEntityBase } from '../../common/entity';
 import { DtoBase } from '../../common/entity/base.dto';
 import { CustomerEntity } from '../customer/customer.entity';
 import { DeliveryEntity } from '../delivery/delivery.entity';
@@ -23,14 +22,15 @@ import { PaymentEntity } from '../payment/payment.entity';
 import { RejectionEntity } from '../rejection/rejection.entity';
 import { ShopEntity } from '../shop/shop.entity';
 import { OrderStateEnum } from './order.state.enum';
+import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 
 export class OrderPostDto {
   @IsDecimalString()
-  price: number;
+  price: string;
 
   @ValidateIf((e, value) => value)
   @IsDecimalString()
-  manufacturingCost?: number;
+  manufacturingCost?: string;
 
   @IsIn(enum2arr(OrderStateEnum))
   state: number;
@@ -66,11 +66,11 @@ export class OrderPostDto {
 
 export class OrderApiPostDto {
   @ValidateIf((e, value) => value)
-  @IsDecimalString()
+  @IsNumber()
   price?: string;
 
   @ValidateIf((e, value) => value)
-  @IsDecimalString()
+  @IsNumber()
   manufacturingCost?: string;
 
   @ValidateIf((e, value) => value)
@@ -80,14 +80,14 @@ export class OrderApiPostDto {
   @IsString()
   deliveryServiceName: string;
 
-  @IsDecimalString()
+  @IsNumber()
   deliveryPrice: string;
 
   @IsString()
   city: string;
 
   @ValidateIf((e, value) => value)
-  @IsNumberString()
+  @IsInt()
   count: number;
 
   @IsMobilePhone('ru-RU')

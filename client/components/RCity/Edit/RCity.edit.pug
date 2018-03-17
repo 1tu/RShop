@@ -31,7 +31,7 @@ v-container(fluid grid-list-lg text-xs-center)
           v-validate='"required|max:80"' :error-messages='errors.collect("namePrepositional")')
 
       v-flex(sm4 xs12)
-        v-text-field(label='Популяция' v-model='model.population' name='population' type='number'
+        v-text-field(label='Популяция' v-model.number='model.population' name='population' type='number'
           v-validate='"required|numeric"' :error-messages='errors.collect("population")')
 
 

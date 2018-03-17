@@ -13,6 +13,12 @@ export class RDeliveryEdit extends Vue {
   @Prop() onSubmit: (model: DeliveryEntity) => void;
   @Prop() id: number;
 
+  public datePickers = {
+    sent: false,
+    approximate: false,
+    recieved: false
+  };
+
   public model: Partial<DeliveryEntity> = {};
   public stateList = DeliveryStateEnumMap;
   @CityState('list') cityList;

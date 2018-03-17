@@ -1,17 +1,15 @@
-import { ValidateIf } from 'class-validator';
-
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
+import { IsNumber, ValidateIf } from 'class-validator';
 
 export class DeliveryServiceMaxSizes {
   @ValidateIf((e, value) => value)
-  @IsDecimalString()
+  @IsNumber()
   height?: number;
 
   @ValidateIf((e, value) => value)
-  @IsDecimalString()
+  @IsNumber()
   width?: number;
 
   @ValidateIf((e, value) => value)
-  @IsDecimalString()
+  @IsNumber()
   length?: number;
 }

@@ -1,7 +1,7 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Product {{ model.id? 'edit' : 'create' }}
   v-form(@submit.prevent='submit')
-    v-layout(row wrap v-if='model')
+    v-layout(row wrap v-if='model' align-center)
       v-flex(v-if='model.manufacture' xs12)
         v-btn(@click='$router.push("/Manufacture/"+ model.manufacture.id +"/edit")') Мануфактура
 
@@ -10,9 +10,10 @@ v-container(fluid grid-list-lg text-xs-center)
           v-validate='"required|max:100"' :error-messages='errors.collect("name")')
 
       v-flex(sm4 xs12)
-        v-select(label='Магазин' v-model='model.shop'  autocomplete
+        v-select(v-if='!model.id' label='Магазин' v-model='model.shop'  autocomplete
           :items='shopList' item-text='name' item-value='id' return-object
           name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
+        p(v-if='model.id') {{ `${model.shop.name} (${model.shop.host})` }}
 
       v-flex(xs12)
         v-text-field(label='Описание' v-model='model.description' name='description' multi-line rows='2' auto-grow)
@@ -25,11 +26,11 @@ v-container(fluid grid-list-lg text-xs-center)
       v-flex(xs12)
         v-layout(row wrap v-for='(property, index) in model.propertyList' :key='index' :class='index % 2 === 0? "grey lighten-3" : null')
           v-flex(sm5 xs12)
-            v-text-field(label='Название' v-model='property.key' :name='"key " + (index + 1)'
-              v-validate='"required|max:50"' :error-messages='errors.collect("key " + (index + 1))')
+            v-text-field(label='Название' v-model='property.name'
+              :name='"name " + (index + 1)' v-validate='"required|max:100"' :error-messages='errors.collect("name " + (index + 1))')
           v-flex(sm5 xs12)
-            v-text-field(label='Значение' v-model='property.value' :name='"value " + (index + 1)'
-              v-validate='"required"' :error-messages='errors.collect("value " + (index + 1))')
+            v-text-field(label='Значение' v-model='property.value'
+              :name='"value " + (index + 1)' v-validate='"required"' :error-messages='errors.collect("value " + (index + 1))')
           v-flex(sm2 xs12)
             v-btn(fab dark small color='red' @click='removeProperty(property)')
               v-icon(dark) remove

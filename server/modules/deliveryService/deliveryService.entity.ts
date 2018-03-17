@@ -16,7 +16,7 @@ export class DeliveryServiceEntity extends AEntityTimestamp {
   maxSize: DeliveryServiceMaxSizes;
 
   @Column('decimal', { precision: 14, scale: 4, nullable: true })
-  maxWeight: number;
+  maxWeight: string;
 
   @ManyToMany(type => CityEntity)
   @JoinTable()

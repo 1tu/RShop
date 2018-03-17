@@ -1,8 +1,7 @@
 import { Type } from 'class-transformer';
-import { ArrayNotEmpty, IsArray, IsBoolean, IsIn, IsString, ValidateIf, ValidateNested } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsBoolean, IsIn, IsNumber, IsString, ValidateIf, ValidateNested } from 'class-validator';
 
 import { enum2arr } from '../../../helpers/enum.helper';
-import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 
 export enum ManufactureSchemaTypes {
   SELECT = 0,
@@ -48,7 +47,7 @@ export class ManufactureSchemaOption {
   @IsString()
   value: string;
 
-  @IsDecimalString()
+  @IsNumber()
   price: number;
 
   @ValidateIf((e, value) => value)

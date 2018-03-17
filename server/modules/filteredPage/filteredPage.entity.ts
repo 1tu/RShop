@@ -17,11 +17,11 @@ export class FilteredPageEntity extends AEntityTimestamp {
   @Column('json')
   filters: FilteredPageFilters;
 
-  @OneToOne(type => SeoTemplateEntity, { eager: true })
+  @OneToOne(type => SeoTemplateEntity, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   seoTemplate: SeoTemplateEntity;
 
-  @OneToOne(type => SeoMetaEntity, { eager: true })
+  @OneToOne(type => SeoMetaEntity, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   seoMeta: SeoMetaEntity;
 
