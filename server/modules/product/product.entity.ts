@@ -32,7 +32,6 @@ export class ProductEntity extends AEntityTimestamp {
   @OneToMany(type => ProductCategoryEntity, pc => pc.product, {
     cascadeInsert: true,
     cascadeUpdate: true,
-    eager: true
   })
   categoryList: ProductCategoryEntity[];
 }

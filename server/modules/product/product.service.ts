@@ -15,10 +15,6 @@ export class ProductService extends AServiceBase<ProductEntity> {
   }
 
   getOneById(id: number, opts?: FindOneOptions<ProductEntity>): Promise<ProductEntity> {
-    return this._repository.findOneById(id, { ...opts, relations: ['shop'] });
-  }
-
-  getOne(opts: FindOneOptions<ProductEntity>): Promise<ProductEntity> {
-    return this._repository.findOne({ ...opts, relations: ['shop'] });
+    return this._repository.findOneById(id, { ...opts, relations: ['shop', 'categoryList'] });
   }
 }
