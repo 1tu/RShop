@@ -24,7 +24,7 @@ let config = {
       test: /\.ts$/,
       exclude: /node_modules/,
       enforce: 'pre',
-      use: 'tslint-loader'
+      loader: 'tslint-loader'
     }, {
       test: /\.ts$/,
       exclude: /node_modules/,
