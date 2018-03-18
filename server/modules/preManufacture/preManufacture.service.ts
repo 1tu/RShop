@@ -12,6 +12,8 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
 
   getOneById(id: number, opts?: FindOneOptions<PreManufactureEntity>): Promise<PreManufactureEntity> {
     return this._repository.createQueryBuilder('preManufacture')
+      .leftJoinAndSelect('preManufacture.categoryList', 'categoryList')
+      .leftJoinAndSelect('categoryList.category', 'category')
       .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
       .leftJoinAndSelect('manufacture.product', 'product')
       .getOne();

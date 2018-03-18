@@ -11,7 +11,7 @@ export class PaymentServiceEntity extends AEntityTimestamp {
   name: string;
 
   @Column('decimal', { precision: 14, scale: 4 })
-  tax: number;
+  tax: string;
 
   // TODO: @Column('enum', { enum: PaymentServiceTaxTypeEnum })
   @Column({ enum: PaymentServiceTaxTypeEnum })

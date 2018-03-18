@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString, MaxLength, ValidateNested, ValidateIf } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength, ValidateNested, ValidateIf, IsBoolean } from 'class-validator';
 
 import { DtoBase } from '../../common/entity/base.dto';
 import { CategoryShopDto } from '../category_shop/category_shop.dto';
@@ -14,6 +14,8 @@ export class CategoryPostDto {
   @IsString()
   @MaxLength(200)
   nameTranslit: string;
+
+  @IsBoolean() isBase: boolean;
 
   @ValidateNested()
   @Type(() => CategoryShopDto)

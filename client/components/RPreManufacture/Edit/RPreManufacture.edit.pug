@@ -19,7 +19,7 @@ v-container(fluid grid-list-lg text-xs-center)
         h2 Конфиг
 
       template(v-if='model.manufacture' v-for='(item, index) in model.config')
-        v-flex(md6 xs12 :key='index')
+        v-flex(md6 xs12 :key='"m" + index')
           v-layout(row wrap align-baseline)
             v-flex(sm3 xs12 style='align-self: center')
               span {{ item.name }}
@@ -31,6 +31,25 @@ v-container(fluid grid-list-lg text-xs-center)
 
             v-flex(sm3 xs12)
               v-checkbox(label='Не изменяемо' v-model='item.isLocked')
+
+      v-flex(xs12)
+        h2.d-inline-block.mr-3 Категории
+        v-btn(fab dark small color='primary' @click='addCategory()')
+          v-icon(dark) add
+
+      template(v-for='(categoryItem, index) in model.categoryList')
+        v-flex(md6 xs12 :key='"c" + index')
+          v-layout(row wrap :class='index % 2 === 0? "grey lighten-3" : null')
+            v-flex(xs10)
+              v-select(label='Категория' v-model='categoryItem.category' autocomplete
+                :items='categoryList | filter(filterSelectedCategory(categoryItem))' item-text='name' item-value='id' return-object
+                :name='"category " + (index + 1)' v-validate='"required"' :error-messages='errors.collect("category " + (index + 1))')
+            v-flex(sm5 xs12)
+              v-checkbox(label='главная' v-model='categoryItem.isMain' @change='checkSingleMainCategory(index)')
+
+            v-flex(sm2 xs12)
+              v-btn(fab dark small color='red' @click='removeCategory(index)')
+                v-icon(dark) remove
 
       v-flex(xs12 text-xs-center)
         v-btn(type='submit') submit

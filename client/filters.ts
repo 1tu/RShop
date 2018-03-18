@@ -1,7 +1,6 @@
 import { filter } from 'lodash';
+import Vue from 'vue';
 
-export default {
-  filter(arr: any[], predicate: any) {
-    return filter(arr, predicate);
-  }
-};
+Vue.filter('filter', (arr: any[], predicate: any) => {
+  return filter(arr, predicate);
+});

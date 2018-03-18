@@ -13,9 +13,14 @@ export class CategoryEntity extends AEntityTimestamp {
   @Column({ length: 200 })
   nameTranslit: string;
 
+  @Column('boolean', { default: false })
+  isBase: boolean;
+
   // TODO: при удалении связи экземпляр CategoryShopEntity не удаляется из БД
   @OneToMany(type => CategoryShopEntity, cs => cs.category, {
-    cascadeInsert: true, cascadeUpdate: true, eager: true
+    cascadeInsert: true,
+    cascadeUpdate: true,
+    eager: true
   })
   seoList: CategoryShopEntity[];
 

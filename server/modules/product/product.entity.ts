@@ -1,19 +1,18 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 
 import { AEntityTimestamp } from '../../common/entity';
 import { ImageEntity } from '../image/image.entity';
 import { ManufactureEntity } from '../manufacture/manufacture.entity';
+import { ProductCategoryEntity } from '../product_category/product_category.entity';
 import { ShopEntity } from '../shop/shop.entity';
 import { ProductProperty } from './product.property';
-import { CategoryEntity } from '../category/category.entity';
-import { ProductCategoryEntity } from '../product_category/product_category.entity';
 
 @Entity('product')
 export class ProductEntity extends AEntityTimestamp {
   @Column({ length: 100 })
   name: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   description: string;
 
   @Column('json', { default: [] })
@@ -31,7 +30,9 @@ export class ProductEntity extends AEntityTimestamp {
 
   // TODO: при удалении связи экземпляр ProductCategoryEntity не удаляется из БД
   @OneToMany(type => ProductCategoryEntity, pc => pc.product, {
-    cascadeInsert: true, cascadeUpdate: true, eager: true
+    cascadeInsert: true,
+    cascadeUpdate: true,
+    eager: true
   })
   categoryList: ProductCategoryEntity[];
 }

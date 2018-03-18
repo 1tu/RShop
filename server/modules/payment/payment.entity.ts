@@ -9,7 +9,7 @@ import { PaymentStateEnum } from './payment.state.enum';
 @Entity('payment')
 export class PaymentEntity extends AEntityTimestamp {
   @Column('decimal', { precision: 14, scale: 4 })
-  amount: number;
+  amount: string;
 
   // TODO: @Column('enum', { enum: CurrencyEnum, default: 643 })
   @Column({ enum: CurrencyEnum, default: 643 })

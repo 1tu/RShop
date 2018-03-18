@@ -73,12 +73,12 @@ export class ApiController {
       delivery: model.config ? {
         state: DeliveryStateEnum.NEW,
         deliveryService, city,
-        price: parseFloat(model.deliveryPrice),
+        price: model.deliveryPrice,
       } : undefined
     };
 
-    if (model.price) newOrder.price = parseFloat(model.price);
-    if (model.manufacturingCost) newOrder.manufacturingCost = parseFloat(model.manufacturingCost);
+    if (model.price) newOrder.price = model.price;
+    if (model.manufacturingCost) newOrder.manufacturingCost = model.manufacturingCost;
 
     if (model.config) newOrder.productList = [{
       count: model.count,
