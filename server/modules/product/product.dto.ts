@@ -1,8 +1,8 @@
 import { Type } from 'class-transformer';
 import { IsArray, IsNotEmpty, IsString, MaxLength, ValidateIf, ValidateNested } from 'class-validator';
 
-import { AEntityBase } from '../../common/entity';
 import { DtoBase } from '../../common/entity/base.dto';
+import { SeoMetaEntity } from '../seoMeta/seoMeta.entity';
 import { ShopEntity } from '../shop/shop.entity';
 import { ProductProperty } from './product.property';
 
@@ -27,4 +27,9 @@ export class ProductDto {
   @ValidateNested()
   @Type(() => DtoBase)
   shop: ShopEntity;
+
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => DtoBase)
+  seoMeta: SeoMetaEntity;
 }

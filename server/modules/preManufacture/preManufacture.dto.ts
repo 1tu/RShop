@@ -1,9 +1,9 @@
 import { Type } from 'class-transformer';
 import { IsArray, IsNotEmpty, IsString, MaxLength, ValidateIf, ValidateNested } from 'class-validator';
 
-import { AEntityBase } from '../../common/entity';
 import { DtoBase } from '../../common/entity/base.dto';
 import { ManufactureEntity } from '../manufacture/manufacture.entity';
+import { SeoMetaEntity } from '../seoMeta/seoMeta.entity';
 import { PreManufactureConfigItem } from './preManufacture.configItem';
 
 export class PreManufactureDto {
@@ -27,4 +27,9 @@ export class PreManufactureDto {
   @ValidateNested()
   @Type(() => DtoBase)
   manufacture: ManufactureEntity;
+
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => DtoBase)
+  seoMeta: SeoMetaEntity;
 }

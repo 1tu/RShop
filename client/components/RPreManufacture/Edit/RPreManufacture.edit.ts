@@ -7,34 +7,59 @@ import { ManufactureEntity } from '../../../../server/modules/manufacture/manufa
 import { PreManufactureConfigItem } from '../../../../server/modules/preManufacture/preManufacture.configItem';
 import { PreManufactureEntity } from '../../../../server/modules/preManufacture/preManufacture.entity';
 import { PreManufactureCategoryEntity } from '../../../../server/modules/preManufacture_category/preManufacture_category.entity';
-import { CategoryAction, CategoryState, ManufactureAction, ManufactureState, PreManufactureAction } from '../../../store/modules';
+import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
+import {
+  CategoryAction,
+  CategoryState,
+  ManufactureAction,
+  ManufactureState,
+  PreManufactureAction,
+  SeoMetaAction,
+  SeoMetaMutation,
+  SeoMetaState
+} from '../../../store/modules';
+import { RSeoMetaEdit } from '../../RSeoMeta';
 
 @Component({
-  template: require('./RPreManufacture.edit.pug')
+  template: require('./RPreManufacture.edit.pug'),
+  components: { RSeoMetaEdit }
 })
 export class RPreManufactureEdit extends Vue {
   @Prop() onSubmit: (model: PreManufactureEntity) => void;
   @Prop() id: number;
 
+  public dialogSeoMeta = false;
   public model: Partial<PreManufactureEntity> = { config: [], categoryList: [] };
+
   @ManufactureState('list') manufactureList;
   @CategoryState('list') categoryList;
+  @SeoMetaState('list') seoMetaList;
 
   @PreManufactureAction get;
   @PreManufactureAction put;
   @PreManufactureAction post;
   @ManufactureAction('getList') getListManufacture;
   @CategoryAction('getList') getListCategory;
+  @SeoMetaAction('getList') getListSeoMeta;
+
+  @SeoMetaMutation('listAdd') listAddSeoMeta;
 
   async mounted() {
     this.getListCategory();
     this.getListManufacture();
+    this.getListSeoMeta();
     const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
       this.onSelectManufacture(this.model.manufacture);
     }
+  }
+
+  public onSeoMetaSubmit(model: SeoMetaEntity) {
+    this.listAddSeoMeta(model);
+    this.model.seoMeta = model;
+    this.dialogSeoMeta = false;
   }
 
   public filterSelectedCategory(cItem: PreManufactureCategoryEntity) {

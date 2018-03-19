@@ -6,11 +6,11 @@ import { ShopEntity } from './shop.entity';
 
 @Component()
 export class ShopService extends AServiceBase<ShopEntity> {
-  constructor( @Inject('ShopRepositoryToken') _repository: Repository<ShopEntity>) {
+  constructor(@Inject('ShopRepositoryToken') _repository: Repository<ShopEntity>) {
     super(_repository);
   }
 
   getOneById(id, opts?: FindOneOptions<ShopEntity>): Promise<ShopEntity> {
-    return this._repository.findOneById(id, { ...opts, relations: ['cityList'] });
+    return this._repository.findOneById(id, { ...opts, relations: ['cityList', 'seoMeta'] });
   }
 }

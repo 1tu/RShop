@@ -6,27 +6,37 @@ import { CategoryEntity } from '../../../../server/modules/category/category.ent
 import { ProductEntity } from '../../../../server/modules/product/product.entity';
 import { ProductProperty } from '../../../../server/modules/product/product.property';
 import { ProductCategoryEntity } from '../../../../server/modules/product_category/product_category.entity';
-import { CategoryAction, CategoryState, ProductAction, ShopAction, ShopState } from '../../../store/modules';
+import { CategoryAction, CategoryState, ProductAction, SeoMetaAction, SeoMetaMutation, SeoMetaState, ShopAction, ShopState } from '../../../store/modules';
+import { RSeoMetaEdit } from '../../RSeoMeta';
+import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
 
 @Component({
-  template: require('./RProduct.edit.pug')
+  template: require('./RProduct.edit.pug'),
+  components: { RSeoMetaEdit }
 })
 export class RProductEdit extends Vue {
   @Prop() onSubmit: (model: ProductEntity) => void;
   @Prop() id: number;
 
   public model: Partial<ProductEntity> = { propertyList: [], categoryList: [] };
+  public dialogSeoMeta = false;
+
   @ShopState('list') shopList;
   @CategoryState('list') categoryList;
+  @SeoMetaState('list') seoMetaList;
 
   @ProductAction get;
   @ProductAction put;
   @ProductAction post;
   @ShopAction('getList') getListShop;
   @CategoryAction('getList') getListCategory;
+  @SeoMetaAction('getList') getListSeoMeta;
+
+  @SeoMetaMutation('listAdd') listAddSeoMeta;
 
   async mounted() {
     this.getListCategory();
+    this.getListSeoMeta();
     const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
@@ -34,6 +44,12 @@ export class RProductEdit extends Vue {
     } else {
       this.getListShop();
     }
+  }
+
+  public onSeoMetaSubmit(model: SeoMetaEntity) {
+    this.listAddSeoMeta(model);
+    this.model.seoMeta = model;
+    this.dialogSeoMeta = false;
   }
 
   public filterSelectedCategory(cItem: ProductCategoryEntity) {

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 
 import { AEntityTimestamp } from '../../common/entity';
 import { ImageEntity } from '../image/image.entity';
@@ -6,6 +6,7 @@ import { ManufactureEntity } from '../manufacture/manufacture.entity';
 import { ProductCategoryEntity } from '../product_category/product_category.entity';
 import { ShopEntity } from '../shop/shop.entity';
 import { ProductProperty } from './product.property';
+import { SeoMetaEntity } from '../seoMeta/seoMeta.entity';
 
 @Entity('product')
 export class ProductEntity extends AEntityTimestamp {
@@ -17,6 +18,10 @@ export class ProductEntity extends AEntityTimestamp {
 
   @Column('json', { default: [] })
   propertyList: ProductProperty[];
+
+  @OneToOne(type => SeoMetaEntity, { cascadeInsert: true })
+  @JoinColumn()
+  seoMeta: SeoMetaEntity;
 
   @ManyToMany(type => ImageEntity)
   @JoinTable()
