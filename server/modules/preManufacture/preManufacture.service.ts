@@ -11,11 +11,15 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
   }
 
   getOneById(id: number, opts?: FindOneOptions<PreManufactureEntity>): Promise<PreManufactureEntity> {
-    return this._repository.createQueryBuilder('preManufacture')
+    return this._repository
+      .createQueryBuilder('preManufacture')
       .leftJoinAndSelect('preManufacture.categoryList', 'categoryList')
       .leftJoinAndSelect('categoryList.category', 'category')
       .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
       .leftJoinAndSelect('manufacture.product', 'product')
+      .leftJoinAndSelect('preManufacture.seoMeta', 'seoMeta')
+      .leftJoinAndSelect('preManufacture.imageList', 'imageList')
+      .where('preManufacture.id = :id', { id })
       .getOne();
     // return this._repository.findOneById(id, { ...opts, relations: ['shop', 'manufacture'] });
   }

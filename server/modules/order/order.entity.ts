@@ -18,6 +18,8 @@ export class OrderEntity extends AEntityTimestamp {
   @Column('decimal', { precision: 14, scale: 2, nullable: true })
   manufacturingCost: string;
 
+  @Column('text') description: string;
+
   // TODO: @Column('enum', { enum: OrderStateEnum })
   @Column({ default: 0 })
   state: number;

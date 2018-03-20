@@ -1,4 +1,4 @@
-import { IsArray, ArrayNotEmpty, ValidateIf } from 'class-validator';
+import { ArrayNotEmpty, IsArray, ValidateIf } from 'class-validator';
 
 export class FilteredPageFilters {
   @IsArray()
@@ -7,5 +7,10 @@ export class FilteredPageFilters {
 
   @ValidateIf((e, value) => value)
   @IsArray()
-  propertyKeyList: string[];
+  propertyKeyValueList: PropertyKeyValueItem[];
+}
+
+interface PropertyKeyValueItem {
+  key: string;
+  valueList: string[];
 }

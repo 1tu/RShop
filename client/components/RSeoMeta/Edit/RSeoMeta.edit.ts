@@ -6,7 +6,7 @@ import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity
 import { SeoMetaAction } from '../../../store/modules';
 
 @Component({
-  template: require('./RSeoMeta.edit.pug'),
+  template: require('./RSeoMeta.edit.pug')
 })
 export class RSeoMetaEdit extends Vue {
   @Prop() onSubmit: (model: SeoMetaEntity) => void;
@@ -30,7 +30,7 @@ export class RSeoMetaEdit extends Vue {
   }
 
   public removeKey(index: number) {
-    if (this.model.keys.length < 3) return;
+    if (this.model.keys.length < 2) return;
     this.model.keys.splice(index, 1);
   }
 
@@ -50,4 +50,3 @@ export class RSeoMetaEdit extends Vue {
     this.$validator.reset();
   }
 }
-

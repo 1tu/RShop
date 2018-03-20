@@ -10,25 +10,25 @@ export interface RouterItem {
 }
 
 export const routes: RouterItem[] = [
-  { path: '/Shop', component: require(`./components/RShop/List`).RShopList, title: 'Shop' },
-  { path: '/City', component: require(`./components/RCity/List`).RCityList, title: 'City' },
-  { path: '/Order', component: require(`./components/ROrder/List`).ROrderList, title: 'Order' },
-  { path: '/Customer', component: require(`./components/RCustomer/List`).RCustomerList, title: 'Customer' },
-  { path: '/Contact', component: require(`./components/RContact/List`).RContactList, title: 'Contact' },
-  { path: '/FilteredPage', component: require(`./components/RFilteredPage/List`).RFilteredPageList, title: 'FilteredPage' },
-  { path: '/Category', component: require(`./components/RCategory/List`).RCategoryList, title: 'Category' },
-  { path: '/Product', component: require(`./components/RProduct/List`).RProductList, title: 'Product' },
-  { path: '/Manufacture', component: require(`./components/RManufacture/List`).RManufactureList, title: 'Manufacture' },
-  { path: '/PreManufacture', component: require(`./components/RPreManufacture/List`).RPreManufactureList, title: 'PreManufacture' },
-  { path: '/SeoMeta', component: require(`./components/RSeoMeta/List`).RSeoMetaList, title: 'SeoMeta' },
-  { path: '/SeoTemplate', component: require(`./components/RSeoTemplate/List`).RSeoTemplateList, title: 'SeoTemplate' },
-  { path: '/Remind', component: require(`./components/RRemind/List`).RRemindList, title: 'Remind' },
-  { path: '/Rejection', component: require(`./components/RRejection/List`).RRejectionList, title: 'Rejection' },
-  { path: '/Payment', component: require(`./components/RPayment/List`).RPaymentList, title: 'Payment' },
-  { path: '/PaymentService', component: require(`./components/RPaymentService/List`).RPaymentServiceList, title: 'Payment service' },
-  { path: '/Delivery', component: require(`./components/RDelivery/List`).RDeliveryList, title: 'Delivery' },
-  { path: '/DeliveryService', component: require(`./components/RDeliveryService/List`).RDeliveryServiceList, title: 'Delivery service' },
-  { path: '/User', component: require(`./components/RUser/List`).RUserList, title: 'User' },
+  { path: '/Shop', component: require(`./components/RShop/List`).RShopList, title: 'Магазины' },
+  { path: '/City', component: require(`./components/RCity/List`).RCityList, title: 'Города' },
+  { path: '/Order', component: require(`./components/ROrder/List`).ROrderList, title: 'Заказы' },
+  { path: '/Customer', component: require(`./components/RCustomer/List`).RCustomerList, title: 'Клиенты' },
+  { path: '/Contact', component: require(`./components/RContact/List`).RContactList, title: 'Обработка заказов' },
+  { path: '/FilteredPage', component: require(`./components/RFilteredPage/List`).RFilteredPageList, title: 'Фильтрованые страницы' },
+  { path: '/Category', component: require(`./components/RCategory/List`).RCategoryList, title: 'Категории' },
+  { path: '/Product', component: require(`./components/RProduct/List`).RProductList, title: 'Продукты' },
+  { path: '/Manufacture', component: require(`./components/RManufacture/List`).RManufactureList, title: 'Производство' },
+  { path: '/PreManufacture', component: require(`./components/RPreManufacture/List`).RPreManufactureList, title: 'Товары и конфигурации' },
+  { path: '/SeoMeta', component: require(`./components/RSeoMeta/List`).RSeoMetaList, title: 'SEO meta' },
+  { path: '/SeoTemplate', component: require(`./components/RSeoTemplate/List`).RSeoTemplateList, title: 'SEO template' },
+  { path: '/Remind', component: require(`./components/RRemind/List`).RRemindList, title: 'Напоминания' },
+  { path: '/Rejection', component: require(`./components/RRejection/List`).RRejectionList, title: 'Отказы' },
+  { path: '/Payment', component: require(`./components/RPayment/List`).RPaymentList, title: 'Платежи' },
+  { path: '/PaymentService', component: require(`./components/RPaymentService/List`).RPaymentServiceList, title: 'Платёжные сервисы' },
+  { path: '/Delivery', component: require(`./components/RDelivery/List`).RDeliveryList, title: 'Доставка' },
+  { path: '/DeliveryService', component: require(`./components/RDeliveryService/List`).RDeliveryServiceList, title: 'Сервисы доставки' },
+  { path: '/User', component: require(`./components/RUser/List`).RUserList, title: 'Пользователи' }
 
   // { path: '/role', title: 'Role' },
   // { path: '/permission', title: 'Permission' },
@@ -74,13 +74,14 @@ const advencedRoutes = [
   { path: '/DeliveryService/:id', component: require(`./components/RDeliveryService`).RDeliveryService },
   { path: '/DeliveryService/:id/edit', component: require(`./components/RDeliveryService/Edit`).RDeliveryServiceEdit },
   { path: '/User/:id', component: require(`./components/RUser`).RUser },
-  { path: '/User/:id/edit', component: require(`./components/RUser/Edit`).RUserEdit },
-
+  { path: '/User/:id/edit', component: require(`./components/RUser/Edit`).RUserEdit }
 ];
 
 export const router = new VueRouter({
-  routes: routes.map(route => ({
-    path: route.path,
-    component: route.component
-  })).concat(advencedRoutes)
+  routes: routes
+    .map(route => ({
+      path: route.path,
+      component: route.component
+    }))
+    .concat(advencedRoutes)
 });

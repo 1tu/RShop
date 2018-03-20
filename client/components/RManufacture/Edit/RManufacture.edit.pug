@@ -2,7 +2,6 @@ v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Manufacture {{ model.id? 'edit' : 'create' }}
   v-form(@submit.prevent='submit')
     v-layout(row wrap v-if='model')
-      //- v-select(v-if='!model.id' label='Товар' v-model='model.product' autocomplete
       v-flex(xs12)
         v-select(label='Товар' v-model='model.product' autocomplete
           :items='productList' item-text='name' item-value='id' return-object
@@ -43,8 +42,12 @@ v-container(fluid grid-list-lg text-xs-center)
                   v-text-field(label='Название' v-model='option.name'
                     :name='"oName " + index+" "+(index2 + 1)' v-validate='"required|max:50"' :error-messages='errors.collect("oName " + index+" "+(index2 + 1))')
                 v-flex(md4 sm6 xs12)
-                  v-text-field(label='Заначение (англ)' v-model='option.value'
+                  //- 2 === ManufactureSchemaTypes.SELECT_IMAGE
+                  v-text-field(v-if='schemaItem.type !== 2' label='Заначение (англ)' v-model='option.value'
                     :name='"oValue " + index+" "+(index2 + 1)' v-validate='"required|max:200"' :error-messages='errors.collect("oValue " + index+" "+(index2 + 1))')
+
+                  image-upload(v-else v-model='option.value' value-type='filepath')
+
                 v-flex(md3 sm8 xs9)
                   v-text-field(label='Стоимость' v-model.number='option.price' type='number'
                     :name='"oPrice " + index+" "+(index2 + 1)' v-validate='"required"' :error-messages='errors.collect("oPrice " + index+" "+(index2 + 1))')

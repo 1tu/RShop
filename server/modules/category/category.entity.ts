@@ -19,8 +19,7 @@ export class CategoryEntity extends AEntityTimestamp {
   // TODO: при удалении связи экземпляр CategoryShopEntity не удаляется из БД
   @OneToMany(type => CategoryShopEntity, cs => cs.category, {
     cascadeInsert: true,
-    cascadeUpdate: true,
-    eager: true
+    cascadeUpdate: true
   })
   seoList: CategoryShopEntity[];
 

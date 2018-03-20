@@ -1,9 +1,10 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 
 import { AEntityTimestamp } from '../../common/entity';
 import { ImageEntity } from '../image/image.entity';
 import { ManufactureEntity } from '../manufacture/manufacture.entity';
 import { PreManufactureCategoryEntity } from '../preManufacture_category/preManufacture_category.entity';
+import { SeoMetaEntity } from '../seoMeta/seoMeta.entity';
 import { ShopEntity } from '../shop/shop.entity';
 import { PreManufactureConfigItem } from './preManufacture.configItem';
 
@@ -17,9 +18,13 @@ export class PreManufactureEntity extends AEntityTimestamp {
   @Column('json', { default: [] })
   config: PreManufactureConfigItem[];
 
-  @ManyToMany(type => ImageEntity)
+  @ManyToMany(type => ImageEntity, { eager: true })
   @JoinTable()
   imageList: ImageEntity;
+
+  @OneToOne(type => SeoMetaEntity, { cascadeInsert: true })
+  @JoinColumn()
+  seoMeta: SeoMetaEntity;
 
   @ManyToOne(type => ShopEntity, shop => shop.preManufactureList)
   shop: ShopEntity;

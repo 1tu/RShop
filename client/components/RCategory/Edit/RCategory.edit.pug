@@ -1,19 +1,22 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Category {{ model.id? 'edit' : 'create' }}
   v-form(@submit.prevent='submit')
-    v-layout(row wrap v-if='model')
-      v-flex(sm4 xs12)
-        v-text-field(label='Name' v-model='model.name'
+    v-layout(row wrap v-if='model' align-center)
+      v-flex(md3 sm6 xs12)
+        v-text-field(label='Название' v-model='model.name'
           name='name' v-validate='"required|max:200"' :error-messages='errors.collect("name")')
 
-      v-flex(sm4 xs12)
-        v-text-field(label='Name translit' v-model='model.nameTranslit'
+      v-flex(md3 sm6 xs12)
+        v-text-field(label='Транилитизированное название' v-model='model.nameTranslit'
           name='nameTranslit' v-validate='"required|max:200"' :error-messages='errors.collect("nameTranslit")')
 
-      v-flex(sm4 xs12)
+      v-flex(md4 sm8 xs12)
         v-select(label='Родительская категория' v-model='model.categoryParent' autocomplete clearable
           :items='categoryList' item-text='name' item-value='id' return-object
           name='categoryParent' :error-messages='errors.collect("categoryParent")')
+
+      v-flex(md2 sm4 xs12)
+        v-checkbox(label='базовая' v-model='model.isBase')
 
       v-flex(xs12)
         h2.d-inline-block.mr-3 Category SEO for shop
@@ -23,7 +26,7 @@ v-container(fluid grid-list-lg text-xs-center)
       v-flex(xs12)
         v-layout.mb-3(row wrap v-for='(seoItem, index) in model.seoList' :key='index' :class='index % 2 === 0? "grey lighten-3" : null')
           v-flex(sm4 xs10)
-            v-select(label='Seo meta' v-model='seoItem.seoMeta' autocomplete
+            v-select(label='Метатэги' v-model='seoItem.seoMeta' autocomplete
               :items='seoMetaList' item-text='title' item-value='id' return-object
               :name='"seoMeta" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("seoMeta" + (index + 1))')
 
@@ -32,7 +35,7 @@ v-container(fluid grid-list-lg text-xs-center)
               v-icon add
 
           v-flex(sm4 xs10)
-            v-select(label='Seo template' v-model='seoItem.seoTemplate' autocomplete
+            v-select(label='Элементы контента' v-model='seoItem.seoTemplate' autocomplete
               :items='seoTemplateList' item-text='h1' item-value='id' return-object
               :name='"seoTemplate" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("seoTemplate" + (index + 1))')
 

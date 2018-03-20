@@ -15,6 +15,18 @@ v-container(fluid grid-list-lg text-xs-center)
         v-text-field(label='Описание' v-model='model.description' multi-line rows='2' auto-grow
           name='description' v-validate='"required"' :error-messages='errors.collect("description")')
 
+      v-flex(sm4 xs10)
+        v-select(label='Метатэги' v-model='model.seoMeta' autocomplete
+          :items='seoMetaList' item-text='keys[0]' item-value='id' return-object
+          name='seoMeta' v-validate='"required"' :error-messages='errors.collect("seoMeta")')
+
+      v-flex(xs2)
+        v-btn(color='primary' fab small dark @click='dialogSeoMeta = true')
+          v-icon add
+
+      v-flex(xs12)
+        image-upload(v-model='model.imageList' :multiple='true')
+
       v-flex(xs12)
         h2 Конфиг
 
@@ -25,9 +37,16 @@ v-container(fluid grid-list-lg text-xs-center)
               span {{ item.name }}
 
             v-flex(sm6 xs12)
-              v-select(label='Значение' v-model='item.value' :name='"value " + (index + 1)'
-                :items='model.manufacture.schema[index].optionList' item-text='name' item-value='value'
-                :error-messages='errors.collect("value " + (index + 1))')
+              //- 2 === ManufactureSchemaTypes.SELECT_IMAGE
+              v-select(v-if='model.manufacture.schema[index].type === 2' label='Значение' v-model='item.value'  clearable
+                :items='model.manufacture.schema[index].optionList' item-text='name' item-value='value')
+                template(slot='selection' slot-scope='data')
+                  img(:src='data.item.value' style='height:60px')
+                template(slot='item' slot-scope='data')
+                  img(:src='data.item.value' style='height:100%')
+
+              v-select(v-else label='Значение' v-model='item.value'  clearable
+                :items='model.manufacture.schema[index].optionList' item-text='name' item-value='value')
 
             v-flex(sm3 xs12)
               v-checkbox(label='Не изменяемо' v-model='item.isLocked')
@@ -39,18 +58,23 @@ v-container(fluid grid-list-lg text-xs-center)
 
       template(v-for='(categoryItem, index) in model.categoryList')
         v-flex(md6 xs12 :key='"c" + index')
-          v-layout(row wrap :class='index % 2 === 0? "grey lighten-3" : null')
-            v-flex(xs10)
+          v-layout(row wrap :class='index % 2 === 0? "grey lighten-3" : null' align-center)
+            v-flex(sm7 xs12)
               v-select(label='Категория' v-model='categoryItem.category' autocomplete
                 :items='categoryList | filter(filterSelectedCategory(categoryItem))' item-text='name' item-value='id' return-object
                 :name='"category " + (index + 1)' v-validate='"required"' :error-messages='errors.collect("category " + (index + 1))')
-            v-flex(sm5 xs12)
+            v-flex(sm3 xs7)
               v-checkbox(label='главная' v-model='categoryItem.isMain' @change='checkSingleMainCategory(index)')
 
-            v-flex(sm2 xs12)
+            v-flex(sm2 xs5)
               v-btn(fab dark small color='red' @click='removeCategory(index)')
                 v-icon(dark) remove
 
       v-flex(xs12 text-xs-center)
         v-btn(type='submit') submit
-        v-btn( @click='clear') clear
+        v-btn(@click='clear') clear
+        v-btn(v-if='model.id' @click='createFromModel') создать из текущего
+
+  v-dialog(v-model='dialogSeoMeta' transition='dialog-bottom-transition')
+    .bg__white
+      r-seo-meta-edit(:id='0' :onSubmit='onSeoMetaSubmit')

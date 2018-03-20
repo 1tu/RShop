@@ -8,11 +8,17 @@ import { ManufactureService } from './manufacture.service';
 @ApiUseTags('manufacture')
 @Controller('manufacture')
 export class ManufactureController {
-  constructor(private _service: ManufactureService) { }
+  constructor(private _service: ManufactureService) {}
+
+  @Get('props')
+  @Permissions('ManufactureGet')
+  getProps() {
+    return this._service.getProps();
+  }
 
   @Get(':id')
   @Permissions('ManufactureGet')
-  getOneById( @Param('id') id: number) {
+  getOneById(@Param('id') id: number) {
     return this._service.getOneById(id);
   }
 
@@ -24,19 +30,19 @@ export class ManufactureController {
 
   @Post()
   @Permissions('ManufacturePost')
-  post( @Body() model: ManufactureDto) {
+  post(@Body() model: ManufactureDto) {
     return this._service.post(model);
   }
 
   @Put()
   @Permissions('ManufacturePut')
-  put( @Body() model: ManufactureDto) {
+  put(@Body() model: ManufactureDto) {
     return this._service.put(model);
   }
 
   @Delete(':id')
   @Permissions('ManufactureDelete')
-  delete( @Param('id') id: number) {
+  delete(@Param('id') id: number) {
     return this._service.delete(id);
   }
 }

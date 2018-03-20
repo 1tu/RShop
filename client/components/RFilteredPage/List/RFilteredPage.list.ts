@@ -18,16 +18,22 @@ export class RFilteredPageList extends Vue {
       { value: 'name', text: 'Name' },
       { value: 'url', text: 'Url' },
       {
-        text: 'Filters', sortable: false,
-        transformer: (e: FilteredPageEntity) => `Категории: ${e.filters.categoryIdList.join(', ')}; Свойства: ${e.filters.propertyKeyList.join(', ')}`
+        text: 'Filters',
+        sortable: false,
+        transformer: (e: FilteredPageEntity) =>
+          `Категории: ${e.filters.categoryIdList.join(', ')}; Свойства: ${e.filters.propertyKeyValueList
+            .map(kv => `${kv.key}=${kv.valueList.join('+')}`)
+            .join(', ')}`
       },
       {
-        text: 'Actions', sortable: false, actionList: [
+        text: 'Actions',
+        sortable: false,
+        actionList: [
           { type: 'Get', name: 'info', icon: 'info', onClick: (id: number) => this.$router.push(`/FilteredPage/${id}`) },
           { type: 'Put', name: 'edit', icon: 'edit', onClick: (id: number) => this.$router.push(`/FilteredPage/${id}/edit`) },
-          { type: 'Delete', name: 'delete', icon: 'delete', onClick: (id: number) => this.delete(id) },
+          { type: 'Delete', name: 'delete', icon: 'delete', onClick: (id: number) => this.delete(id) }
         ].filter(item => this.hasPermission(this.constructor.name.replace(/(^R|List$)/g, '') + item.type))
-      },
+      }
     ];
   }
 
@@ -35,4 +41,3 @@ export class RFilteredPageList extends Vue {
     await this.getList();
   }
 }
-

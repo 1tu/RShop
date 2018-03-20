@@ -9,27 +9,29 @@ import {
   CategoryAction,
   CategoryState,
   FilteredPageAction,
+  ManufactureAction,
+  ManufactureState,
   SeoMetaAction,
   SeoMetaMutation,
   SeoMetaState,
   SeoTemplateAction,
+  SeoTemplateMutation,
   SeoTemplateState,
   ShopAction,
-  ShopState,
-  SeoTemplateMutation,
+  ShopState
 } from '../../../store/modules';
 import { RSeoMetaEdit } from '../../RSeoMeta';
 import { RSeoTemplateEdit } from '../../RSeoTemplate';
 
 @Component({
   template: require('./RFilteredPage.edit.pug'),
-  components: { RSeoMetaEdit, RSeoTemplateEdit },
+  components: { RSeoMetaEdit, RSeoTemplateEdit }
 })
 export class RFilteredPageEdit extends Vue {
   @Prop() onSubmit: (model: FilteredPageEntity) => void;
   @Prop() id: number;
 
-  public model: Partial<FilteredPageEntity> = { filters: { categoryIdList: [], propertyKeyList: [] } };
+  public model: Partial<FilteredPageEntity> = { filters: { categoryIdList: [], propertyKeyValueList: [] } };
   public filteredPageList: FilteredPageEntity[] = [];
   public dialogSeoMeta = false;
   public dialogSeoTemplate = false;
@@ -38,6 +40,7 @@ export class RFilteredPageEdit extends Vue {
   @SeoMetaState('list') seoMetaList;
   @SeoTemplateState('list') seoTemplateList;
   @CategoryState('list') categoryList;
+  @ManufactureState('propList') propList;
 
   @FilteredPageAction get;
   @FilteredPageAction put;
@@ -47,15 +50,30 @@ export class RFilteredPageEdit extends Vue {
   @SeoMetaAction('getList') getListSeoMeta;
   @SeoTemplateAction('getList') getListSeoTemplate;
   @CategoryAction('getList') getListCategory;
+  @ManufactureAction('getPropList') getPropList;
 
   @SeoMetaMutation('listAdd') listAddSeoMeta;
   @SeoTemplateMutation('listAdd') listAddSeoTemplate;
+
+  get keyList() {
+    return Object.keys(this.propList);
+  }
+  public valueList(key: string) {
+    return this.propList[key];
+  }
+  public addProp() {
+    this.model.filters.propertyKeyValueList.push({} as any);
+  }
+  public removeProp(index: number) {
+    this.model.filters.propertyKeyValueList.splice(index, 1);
+  }
 
   async mounted() {
     this.getListShop();
     this.getListSeoMeta();
     this.getListSeoTemplate();
     this.getListCategory();
+    this.getPropList();
     const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
@@ -87,8 +105,7 @@ export class RFilteredPageEdit extends Vue {
   }
 
   public clear() {
-    this.model = { id: this.model.id, filters: { categoryIdList: [], propertyKeyList: [] } };
+    this.model = { id: this.model.id, filters: { categoryIdList: [], propertyKeyValueList: [] } };
     this.$validator.reset();
   }
 }
-

@@ -15,7 +15,9 @@ export class CategoryPostDto {
   @MaxLength(200)
   nameTranslit: string;
 
-  @IsBoolean() isBase: boolean;
+  @ValidateIf((e, value) => value)
+  @IsBoolean()
+  isBase: boolean;
 
   @ValidateNested()
   @Type(() => CategoryShopDto)

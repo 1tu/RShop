@@ -7,11 +7,13 @@ import { ManufactureStoreState } from './manufacture.storeState';
 import { manufactureApi } from '../../../api';
 import { ManufactureEntity } from '../../../../server/modules/manufacture/manufacture.entity';
 import { EntityType } from '../../../../shared/Entity.shared';
+import { ManufacturePropList } from '.';
 
 const storeName: EntityType = 'Manufacture';
 const state: ManufactureStoreState = {
   item: undefined,
-  list: []
+  list: [],
+  propList: undefined
 };
 
 const getters = getter(state, {
@@ -19,7 +21,10 @@ const getters = getter(state, {
     return (id: number) => {
       let index: number;
       state.list.some((item, i) => {
-        if (item.id === id) { index = i; return true; }
+        if (item.id === id) {
+          index = i;
+          return true;
+        }
       });
       return index;
     };
@@ -41,18 +46,32 @@ const mutations = mutation(state, {
   },
   listAdd(state, e: ManufactureEntity) {
     state.list = state.list.concat(e);
+  },
+  propList(state, list: ManufacturePropList) {
+    state.propList = list;
   }
 });
 
 const actions = action(state, {
   async getList({ commit, state }) {
-    const list = await manufactureApi.getList().catch(e => { console.error(e); });
+    const list = await manufactureApi.getList().catch(e => {
+      console.error(e);
+    });
     commit(types.mutation.list, list);
     return state.list;
   },
+  async getPropList({ commit, state }) {
+    const propList = await manufactureApi.getProps().catch(e => {
+      console.error(e);
+    });
+    commit(types.mutation.propList, propList);
+    return state.propList;
+  },
   async get({ commit, state }, id: number) {
     if (state.item && state.item.id === id) return state.item;
-    const item = await manufactureApi.get(id).catch(e => { console.error(e); });
+    const item = await manufactureApi.get(id).catch(e => {
+      console.error(e);
+    });
     commit(types.mutation.item, item);
     return state.item;
   },
@@ -63,7 +82,7 @@ const actions = action(state, {
     model = await manufactureApi.put(model);
     commit(types.mutation.item, model);
     if (getters.itemById(model.id)) {
-      commit(types.mutation.list, state.list.map(item => item.id === model.id ? model : item));
+      commit(types.mutation.list, state.list.map(item => (item.id === model.id ? model : item)));
     }
     return model;
   },
@@ -81,7 +100,11 @@ const types = {
 };
 
 export const Manufacture = {
-  namespaced: true, state, getters, mutations, actions
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
 };
 
 export const ManufactureTypes = types;

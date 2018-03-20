@@ -1,0 +1,46 @@
+v-layout(row wrap text-xs-center)
+  v-flex(xs12 v-if='model && typeofModel() === "array"')
+    .d-inline-block(v-for='(img, index) in model' :key='img.id')
+      img.d-block.mr-1(:src='img.filepath'  style='height: 100px')
+      v-btn.d-block(fab dark small color='red' @click='removeImage(index)')
+        v-icon(dark) remove
+
+  v-flex(xs12 v-else-if='model && valueType')
+    img(:src='model' style='height: 100px')
+    v-btn(fab dark small color='red' @click='removeImage()')
+      v-icon(dark) remove
+
+  v-flex(xs12 v-else-if='model && !valueType && typeofModel() === "object"')
+    img(:src='model.filepath' style='height: 100px')
+    v-btn(fab dark small color='red' @click='removeImage()')
+      v-icon(dark) remove
+
+
+  v-flex(xs12)
+    v-btn(@click='dialog = true') Upload image
+
+  v-dialog(v-model='dialog' transition='dialog-bottom-transition')
+    v-layout.bg__white.pa-4(row wrap text-xs-center)
+      input(ref='fileInput' style='display:none' type='file' @change='onFileSelect')
+
+      v-flex(md6 xs12)
+        .avatar.avatar--tile.grey.lighten-4(style='height:300px')
+          img(ref='image')
+
+
+      v-flex(md6 xs12)
+        v-layout(row wrap)
+          v-flex(xs12)
+            v-text-field(label='Альт' v-model='tempModel.alt'
+              name='alt' v-validate='"required|max:200"' :error-messages='errors.collect("alt")')
+
+          v-flex(xs12)
+            v-text-field(label='Название' v-model='tempModel.name')
+
+          v-flex(xs12)
+            v-text-field(label='Описание' v-model='tempModel.description' multi-line rows='2' auto-grow)
+
+      v-flex.mt-3(xs12)
+        v-btn(@click='$refs.fileInput.click()') Pick image
+        v-btn(v-show='selectedFile' @click='submit') Upload
+

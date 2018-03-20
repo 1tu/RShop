@@ -5,6 +5,7 @@ import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import * as fileUpload from 'express-fileupload';
 import { join } from 'path';
 
 import { config } from '../config';
@@ -16,16 +17,19 @@ async function bootstrap() {
   app.use(express.static(join(__dirname, '../public')));
   app.use(cookieParser());
   app.use(bodyParser.json());
+  app.use(fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }));
 
-  app.use(session({
-    secret: config.auth.secret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      // TODO: when HTTPS
-      // secure: true
-    }
-  }));
+  app.use(
+    session({
+      secret: config.auth.secret,
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        // TODO: when HTTPS
+        // secure: true
+      }
+    })
+  );
 
   app.use(passport.initialize());
   app.use(passport.session());
