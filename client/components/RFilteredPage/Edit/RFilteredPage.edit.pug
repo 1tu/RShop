@@ -42,7 +42,7 @@ v-container(fluid grid-list-lg text-xs-center)
 
       v-flex(sm4 xs10)
         v-select(label='Метатэги' v-model='model.seoMeta' autocomplete
-          :items='seoMetaList' item-text='title' item-value='id' return-object
+          :items='seoMetaList' item-text='keys[0]' item-value='id' return-object
           name='seoMeta' v-validate='"required"' :error-messages='errors.collect("seoMeta")')
 
       v-flex(xs2)
