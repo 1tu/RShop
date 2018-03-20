@@ -11,7 +11,8 @@ v-container(fluid grid-list-lg text-xs-center)
           name='video' v-validate='"max:200"' :error-messages='errors.collect("video")')
 
       v-flex(xs12)
-        v-text-field(label='Content' v-model='model.content' multi-line rows='2' auto-grow)
+        h3 Контент
+        tinymce(id='d1fas' v-model='model.content')
 
       v-flex(xs12 text-xs-center)
         v-btn(type='submit') submit

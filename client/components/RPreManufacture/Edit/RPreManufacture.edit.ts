@@ -18,11 +18,12 @@ import {
   SeoMetaMutation,
   SeoMetaState
 } from '../../../store/modules';
+import { ImageUpload } from '../../_shared/ImageUpload/ImageUpload.component';
 import { RSeoMetaEdit } from '../../RSeoMeta';
 
 @Component({
   template: require('./RPreManufacture.edit.pug'),
-  components: { RSeoMetaEdit }
+  components: { RSeoMetaEdit, ImageUpload }
 })
 export class RPreManufactureEdit extends Vue {
   @Prop() onSubmit: (model: PreManufactureEntity) => void;
@@ -54,6 +55,13 @@ export class RPreManufactureEdit extends Vue {
       item && (this.model = cloneDeep(item));
       this.onSelectManufacture(this.model.manufacture);
     }
+  }
+
+  public createFromModel() {
+    this.model = cloneDeep(this.model);
+    this.model.id = undefined;
+    this.model.seoMeta = undefined;
+    if (this.model.categoryList) this.model.categoryList.forEach(c => (c.id = undefined));
   }
 
   public onSeoMetaSubmit(model: SeoMetaEntity) {

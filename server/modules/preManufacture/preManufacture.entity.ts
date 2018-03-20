@@ -18,7 +18,7 @@ export class PreManufactureEntity extends AEntityTimestamp {
   @Column('json', { default: [] })
   config: PreManufactureConfigItem[];
 
-  @ManyToMany(type => ImageEntity)
+  @ManyToMany(type => ImageEntity, { eager: true })
   @JoinTable()
   imageList: ImageEntity;
 

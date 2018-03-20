@@ -25,42 +25,65 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin'),
 //   }
 // });
 
-webpackConfig.module.rules = [...webpackConfig.module.rules,
-{
-  test: /\.styl$/,
-  use: [
-    'style-loader',
-    {
-      loader: 'css-loader',
-      options: {
-        minimize: true,
-        sourceMap: false,
-        importLoaders: 2
+webpackConfig.module.rules = [
+  ...webpackConfig.module.rules,
+  {
+    test: /\.styl$/,
+    use: [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          minimize: true,
+          sourceMap: false,
+          importLoaders: 2
+        }
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: false,
+          plugins: () => [autoprefixer]
+        }
+      },
+      'stylus-loader',
+      {
+        loader: 'vuetify-loader',
+        options: {
+          theme: helpers.root('./client/stylus/theme.styl')
+        }
       }
-    }, {
-      loader: 'postcss-loader',
-      options: {
-        sourceMap: false,
-        plugins: () => [autoprefixer]
+    ]
+  },
+  {
+    test: /\.css$/,
+    use: [
+      'style-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          minimize: true,
+          sourceMap: false,
+          importLoaders: 2
+        }
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: false,
+          plugins: () => [autoprefixer]
+        }
       }
-    },
-    'stylus-loader',
-    {
-      loader: 'vuetify-loader',
-      options: {
-        theme: helpers.root('./client/stylus/theme.styl')
-      }
-    }
-  ],
-},
-{
-  test: /\.(jpg|png|gif)$/,
-  loader: 'file-loader?name=assets/img/[name].[ext]'
-},
-{
-  test: /\.(eot|svg|ttf|woff|woff2)$/,
-  loader: 'file-loader?name=fonts/[name].[ext]'
-}
+    ]
+  },
+  {
+    test: /\.(jpg|png|gif)$/,
+    loader: 'file-loader?name=assets/img/[name].[ext]'
+  },
+  {
+    test: /\.(eot|svg|ttf|woff|woff2)$/,
+    loader: 'file-loader?name=fonts/[name].[ext]'
+  }
 ];
 
 // ensure ts lint fails the build
@@ -68,19 +91,20 @@ webpackConfig.module.rules[0].options = {
   failOnHint: true
 };
 
-webpackConfig.plugins = [...webpackConfig.plugins,
-// purifyCss,
-new UglifyJsPlugin({
-  include: /\.min\.js$/,
-  minimize: true
-}),
-new CompressionPlugin({
-  asset: '[path].gz[query]',
-  test: /\.min\.js$/
-}),
-new DefinePlugin({
-  'process.env': env
-})
+webpackConfig.plugins = [
+  ...webpackConfig.plugins,
+  // purifyCss,
+  new UglifyJsPlugin({
+    include: /\.min\.js$/,
+    minimize: true
+  }),
+  new CompressionPlugin({
+    asset: '[path].gz[query]',
+    test: /\.min\.js$/
+  }),
+  new DefinePlugin({
+    'process.env': env
+  })
 ];
 
 module.exports = webpackConfig;

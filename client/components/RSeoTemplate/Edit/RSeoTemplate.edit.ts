@@ -4,15 +4,17 @@ import { Component, Prop } from 'vue-property-decorator';
 
 import { SeoTemplateEntity } from '../../../../server/modules/seoTemplate/seoTemplate.entity';
 import { SeoTemplateAction } from '../../../store/modules';
+import { Tinymce } from '../../_shared/Tinymce/tinymce.component';
 
 @Component({
   template: require('./RSeoTemplate.edit.pug'),
+  components: { Tinymce }
 })
 export class RSeoTemplateEdit extends Vue {
   @Prop() onSubmit: (model: SeoTemplateEntity) => void;
   @Prop() id: number;
 
-  public model: Partial<SeoTemplateEntity> = { };
+  public model: Partial<SeoTemplateEntity> = {};
 
   @SeoTemplateAction get;
   @SeoTemplateAction put;
@@ -41,4 +43,3 @@ export class RSeoTemplateEdit extends Vue {
     this.$validator.reset();
   }
 }
-

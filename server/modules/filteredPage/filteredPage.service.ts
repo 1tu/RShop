@@ -8,23 +8,22 @@ import { FilteredPageFilters } from './filteredPage.filters';
 
 @Component()
 export class FilteredPageService extends AServiceBase<FilteredPageEntity> {
-  constructor(
-    @Inject('FilteredPageRepositoryToken') _repository: Repository<FilteredPageEntity>,
-    private _categoryService: CategoryService
-  ) { super(_repository); }
+  constructor(@Inject('FilteredPageRepositoryToken') _repository: Repository<FilteredPageEntity>, private _categoryService: CategoryService) {
+    super(_repository);
+  }
 
   getOneById(id, opts?: FindOneOptions<FilteredPageEntity>): Promise<FilteredPageEntity> {
     return this._repository.findOneById(id, { ...opts, relations: ['shop'] });
   }
 
   async post(model: Partial<FilteredPageEntity>, opts?: SaveOptions) {
-    if (!model.url) model.url = await this._makeUrl(model.filters);
+    model.url = await this._makeUrl(model.filters);
     const instance = this._repository.create(model);
     return this._repository.save(instance, opts);
   }
 
   async put(model: Partial<FilteredPageEntity>, opts?: SaveOptions) {
-    if (!model.url) model.url = await this._makeUrl(model.filters);
+    model.url = await this._makeUrl(model.filters);
     let instance = await this._repository.findOneById(model.id);
     this._repository.merge(instance, model);
     return this._repository.save(instance, opts);
@@ -32,6 +31,6 @@ export class FilteredPageService extends AServiceBase<FilteredPageEntity> {
 
   private async _makeUrl(filters: FilteredPageFilters) {
     const res = await this._categoryService.getByIds(filters.categoryIdList);
-    return '/catalog/' + res.map(c => c.nameTranslit).join(',') + ';' + filters.propertyKeyList.join(',');
+    return '/' + res.map(c => c.nameTranslit).join(',') + ';' + filters.propertyKeyValueList.map(kv => `${kv.key}=${kv.valueList.join('+')}`).join(',');
   }
 }

@@ -9,10 +9,11 @@ import { ProductCategoryEntity } from '../../../../server/modules/product_catego
 import { CategoryAction, CategoryState, ProductAction, SeoMetaAction, SeoMetaMutation, SeoMetaState, ShopAction, ShopState } from '../../../store/modules';
 import { RSeoMetaEdit } from '../../RSeoMeta';
 import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
+import { ImageUpload } from '../../_shared/ImageUpload/ImageUpload.component';
 
 @Component({
   template: require('./RProduct.edit.pug'),
-  components: { RSeoMetaEdit }
+  components: { RSeoMetaEdit, ImageUpload }
 })
 export class RProductEdit extends Vue {
   @Prop() onSubmit: (model: ProductEntity) => void;

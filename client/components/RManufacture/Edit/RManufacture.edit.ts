@@ -3,15 +3,13 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
 import { ManufactureEntity } from '../../../../server/modules/manufacture/manufacture.entity';
-import {
-  ManufactureSchemaItem,
-  ManufactureSchemaOption,
-  ManufactureSchemaTypesMap,
-} from '../../../../server/modules/manufacture/manufacture.schema';
+import { ManufactureSchemaItem, ManufactureSchemaOption, ManufactureSchemaTypesMap } from '../../../../server/modules/manufacture/manufacture.schema';
 import { ManufactureAction, ProductAction, ProductState } from '../../../store/modules';
+import { ImageUpload } from '../../_shared/ImageUpload/ImageUpload.component';
 
 @Component({
   template: require('./RManufacture.edit.pug'),
+  components: { ImageUpload }
 })
 export class RManufactureEdit extends Vue {
   @Prop() onSubmit: (model: ManufactureEntity) => void;
@@ -66,4 +64,3 @@ export class RManufactureEdit extends Vue {
     this.$validator.reset();
   }
 }
-

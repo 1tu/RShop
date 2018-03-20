@@ -18,19 +18,22 @@ export class OrderEntity extends AEntityTimestamp {
   @Column('decimal', { precision: 14, scale: 2, nullable: true })
   manufacturingCost: string;
 
+  @Column('text') description: string;
+
   // TODO: @Column('enum', { enum: OrderStateEnum })
   @Column({ default: 0 })
   state: number;
 
-  @Column('json')
-  stateHistory: StateHistory[];
+  @Column('json') stateHistory: StateHistory[];
 
   @OneToMany(type => PaymentEntity, payment => payment.order)
   paymentList: PaymentEntity[];
 
   // TODO: при удалении связи экземпляр OrderProductEntity не удаляется из БД
   @OneToMany(type => OrderProductEntity, op => op.order, {
-    cascadeInsert: true, cascadeUpdate: true, eager: true
+    cascadeInsert: true,
+    cascadeUpdate: true,
+    eager: true
   })
   productList: OrderProductEntity[];
 
@@ -51,7 +54,6 @@ export class OrderEntity extends AEntityTimestamp {
   @OneToOne(type => DeliveryEntity, { cascadeInsert: true, onDelete: 'CASCADE' })
   @JoinColumn()
   delivery: DeliveryEntity;
-
 
   @BeforeInsert()
   public createHistory() {

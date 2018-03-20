@@ -5,15 +5,18 @@ import { UserEntity } from '../user/user.entity';
 
 @Entity('image')
 export class ImageEntity extends AEntityTimestamp {
-  @Column({ length: 100 })
+  @Column({ length: 200 })
+  alt: string;
+
+  @Column({ length: 150, nullable: true })
   name: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   description: string;
 
-  @Column({ length: 100 })
-  filename: string;
+  @Column({ length: 150 })
+  filepath: string;
 
   @ManyToOne(type => UserEntity)
-  author: UserEntity;
+  user: UserEntity;
 }

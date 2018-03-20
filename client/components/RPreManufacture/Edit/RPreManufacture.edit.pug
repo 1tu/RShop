@@ -16,12 +16,16 @@ v-container(fluid grid-list-lg text-xs-center)
           name='description' v-validate='"required"' :error-messages='errors.collect("description")')
 
       v-flex(sm4 xs10)
-        v-select(label='Seo meta' v-model='model.seoMeta' autocomplete
-          :items='seoMetaList' item-text='title' item-value='id' return-object)
+        v-select(label='Метатэги' v-model='model.seoMeta' autocomplete
+          :items='seoMetaList' item-text='keys[0]' item-value='id' return-object
+          name='seoMeta' v-validate='"required"' :error-messages='errors.collect("seoMeta")')
 
       v-flex(xs2)
         v-btn(color='primary' fab small dark @click='dialogSeoMeta = true')
           v-icon add
+
+      v-flex(xs12)
+        image-upload(v-model='model.imageList' :multiple='true')
 
       v-flex(xs12)
         h2 Конфиг
@@ -33,9 +37,16 @@ v-container(fluid grid-list-lg text-xs-center)
               span {{ item.name }}
 
             v-flex(sm6 xs12)
-              v-select(label='Значение' v-model='item.value' :name='"value " + (index + 1)'
-                :items='model.manufacture.schema[index].optionList' item-text='name' item-value='value'
-                :error-messages='errors.collect("value " + (index + 1))')
+              //- 2 === ManufactureSchemaTypes.SELECT_IMAGE
+              v-select(v-if='model.manufacture.schema[index].type === 2' label='Значение' v-model='item.value'  clearable
+                :items='model.manufacture.schema[index].optionList' item-text='name' item-value='value')
+                template(slot='selection' slot-scope='data')
+                  img(:src='data.item.value' style='height:60px')
+                template(slot='item' slot-scope='data')
+                  img(:src='data.item.value' style='height:100%')
+
+              v-select(v-else label='Значение' v-model='item.value'  clearable
+                :items='model.manufacture.schema[index].optionList' item-text='name' item-value='value')
 
             v-flex(sm3 xs12)
               v-checkbox(label='Не изменяемо' v-model='item.isLocked')
@@ -61,7 +72,8 @@ v-container(fluid grid-list-lg text-xs-center)
 
       v-flex(xs12 text-xs-center)
         v-btn(type='submit') submit
-        v-btn( @click='clear') clear
+        v-btn(@click='clear') clear
+        v-btn(v-if='model.id' @click='createFromModel') создать из текущего
 
   v-dialog(v-model='dialogSeoMeta' transition='dialog-bottom-transition')
     .bg__white

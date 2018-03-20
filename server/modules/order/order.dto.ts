@@ -1,16 +1,5 @@
 import { Type } from 'class-transformer';
-import {
-  ArrayNotEmpty,
-  IsArray,
-  IsIn,
-  IsInt,
-  IsMobilePhone,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  ValidateIf,
-  ValidateNested,
-} from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsIn, IsInt, IsMobilePhone, IsNotEmpty, IsNumber, IsString, ValidateIf, ValidateNested } from 'class-validator';
 
 import { enum2arr } from '../../../helpers/enum.helper';
 import { DtoBase } from '../../common/entity/base.dto';
@@ -25,21 +14,23 @@ import { OrderStateEnum } from './order.state.enum';
 import { IsDecimalString } from '../../../helpers/validators/IsDecimalString.validator';
 
 export class OrderPostDto {
-  @IsDecimalString()
-  price: string;
+  @IsDecimalString() price: string;
 
   @ValidateIf((e, value) => value)
   @IsDecimalString()
   manufacturingCost?: string;
 
+  @ValidateIf((e, value) => value)
+  @IsString()
+  description: string;
+
   @IsIn(enum2arr(OrderStateEnum))
   state: number;
 
-  @ArrayNotEmpty()
+  @ArrayNotEmpty() productList: OrderProductEntity[];
   // TODO: create dto for junction table
   // @ValidateNested()
   // @Type(() => DtoBase)
-  productList: OrderProductEntity[];
 
   @IsNotEmpty()
   @ValidateNested()
@@ -77,24 +68,19 @@ export class OrderApiPostDto {
   @IsString()
   productName: string;
 
-  @IsString()
-  deliveryServiceName: string;
+  @IsString() deliveryServiceName: string;
 
-  @IsNumber()
-  deliveryPrice: string;
+  @IsNumber() deliveryPrice: string;
 
-  @IsString()
-  city: string;
+  @IsString() city: string;
 
   @ValidateIf((e, value) => value)
   @IsInt()
   count: number;
 
-  @IsMobilePhone('ru-RU')
-  customerPhone: string;
+  @IsMobilePhone('ru-RU') customerPhone: string;
 
-  @IsString()
-  customerName: string;
+  @IsString() customerName: string;
 
   @ValidateIf((e, value) => value)
   @IsArray()

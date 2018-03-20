@@ -15,14 +15,14 @@ import {
   SeoTemplateMutation,
   SeoTemplateState,
   ShopAction,
-  ShopState,
+  ShopState
 } from '../../../store/modules';
 import { RSeoMetaEdit } from '../../RSeoMeta';
 import { RSeoTemplateEdit } from '../../RSeoTemplate';
 
 @Component({
   template: require('./RCategory.edit.pug'),
-  components: { RSeoMetaEdit, RSeoTemplateEdit },
+  components: { RSeoMetaEdit, RSeoTemplateEdit }
 })
 export class RCategoryEdit extends Vue {
   @Prop() onSubmit: (model: CategoryEntity) => void;
@@ -52,7 +52,7 @@ export class RCategoryEdit extends Vue {
   private _lastSeoItem: CategoryShopEntity;
 
   async mounted() {
-    this.getListShop();
+    await this.getListShop();
     this.getListSeoMeta();
     this.getListSeoTemplate();
     this.categoryList = await this.getListCategory();
@@ -61,6 +61,10 @@ export class RCategoryEdit extends Vue {
       this.categoryList = this.categoryList.filter(c => c.id !== id);
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
+    } else {
+      // TODO: remove after contenting
+      const finded = this.shopList.filter(s => s.host === 'crafteam.com');
+      if (finded.length) this.model.seoList[0].shop = finded[0];
     }
   }
 
@@ -105,4 +109,3 @@ export class RCategoryEdit extends Vue {
     this.$validator.reset();
   }
 }
-

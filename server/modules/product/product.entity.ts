@@ -23,7 +23,7 @@ export class ProductEntity extends AEntityTimestamp {
   @JoinColumn()
   seoMeta: SeoMetaEntity;
 
-  @ManyToMany(type => ImageEntity)
+  @ManyToMany(type => ImageEntity, { eager: true })
   @JoinTable()
   imageList: ImageEntity;
 
