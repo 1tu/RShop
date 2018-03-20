@@ -27,7 +27,7 @@ v-container(fluid grid-list-lg text-xs-center)
         v-layout.mb-3(row wrap v-for='(seoItem, index) in model.seoList' :key='index' :class='index % 2 === 0? "grey lighten-3" : null')
           v-flex(sm4 xs10)
             v-select(label='Метатэги' v-model='seoItem.seoMeta' autocomplete
-              :items='seoMetaList' item-text='title' item-value='id' return-object
+              :items='seoMetaList' item-text='keys[0]' item-value='id' return-object
               :name='"seoMeta" + (index + 1)' v-validate='"required"' :error-messages='errors.collect("seoMeta" + (index + 1))')
 
           v-flex(xs2)
