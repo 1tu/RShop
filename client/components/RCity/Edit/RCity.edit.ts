@@ -3,17 +3,19 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
 import { CityEntity } from '../../../../server/modules/city/city.entity';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 import { CityAction } from '../../../store/modules';
 
 @Component({
-  template: require('./RCity.edit.pug'),
+  template: require('./RCity.edit.pug')
 })
 export class RCityEdit extends Vue {
   @Prop() onSubmit: (model: CityEntity) => void;
   @Prop() id: number;
 
   public model: Partial<CityEntity> = {};
-
+  @Mutation alertAdd;
   @CityAction get;
   @CityAction put;
   @CityAction post;
@@ -33,6 +35,7 @@ export class RCityEdit extends Vue {
       else this.$router.push('/City');
     } catch (e) {
       console.log('city edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -41,4 +44,3 @@ export class RCityEdit extends Vue {
     this.$validator.reset();
   }
 }
-

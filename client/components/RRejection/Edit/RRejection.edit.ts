@@ -4,10 +4,12 @@ import { Component, Prop } from 'vue-property-decorator';
 
 import { RejectionEntity } from '../../../../server/modules/rejection/rejection.entity';
 import { RejectionReasonEnumMap } from '../../../../server/modules/rejection/rejection.reason.enum';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 import { RejectionAction } from '../../../store/modules';
 
 @Component({
-  template: require('./RRejection.edit.pug'),
+  template: require('./RRejection.edit.pug')
 })
 export class RRejectionEdit extends Vue {
   @Prop() onSubmit: (model: RejectionEntity) => void;
@@ -16,6 +18,7 @@ export class RRejectionEdit extends Vue {
   public model: Partial<RejectionEntity> = {};
   public reasonList = RejectionReasonEnumMap;
 
+  @Mutation alertAdd;
   @RejectionAction get;
   @RejectionAction put;
   @RejectionAction post;
@@ -35,6 +38,7 @@ export class RRejectionEdit extends Vue {
       else this.$router.push('/Rejection');
     } catch (e) {
       console.log('rejection edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -43,4 +47,3 @@ export class RRejectionEdit extends Vue {
     this.$validator.reset();
   }
 }
-

@@ -7,8 +7,7 @@ import { ProductEntity } from '../product/product.entity';
 
 @Entity('order_product')
 export class OrderProductEntity extends AEntityBase {
-  @Column()
-  count: number;
+  @Column() count: number;
 
   @Column('json', { nullable: true })
   config: ManufactureConfigItem[];

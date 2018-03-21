@@ -5,9 +5,11 @@ import { Component, Prop } from 'vue-property-decorator';
 import { PaymentServiceEntity } from '../../../../server/modules/paymentService/paymentService.entity';
 import { PaymentServiceTaxTypeEnumMap } from '../../../../server/modules/paymentService/paymentService.taxType.enum';
 import { DeliveryServiceAction, DeliveryServiceState, PaymentServiceAction } from '../../../store/modules';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 
 @Component({
-  template: require('./RPaymentService.edit.pug'),
+  template: require('./RPaymentService.edit.pug')
 })
 export class RPaymentServiceEdit extends Vue {
   @Prop() onSubmit: (model: PaymentServiceEntity) => void;
@@ -15,6 +17,7 @@ export class RPaymentServiceEdit extends Vue {
 
   public model: Partial<PaymentServiceEntity> = {};
   public taxTypeList = PaymentServiceTaxTypeEnumMap;
+  @Mutation alertAdd;
   @DeliveryServiceState('list') deliveryServiceList;
 
   @PaymentServiceAction get;
@@ -39,6 +42,7 @@ export class RPaymentServiceEdit extends Vue {
       else this.$router.push('/PaymentService');
     } catch (e) {
       console.log('paymentService edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -47,4 +51,3 @@ export class RPaymentServiceEdit extends Vue {
     this.$validator.reset();
   }
 }
-

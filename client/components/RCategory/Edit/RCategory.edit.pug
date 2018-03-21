@@ -1,5 +1,6 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Category {{ model.id? 'edit' : 'create' }}
+  v-btn(type='submit') submit
   v-form(@submit.prevent='submit')
     v-layout(row wrap v-if='model' align-center)
       v-flex(md3 sm6 xs12)
@@ -54,7 +55,7 @@ v-container(fluid grid-list-lg text-xs-center)
 
       v-flex(xs12 text-xs-center)
         v-btn(type='submit') submit
-        v-btn( @click='clear') clear
+        v-btn(@click='clear') clear
 
   v-dialog(v-model='dialogSeoMeta' transition='dialog-bottom-transition')
     .bg__white

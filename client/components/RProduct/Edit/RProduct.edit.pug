@@ -1,30 +1,43 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Product {{ model.id? 'edit' : 'create' }}
+  v-btn(type='submit') submit
   v-form(@submit.prevent='submit')
     v-layout(row wrap v-if='model' align-center)
       v-flex(v-if='model.manufacture' xs12)
         v-btn(@click='$router.push("/Manufacture/"+ model.manufacture.id +"/edit")') Мануфактура
 
-      v-flex(sm8 xs12)
-        v-text-field(label='Название' v-model='model.name' name='name'
-          v-validate='"required|max:100"' :error-messages='errors.collect("name")')
+      v-flex(sm6 xs12)
+        v-text-field(label='Название' v-model='model.name'
+          name='name' v-validate='"required|max:150"' :error-messages='errors.collect("name")')
 
-      v-flex(sm4 xs12)
+      v-flex(sm6 xs12)
+        v-text-field(label='Название транслитизированное' v-model='model.nameTranslit'
+          name='nameTranslit' v-validate='"required|max:150"' :error-messages='errors.collect("nameTranslit")')
+
+      v-flex(md10 sm9 xs12)
+        v-text-field(label='Описание' v-model='model.description' multi-line rows='2' auto-grow)
+
+      v-flex(md2 sm3 xs12)
         v-select(v-if='!model.id' label='Магазин' v-model='model.shop'  autocomplete
           :items='shopList' item-text='name' item-value='id' return-object
           name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
         p(v-if='model.id') {{ `${model.shop.name} (${model.shop.host})` }}
 
-      v-flex(xs12)
-        v-text-field(label='Описание' v-model='model.description' multi-line rows='2' auto-grow)
-
       v-flex(md4 xs10)
-        v-select(label='Seo meta' v-model='model.seoMeta' autocomplete
+        v-select(label='Метатэги' v-model='model.seoMeta' autocomplete
           :items='seoMetaList' item-text='keys[0]' item-value='id' return-object
           name='seoMeta' v-validate='"required"' :error-messages='errors.collect("seoMeta")')
 
       v-flex(xs2)
         v-btn(color='primary' fab small dark @click='dialogSeoMeta = true')
+          v-icon add
+
+      v-flex(sm4 xs10)
+        v-select(label='Элементы контента' v-model='model.seoTemplate' autocomplete
+          :items='seoTemplateList' item-text='h1' item-value='id' return-object)
+
+      v-flex(xs2)
+        v-btn(color='primary' fab small dark @click='dialogSeoTemplate = true')
           v-icon add
 
       v-flex(xs12)
@@ -73,3 +86,7 @@ v-container(fluid grid-list-lg text-xs-center)
   v-dialog(v-model='dialogSeoMeta' transition='dialog-bottom-transition')
     .bg__white
       r-seo-meta-edit(:id='0' :onSubmit='onSeoMetaSubmit')
+
+  v-dialog(v-model='dialogSeoTemplate' transition='dialog-bottom-transition')
+    .bg__white
+      r-seo-template-edit(:id='0' :onSubmit='onSeoTemplateSubmit')

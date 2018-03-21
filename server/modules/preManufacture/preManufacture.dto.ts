@@ -5,11 +5,16 @@ import { DtoBase } from '../../common/entity/base.dto';
 import { ManufactureEntity } from '../manufacture/manufacture.entity';
 import { SeoMetaEntity } from '../seoMeta/seoMeta.entity';
 import { PreManufactureConfigItem } from './preManufacture.configItem';
+import { SeoTemplateEntity } from '../seoTemplate/seoTemplate.entity';
 
 export class PreManufactureDto {
   @IsString()
-  @MaxLength(100)
+  @MaxLength(150)
   name: string;
+
+  @IsString()
+  @MaxLength(150)
+  nameTranslit: string;
 
   @ValidateIf((e, value) => value)
   @IsString()
@@ -32,4 +37,9 @@ export class PreManufactureDto {
   @ValidateNested()
   @Type(() => DtoBase)
   seoMeta: SeoMetaEntity;
+
+  @ValidateIf((e, value) => value)
+  @ValidateNested()
+  @Type(() => DtoBase)
+  seoTemplate: SeoTemplateEntity;
 }

@@ -4,10 +4,12 @@ import { Component, Prop } from 'vue-property-decorator';
 
 import { CustomerCameFromEnumMap } from '../../../../server/modules/customer/customer.cameFrom.enum';
 import { CustomerEntity } from '../../../../server/modules/customer/customer.entity';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 import { CityAction, CityState, CustomerAction } from '../../../store/modules';
 
 @Component({
-  template: require('./RCustomer.edit.pug'),
+  template: require('./RCustomer.edit.pug')
 })
 export class RCustomerEdit extends Vue {
   @Prop() onSubmit: (model: CustomerEntity) => void;
@@ -17,6 +19,7 @@ export class RCustomerEdit extends Vue {
 
   public model: Partial<CustomerEntity> = {};
   public cameFromList = CustomerCameFromEnumMap;
+  @Mutation alertAdd;
   @CityState('list') cityList;
 
   @CustomerAction get;
@@ -41,6 +44,7 @@ export class RCustomerEdit extends Vue {
       else this.$router.push('/Customer');
     } catch (e) {
       console.log('customer edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -49,4 +53,3 @@ export class RCustomerEdit extends Vue {
     this.$validator.reset();
   }
 }
-

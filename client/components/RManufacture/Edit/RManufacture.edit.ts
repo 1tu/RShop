@@ -6,6 +6,8 @@ import { ManufactureEntity } from '../../../../server/modules/manufacture/manufa
 import { ManufactureSchemaItem, ManufactureSchemaOption, ManufactureSchemaTypesMap } from '../../../../server/modules/manufacture/manufacture.schema';
 import { ManufactureAction, ProductAction, ProductState } from '../../../store/modules';
 import { ImageUpload } from '../../_shared/ImageUpload/ImageUpload.component';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 
 @Component({
   template: require('./RManufacture.edit.pug'),
@@ -17,6 +19,7 @@ export class RManufactureEdit extends Vue {
 
   public model: Partial<ManufactureEntity> = { schema: [new ManufactureSchemaItem()] };
   public schemaTypeList = ManufactureSchemaTypesMap;
+  @Mutation alertAdd;
   @ProductState('list') productList;
 
   @ManufactureAction get;
@@ -56,6 +59,7 @@ export class RManufactureEdit extends Vue {
       else this.$router.push('/Manufacture');
     } catch (e) {
       console.log('manufacture edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 

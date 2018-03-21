@@ -1,18 +1,36 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { State as vState, Getter as vGetter, Mutation as vMutation, Action as vAction, namespace } from 'vuex-class';
-import { RootState } from './';
+import { RootState, Alert } from './';
 import { keymirror, mutation, decorator, getter, action } from './vuexTypes';
 import {
-  auth, User, Customer, City, Contact, DeliveryService, Delivery, Order,
-  Payment, PaymentService, Product, Rejection, Remind, Shop, Manufacture,
-  Category, FilteredPage, PreManufacture, SeoMeta, SeoTemplate
+  auth,
+  User,
+  Customer,
+  City,
+  Contact,
+  DeliveryService,
+  Delivery,
+  Order,
+  Payment,
+  PaymentService,
+  Product,
+  Rejection,
+  Remind,
+  Shop,
+  Manufacture,
+  Category,
+  FilteredPage,
+  PreManufacture,
+  SeoMeta,
+  SeoTemplate
 } from './modules';
 
 Vue.use(Vuex);
 
 const state: RootState = {
-  navShow: true
+  navShow: true,
+  alertList: []
 };
 
 const getters = getter(state, {});
@@ -20,6 +38,13 @@ const getters = getter(state, {});
 const mutations = mutation(state, {
   toggleNav(state) {
     state.navShow = !state.navShow;
+  },
+  alertAdd(state, item: Alert) {
+    state.alertList = state.alertList.concat(item);
+  },
+  alertRemove(state, index: number) {
+    if (!state.alertList[index]) return;
+    state.alertList = state.alertList.slice(0, index).concat(state.alertList.slice(index + 1));
   }
 });
 
@@ -29,11 +54,28 @@ export const store = new Vuex.Store({
   state,
   mutations,
   modules: {
-    auth, Category, City, Contact, Customer, DeliveryService, Delivery, FilteredPage,
-    Order, Manufacture, Payment, PaymentService, PreManufacture, Product, Rejection,
-    Remind, SeoMeta, SeoTemplate, Shop, User
+    auth,
+    Category,
+    City,
+    Contact,
+    Customer,
+    DeliveryService,
+    Delivery,
+    FilteredPage,
+    Order,
+    Manufacture,
+    Payment,
+    PaymentService,
+    PreManufacture,
+    Product,
+    Rejection,
+    Remind,
+    SeoMeta,
+    SeoTemplate,
+    Shop,
+    User
   },
-  strict: process.env.NODE_ENV !== 'production',
+  strict: process.env.NODE_ENV !== 'production'
 });
 
 const types = {

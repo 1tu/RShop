@@ -1,5 +1,6 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Order {{ model.id? 'edit' : 'create' }}
+  v-btn(type='submit') submit
   v-form(@submit.prevent='submit')
     v-layout(row wrap v-if='model' align-center)
       v-flex(xs12 v-if='model.id')

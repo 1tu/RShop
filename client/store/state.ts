@@ -1,13 +1,33 @@
 import {
-  AuthStoreState, CityStoreState, CustomerStoreState, UserStoreState, ShopStoreState,
-  RemindStoreState, RejectionStoreState, ProductStoreState, PaymentServiceStoreState,
-  PaymentStoreState, OrderStoreState, DeliveryServiceStoreState, ContactStoreState,
-  ManufactureStoreState, CategoryStoreState, FilteredPageStoreState, PreManufactureStoreState,
-  SeoMetaStoreState, SeoTemplateStoreState,
-} from './modules/index';
+  AuthStoreState,
+  CategoryStoreState,
+  CityStoreState,
+  ContactStoreState,
+  CustomerStoreState,
+  DeliveryServiceStoreState,
+  FilteredPageStoreState,
+  ManufactureStoreState,
+  OrderStoreState,
+  PaymentServiceStoreState,
+  PaymentStoreState,
+  PreManufactureStoreState,
+  ProductStoreState,
+  RejectionStoreState,
+  RemindStoreState,
+  SeoMetaStoreState,
+  SeoTemplateStoreState,
+  ShopStoreState,
+  UserStoreState
+} from './modules';
+
+export interface Alert {
+  type: 'success' | 'info' | 'warning' | 'error';
+  text: string;
+}
 
 export interface RootState {
   navShow: boolean;
+  alertList: Alert[];
 
   auth?: AuthStoreState;
   Category?: CategoryStoreState;

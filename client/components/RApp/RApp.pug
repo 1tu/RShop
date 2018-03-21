@@ -1,4 +1,7 @@
 v-app#inspire
+  div(style='z-index:1000;position:fixed;right:0;top:-5px')
+    v-alert(v-for='(item, index) in alertList' style='cursor:pointer' @click='alertRemove(index)'
+      :type='item.type' :value='true' :key='index') {{ item.text }}
   r-header
   r-nav
   main

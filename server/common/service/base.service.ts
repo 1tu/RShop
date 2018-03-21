@@ -3,7 +3,7 @@ import { FindManyOptions, FindOneOptions, RemoveOptions, Repository, SaveOptions
 import { AEntityBase } from '../entity';
 
 export class AServiceBase<E extends AEntityBase> {
-  constructor(protected _repository: Repository<E>) { }
+  constructor(protected _repository: Repository<E>) {}
 
   getOneById(id, opts?: FindOneOptions<E>): Promise<E> {
     return this._repository.findOneById(id, opts);

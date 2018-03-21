@@ -3,16 +3,19 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
 import { ContactEntity } from '../../../../server/modules/contact/contact.entity';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 import { ContactAction, CustomerAction, CustomerState } from '../../../store/modules';
 
 @Component({
-  template: require('./RContact.edit.pug'),
+  template: require('./RContact.edit.pug')
 })
 export class RContactEdit extends Vue {
   @Prop() onSubmit: (model: ContactEntity) => void;
   @Prop() id: number;
 
   public model: Partial<ContactEntity> = {};
+  @Mutation alertAdd;
   @CustomerState('list') customerList;
 
   @ContactAction get;
@@ -37,6 +40,7 @@ export class RContactEdit extends Vue {
       else this.$router.push('/Contact');
     } catch (e) {
       console.log('contact edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -45,4 +49,3 @@ export class RContactEdit extends Vue {
     this.$validator.reset();
   }
 }
-

@@ -7,8 +7,7 @@ import { ManufactureSchemaItem } from './manufacture.schema';
 
 @Entity('manufacture')
 export class ManufactureEntity extends AEntityTimestamp {
-  @Column('json')
-  schema: ManufactureSchemaItem[];
+  @Column('json') schema: ManufactureSchemaItem[];
 
   @OneToOne(type => ProductEntity, product => product.manufacture, { onDelete: 'CASCADE' })
   @JoinColumn()

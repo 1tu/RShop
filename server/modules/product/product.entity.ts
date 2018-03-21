@@ -7,11 +7,15 @@ import { ProductCategoryEntity } from '../product_category/product_category.enti
 import { ShopEntity } from '../shop/shop.entity';
 import { ProductProperty } from './product.property';
 import { SeoMetaEntity } from '../seoMeta/seoMeta.entity';
+import { SeoTemplateEntity } from '../seoTemplate/seoTemplate.entity';
 
 @Entity('product')
 export class ProductEntity extends AEntityTimestamp {
-  @Column({ length: 100 })
+  @Column({ length: 150 })
   name: string;
+
+  @Column({ length: 150, unique: true })
+  nameTranslit: string;
 
   @Column('text', { nullable: true })
   description: string;
@@ -22,6 +26,10 @@ export class ProductEntity extends AEntityTimestamp {
   @OneToOne(type => SeoMetaEntity, { cascadeInsert: true })
   @JoinColumn()
   seoMeta: SeoMetaEntity;
+
+  @OneToOne(type => SeoTemplateEntity, { cascadeInsert: true })
+  @JoinColumn()
+  seoTemplate: SeoTemplateEntity;
 
   @ManyToMany(type => ImageEntity, { eager: true })
   @JoinTable()
@@ -36,7 +44,7 @@ export class ProductEntity extends AEntityTimestamp {
   // TODO: при удалении связи экземпляр ProductCategoryEntity не удаляется из БД
   @OneToMany(type => ProductCategoryEntity, pc => pc.product, {
     cascadeInsert: true,
-    cascadeUpdate: true,
+    cascadeUpdate: true
   })
   categoryList: ProductCategoryEntity[];
 }

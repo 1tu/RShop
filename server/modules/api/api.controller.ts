@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 import { DeepPartial } from 'typeorm/common/DeepPartial';
 
@@ -16,31 +16,32 @@ import { OrderEntity } from '../order/order.entity';
 import { OrderService } from '../order/order.service';
 import { OrderStateEnum } from '../order/order.state.enum';
 import { ProductService } from '../product/product.service';
+import { CategoryService } from '../category/category.service';
 
 @UseGuards(ApiGuard)
 @ApiUseTags('api')
 @Controller('api')
 export class ApiController {
   constructor(
-    private _orderService: OrderService, private _productService: ProductService,
-    private _customerService: CustomerService, private _cityService: CityService,
-    private _deliveryServiceService: DeliveryServiceService, private _event: EventGateway
-  ) { }
+    private _orderService: OrderService,
+    private _productService: ProductService,
+    private _customerService: CustomerService,
+    private _cityService: CityService,
+    private _deliveryServiceService: DeliveryServiceService,
+    private _event: EventGateway,
+    private _categoryService: CategoryService
+  ) {}
 
   @Post('order')
-  async post(@Body() model: OrderApiPostDto, @Res() res) {
+  async postOrder(@Body() model: OrderApiPostDto, @Res() res) {
     const city = await this._cityService.getOne({ where: { name: model.city } });
-    if (!city)
-      return res.status(HttpStatus.BAD_REQUEST).send('Given city not exist');
+    if (!city) return res.status(HttpStatus.BAD_REQUEST).send('Given city not exist');
     const deliveryService = await this._deliveryServiceService.getOne({ where: { name: model.deliveryServiceName } });
-    if (!deliveryService)
-      return res.status(HttpStatus.BAD_REQUEST).send('Given deliveryService not exist');
+    if (!deliveryService) return res.status(HttpStatus.BAD_REQUEST).send('Given deliveryService not exist');
 
     const product = await this._productService.getOne({ where: { name: model.productName } });
-    if (!product)
-      return res.status(HttpStatus.BAD_REQUEST).send('Product with given "productName" not exist');
-    if (model.config && !product.manufacture)
-      return res.status(HttpStatus.BAD_REQUEST).send('Given product havent manufacture');
+    if (!product) return res.status(HttpStatus.BAD_REQUEST).send('Product with given "productName" not exist');
+    if (model.config && !product.manufacture) return res.status(HttpStatus.BAD_REQUEST).send('Given product havent manufacture');
 
     if (model.config) {
       console.log('CFG', model.config);
@@ -49,45 +50,66 @@ export class ApiController {
         if (!cfg) {
           cfg = { key: item.key, name: item.name, value: null };
           model.config.push(cfg);
-        }
-        else cfg.name = item.name;
+        } else cfg.name = item.name;
 
-        if (item.isRequired && !cfg.value ||
-          (cfg.value && item.type !== ManufactureSchemaTypes.TEXT && !item.optionList.some(o => o.value === cfg.value))) return false;
+        if (
+          (item.isRequired && !cfg.value) ||
+          (cfg.value && item.type !== ManufactureSchemaTypes.TEXT && !item.optionList.some(o => o.value === cfg.value))
+        )
+          return false;
         return true;
       });
-      if (!isConfigValid)
-        return res.status(HttpStatus.BAD_REQUEST).send('Config not valid');
+      if (!isConfigValid) return res.status(HttpStatus.BAD_REQUEST).send('Config not valid');
     }
 
     let customer: CustomerPostDto = await this._customerService.getOne({ where: { phone: model.customerPhone } });
-    if (!customer) customer = {
-      nameFirst: model.customerName, phone: model.customerPhone,
-      nameLast: '<УТОЧНИТЬ !!!>', address: '<УТОЧНИТЬ !!!>', city,
-    };
+    if (!customer)
+      customer = {
+        nameFirst: model.customerName,
+        phone: model.customerPhone,
+        nameLast: '<УТОЧНИТЬ !!!>',
+        address: '<УТОЧНИТЬ !!!>',
+        city
+      };
 
     const newOrder: DeepPartial<OrderEntity> = {
       shop: product.shop,
       customer,
       state: model.config ? OrderStateEnum.NEW : OrderStateEnum.RECALL,
-      delivery: model.config ? {
-        state: DeliveryStateEnum.NEW,
-        deliveryService, city,
-        price: model.deliveryPrice,
-      } : undefined
+      delivery: model.config
+        ? {
+            state: DeliveryStateEnum.NEW,
+            deliveryService,
+            city,
+            price: model.deliveryPrice
+          }
+        : undefined
     };
 
     if (model.price) newOrder.price = model.price;
     if (model.manufacturingCost) newOrder.manufacturingCost = model.manufacturingCost;
 
-    if (model.config) newOrder.productList = [{
-      count: model.count,
-      config: model.config,
-      product
-    }];
+    if (model.config)
+      newOrder.productList = [
+        {
+          count: model.count,
+          config: model.config,
+          product
+        }
+      ];
 
     const order = await this._orderService.post(newOrder as any);
     this._event.server.emit(makeEvent('Order', 'Post'), order.id);
     return res.status(HttpStatus.CREATED).send();
+  }
+
+  @Get('category')
+  async getGategory() {
+    return this._categoryService.get();
+  }
+
+  @Get('productsByFilter')
+  async getProductsByFilter() {
+    
   }
 }
