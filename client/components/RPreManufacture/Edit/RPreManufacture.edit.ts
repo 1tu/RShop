@@ -8,6 +8,9 @@ import { PreManufactureConfigItem } from '../../../../server/modules/preManufact
 import { PreManufactureEntity } from '../../../../server/modules/preManufacture/preManufacture.entity';
 import { PreManufactureCategoryEntity } from '../../../../server/modules/preManufacture_category/preManufacture_category.entity';
 import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
+import { SeoTemplateEntity } from '../../../../server/modules/seoTemplate/seoTemplate.entity';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 import {
   CategoryAction,
   CategoryState,
@@ -16,25 +19,32 @@ import {
   PreManufactureAction,
   SeoMetaAction,
   SeoMetaMutation,
-  SeoMetaState
+  SeoMetaState,
+  SeoTemplateAction,
+  SeoTemplateMutation,
+  SeoTemplateState
 } from '../../../store/modules';
 import { ImageUpload } from '../../_shared/ImageUpload/ImageUpload.component';
 import { RSeoMetaEdit } from '../../RSeoMeta';
+import { RSeoTemplateEdit } from '../../RSeoTemplate';
 
 @Component({
   template: require('./RPreManufacture.edit.pug'),
-  components: { RSeoMetaEdit, ImageUpload }
+  components: { RSeoMetaEdit, RSeoTemplateEdit, ImageUpload }
 })
 export class RPreManufactureEdit extends Vue {
   @Prop() onSubmit: (model: PreManufactureEntity) => void;
   @Prop() id: number;
 
-  public dialogSeoMeta = false;
   public model: Partial<PreManufactureEntity> = { config: [], categoryList: [] };
+  public dialogSeoMeta = false;
+  public dialogSeoTemplate = false;
+  @Mutation alertAdd;
 
   @ManufactureState('list') manufactureList;
   @CategoryState('list') categoryList;
   @SeoMetaState('list') seoMetaList;
+  @SeoTemplateState('list') seoTemplateList;
 
   @PreManufactureAction get;
   @PreManufactureAction put;
@@ -42,13 +52,16 @@ export class RPreManufactureEdit extends Vue {
   @ManufactureAction('getList') getListManufacture;
   @CategoryAction('getList') getListCategory;
   @SeoMetaAction('getList') getListSeoMeta;
+  @SeoTemplateAction('getList') getListSeoTemplate;
 
   @SeoMetaMutation('listAdd') listAddSeoMeta;
+  @SeoTemplateMutation('listAdd') listAddSeoTemplate;
 
   async mounted() {
     this.getListCategory();
     this.getListManufacture();
     this.getListSeoMeta();
+    this.getListSeoTemplate();
     const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
@@ -68,6 +81,11 @@ export class RPreManufactureEdit extends Vue {
     this.listAddSeoMeta(model);
     this.model.seoMeta = model;
     this.dialogSeoMeta = false;
+  }
+  public onSeoTemplateSubmit(model: SeoTemplateEntity) {
+    this.listAddSeoTemplate(model);
+    this.model.seoTemplate = model;
+    this.dialogSeoTemplate = false;
   }
 
   public filterSelectedCategory(cItem: PreManufactureCategoryEntity) {
@@ -105,6 +123,7 @@ export class RPreManufactureEdit extends Vue {
       this.$router.push('/PreManufacture');
     } catch (e) {
       console.log('preManufacture edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 

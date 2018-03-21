@@ -4,6 +4,8 @@ import { Component, Prop } from 'vue-property-decorator';
 
 import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
 import { SeoMetaAction } from '../../../store/modules';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 
 @Component({
   template: require('./RSeoMeta.edit.pug')
@@ -13,7 +15,7 @@ export class RSeoMetaEdit extends Vue {
   @Prop() id: number;
 
   public model: Partial<SeoMetaEntity> = { keys: ['', ''] };
-
+  @Mutation alertAdd;
   @SeoMetaAction get;
   @SeoMetaAction put;
   @SeoMetaAction post;
@@ -42,6 +44,7 @@ export class RSeoMetaEdit extends Vue {
       else this.$router.push('/SeoMeta');
     } catch (e) {
       console.log('seoMeta edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 

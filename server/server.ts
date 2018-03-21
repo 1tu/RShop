@@ -11,6 +11,7 @@ import { join } from 'path';
 import { config } from '../config';
 import { ApplicationModule } from './common/app';
 import { PermissionsGuard } from './guards/permission.guard';
+import { ExceptionInterceptor } from './common/interceptors/exception.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(ApplicationModule);
@@ -36,6 +37,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalGuards(new PermissionsGuard(new Reflector()));
+  app.useGlobalInterceptors(new ExceptionInterceptor());
 
   // TODO: swagger implementation
   // const options = new DocumentBuilder()

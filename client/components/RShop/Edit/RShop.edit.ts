@@ -7,6 +7,8 @@ import { ShopEntity } from '../../../../server/modules/shop/shop.entity';
 import { CityAction, CityState, SeoMetaAction, SeoMetaMutation, SeoMetaState, ShopAction } from '../../../store/modules';
 import { RSeoMetaEdit } from '../../RSeoMeta';
 import { RSeoTemplateEdit } from '../../RSeoTemplate';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 
 @Component({
   template: require('./RShop.edit.pug'),
@@ -18,7 +20,7 @@ export class RShopEdit extends Vue {
 
   public model: Partial<ShopEntity> = {};
   public dialogSeoMeta = false;
-
+  @Mutation alertAdd;
   @CityState('list') cityList;
   @SeoMetaState('list') seoMetaList;
 
@@ -55,6 +57,7 @@ export class RShopEdit extends Vue {
       else this.$router.push('/Shop');
     } catch (e) {
       console.log('shop edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 

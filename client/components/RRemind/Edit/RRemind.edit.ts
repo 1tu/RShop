@@ -3,10 +3,12 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
 import { RemindEntity } from '../../../../server/modules/remind/remind.entity';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 import { RemindAction } from '../../../store/modules';
 
 @Component({
-  template: require('./RRemind.edit.pug'),
+  template: require('./RRemind.edit.pug')
 })
 export class RRemindEdit extends Vue {
   @Prop() onSubmit: (model: RemindEntity) => void;
@@ -15,7 +17,7 @@ export class RRemindEdit extends Vue {
   public datePicker = false;
 
   public model: Partial<RemindEntity> = {};
-
+  @Mutation alertAdd;
   @RemindAction get;
   @RemindAction put;
   @RemindAction post;
@@ -35,6 +37,7 @@ export class RRemindEdit extends Vue {
       else this.$router.push('/Remind');
     } catch (e) {
       console.log('remind edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -43,4 +46,3 @@ export class RRemindEdit extends Vue {
     this.$validator.reset();
   }
 }
-

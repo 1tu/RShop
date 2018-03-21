@@ -5,9 +5,11 @@ import { Component, Prop } from 'vue-property-decorator';
 import { DeliveryEntity } from '../../../../server/modules/delivery/delivery.entity';
 import { DeliveryStateEnumMap } from '../../../../server/modules/delivery/delivery.state.enum';
 import { CityAction, CityState, DeliveryAction, DeliveryServiceAction, DeliveryServiceState } from '../../../store/modules';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 
 @Component({
-  template: require('./RDelivery.edit.pug'),
+  template: require('./RDelivery.edit.pug')
 })
 export class RDeliveryEdit extends Vue {
   @Prop() onSubmit: (model: DeliveryEntity) => void;
@@ -21,6 +23,7 @@ export class RDeliveryEdit extends Vue {
 
   public model: Partial<DeliveryEntity> = {};
   public stateList = DeliveryStateEnumMap;
+  @Mutation alertAdd;
   @CityState('list') cityList;
   @DeliveryServiceState('list') deliveryServiceList;
 
@@ -48,6 +51,7 @@ export class RDeliveryEdit extends Vue {
       else this.$router.push('/Delivery');
     } catch (e) {
       console.log('delivery edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -56,4 +60,3 @@ export class RDeliveryEdit extends Vue {
     this.$validator.reset();
   }
 }
-

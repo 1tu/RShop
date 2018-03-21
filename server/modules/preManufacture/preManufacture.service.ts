@@ -18,6 +18,7 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
       .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
       .leftJoinAndSelect('manufacture.product', 'product')
       .leftJoinAndSelect('preManufacture.seoMeta', 'seoMeta')
+      .leftJoinAndSelect('preManufacture.seoTemplate', 'seoTemplate')
       .leftJoinAndSelect('preManufacture.imageList', 'imageList')
       .where('preManufacture.id = :id', { id })
       .getOne();

@@ -14,14 +14,13 @@ export class FilteredPageEntity extends AEntityTimestamp {
   @Column({ nullable: true })
   url: string;
 
-  @Column('json')
-  filters: FilteredPageFilters;
+  @Column('json') filters: FilteredPageFilters;
 
-  @OneToOne(type => SeoTemplateEntity, { eager: true, onDelete: 'CASCADE' })
+  @OneToOne(type => SeoTemplateEntity, { cascadeInsert: true, eager: true })
   @JoinColumn()
   seoTemplate: SeoTemplateEntity;
 
-  @OneToOne(type => SeoMetaEntity, { eager: true, onDelete: 'CASCADE' })
+  @OneToOne(type => SeoMetaEntity, { cascadeInsert: true, eager: true })
   @JoinColumn()
   seoMeta: SeoMetaEntity;
 

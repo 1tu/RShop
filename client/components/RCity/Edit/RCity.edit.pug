@@ -1,10 +1,11 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 City {{ model.id? 'edit' : 'create' }}
+  v-btn(type='submit') submit
   v-form(@submit.prevent='submit')
     v-layout(row wrap v-if='model')
       v-flex(sm6 xs12)
-        v-text-field(label='English name' v-model='model.nameEng' name='nameEng'
-          v-validate='"required|max:50"' :error-messages='errors.collect("nameEng")')
+        v-text-field(label='English name' v-model='model.nameTranslit' name='nameTranslit'
+          v-validate='"required|max:80"' :error-messages='errors.collect("nameTranslit")')
 
       v-flex.mb-5(sm6 xs12)
         v-text-field(label='Название' v-model='model.name' name='name'

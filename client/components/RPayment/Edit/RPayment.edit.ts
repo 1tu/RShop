@@ -6,9 +6,11 @@ import { PaymentEntity } from '../../../../server/modules/payment/payment.entity
 import { PaymentStateEnumMap } from '../../../../server/modules/payment/payment.state.enum';
 import { CurrencyEnumMap } from '../../../../shared/enum/currency.enum';
 import { OrderAction, OrderState, PaymentAction, PaymentServiceAction, PaymentServiceState } from '../../../store/modules';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 
 @Component({
-  template: require('./RPayment.edit.pug'),
+  template: require('./RPayment.edit.pug')
 })
 export class RPaymentEdit extends Vue {
   @Prop() onSubmit: (model: PaymentEntity) => void;
@@ -17,6 +19,7 @@ export class RPaymentEdit extends Vue {
   public model: Partial<PaymentEntity> = {};
   public stateList = PaymentStateEnumMap;
   public currencyList = CurrencyEnumMap;
+  @Mutation alertAdd;
   @PaymentServiceState('list') paymentServiceList;
   @OrderState('list') orderList;
 
@@ -45,6 +48,7 @@ export class RPaymentEdit extends Vue {
       else this.$router.push('/Payment');
     } catch (e) {
       console.log('payment edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -53,4 +57,3 @@ export class RPaymentEdit extends Vue {
     this.$validator.reset();
   }
 }
-

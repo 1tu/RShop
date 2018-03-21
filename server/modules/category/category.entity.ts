@@ -10,7 +10,7 @@ export class CategoryEntity extends AEntityTimestamp {
   @Column({ length: 200 })
   name: string;
 
-  @Column({ length: 200 })
+  @Column({ length: 200, unique: true })
   nameTranslit: string;
 
   @Column('boolean', { default: false })

@@ -22,6 +22,8 @@ import {
 } from '../../../store/modules';
 import { RSeoMetaEdit } from '../../RSeoMeta';
 import { RSeoTemplateEdit } from '../../RSeoTemplate';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 
 @Component({
   template: require('./RFilteredPage.edit.pug'),
@@ -35,7 +37,7 @@ export class RFilteredPageEdit extends Vue {
   public filteredPageList: FilteredPageEntity[] = [];
   public dialogSeoMeta = false;
   public dialogSeoTemplate = false;
-
+  @Mutation alertAdd;
   @ShopState('list') shopList;
   @SeoMetaState('list') seoMetaList;
   @SeoTemplateState('list') seoTemplateList;
@@ -101,6 +103,7 @@ export class RFilteredPageEdit extends Vue {
       else this.$router.push('/FilteredPage');
     } catch (e) {
       console.log('filteredPage edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 

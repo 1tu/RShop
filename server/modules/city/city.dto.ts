@@ -3,32 +3,31 @@ import { IsInt, IsString, MaxLength } from 'class-validator';
 export class CityPostDto {
   @IsString()
   @MaxLength(80)
-  readonly nameEng: string;
+  nameTranslit: string;
 
   @IsString()
   @MaxLength(80)
-  readonly name: string;
+  name: string;
 
   @IsString()
   @MaxLength(80)
-  readonly nameGenitive: string;
+  nameGenitive: string;
 
   @IsString()
   @MaxLength(80)
-  readonly nameDative: string;
+  nameDative: string;
 
   @IsString()
   @MaxLength(80)
-  readonly nameAccusative: string;
+  nameAccusative: string;
 
   @IsString()
   @MaxLength(80)
-  readonly nameInstrumental: string;
+  nameInstrumental: string;
 
   @IsString()
   @MaxLength(80)
-  readonly namePrepositional: string;
+  namePrepositional: string;
 
-  @IsInt()
-  readonly population: number;
+  @IsInt() population: number;
 }

@@ -5,13 +5,17 @@ import { ImageEntity } from '../image/image.entity';
 import { ManufactureEntity } from '../manufacture/manufacture.entity';
 import { PreManufactureCategoryEntity } from '../preManufacture_category/preManufacture_category.entity';
 import { SeoMetaEntity } from '../seoMeta/seoMeta.entity';
+import { SeoTemplateEntity } from '../seoTemplate/seoTemplate.entity';
 import { ShopEntity } from '../shop/shop.entity';
 import { PreManufactureConfigItem } from './preManufacture.configItem';
 
 @Entity('preManufacture')
 export class PreManufactureEntity extends AEntityTimestamp {
-  @Column({ length: 100 })
+  @Column({ length: 150 })
   name: string;
+
+  @Column({ length: 150, unique: true })
+  nameTranslit: string;
 
   @Column('text') description: string;
 
@@ -25,6 +29,10 @@ export class PreManufactureEntity extends AEntityTimestamp {
   @OneToOne(type => SeoMetaEntity, { cascadeInsert: true })
   @JoinColumn()
   seoMeta: SeoMetaEntity;
+
+  @OneToOne(type => SeoTemplateEntity, { cascadeInsert: true })
+  @JoinColumn()
+  seoTemplate: SeoTemplateEntity;
 
   @ManyToOne(type => ShopEntity, shop => shop.preManufactureList)
   shop: ShopEntity;

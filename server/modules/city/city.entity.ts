@@ -4,8 +4,8 @@ import { AEntityBase } from '../../common/entity/base.entity';
 
 @Entity('city')
 export class CityEntity extends AEntityBase {
-  @Column({ length: 50 })
-  nameEng: string;
+  @Column({ length: 80, unique: true })
+  nameTranslit: string;
 
   @Column({ length: 80 })
   name: string;
@@ -25,6 +25,5 @@ export class CityEntity extends AEntityBase {
   @Column({ length: 80 })
   namePrepositional: string;
 
-  @Column('int')
-  population: number;
+  @Column('int') population: number;
 }

@@ -6,6 +6,8 @@ import { CategoryEntity } from '../../../../server/modules/category/category.ent
 import { CategoryShopEntity } from '../../../../server/modules/category_shop/category_shop.entity';
 import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
 import { SeoTemplateEntity } from '../../../../server/modules/seoTemplate/seoTemplate.entity';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 import {
   CategoryAction,
   SeoMetaAction,
@@ -33,6 +35,8 @@ export class RCategoryEdit extends Vue {
 
   public model: Partial<CategoryEntity> = { seoList: [{}] as any };
   public categoryList: CategoryEntity[] = [];
+  @Mutation alertAdd;
+
   @ShopState('list') shopList;
   @SeoMetaState('list') seoMetaList;
   @SeoTemplateState('list') seoTemplateList;
@@ -101,6 +105,7 @@ export class RCategoryEdit extends Vue {
       else this.$router.push('/Category');
     } catch (e) {
       console.log('category edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 

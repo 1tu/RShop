@@ -4,15 +4,18 @@ import { Component, Prop } from 'vue-property-decorator';
 
 import { DeliveryServiceEntity } from '../../../../server/modules/deliveryService/deliveryService.entity';
 import { CityAction, CityState, DeliveryServiceAction } from '../../../store/modules';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 
 @Component({
-  template: require('./RDeliveryService.edit.pug'),
+  template: require('./RDeliveryService.edit.pug')
 })
 export class RDeliveryServiceEdit extends Vue {
   @Prop() onSubmit: (model: DeliveryServiceEntity) => void;
   @Prop() id: number;
 
   public model: Partial<DeliveryServiceEntity> = {};
+  @Mutation alertAdd;
   @CityState('list') cityList;
 
   @DeliveryServiceAction get;
@@ -37,6 +40,7 @@ export class RDeliveryServiceEdit extends Vue {
       else this.$router.push('/DeliveryService');
     } catch (e) {
       console.log('deliveryService edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -45,4 +49,3 @@ export class RDeliveryServiceEdit extends Vue {
     this.$validator.reset();
   }
 }
-

@@ -3,6 +3,8 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
 import { SeoTemplateEntity } from '../../../../server/modules/seoTemplate/seoTemplate.entity';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
 import { SeoTemplateAction } from '../../../store/modules';
 import { Tinymce } from '../../_shared/Tinymce/tinymce.component';
 
@@ -15,7 +17,7 @@ export class RSeoTemplateEdit extends Vue {
   @Prop() id: number;
 
   public model: Partial<SeoTemplateEntity> = {};
-
+  @Mutation alertAdd;
   @SeoTemplateAction get;
   @SeoTemplateAction put;
   @SeoTemplateAction post;
@@ -35,6 +37,7 @@ export class RSeoTemplateEdit extends Vue {
       else this.$router.push('/SeoTemplate');
     } catch (e) {
       console.log('seoTemplate edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 

@@ -10,18 +10,12 @@ import { OrderEntity } from '../../../../server/modules/order/order.entity';
 import { OrderStateEnumMap } from '../../../../server/modules/order/order.state.enum';
 import { OrderProductEntity } from '../../../../server/modules/order_product/order_product.entity';
 import { ProductEntity } from '../../../../server/modules/product/product.entity';
-import {
-  CustomerAction,
-  CustomerState,
-  OrderAction,
-  ProductAction,
-  ProductState,
-  ShopAction,
-  ShopState,
-} from '../../../store/modules';
+import { serverValidationErrorMessage } from '../../../helpers/error';
+import { Mutation } from '../../../store';
+import { CustomerAction, CustomerState, OrderAction, ProductAction, ProductState, ShopAction, ShopState } from '../../../store/modules';
 
 @Component({
-  template: require('./ROrder.edit.pug'),
+  template: require('./ROrder.edit.pug')
 })
 export class ROrderEdit extends Vue {
   @Prop() onSubmit: (model: OrderEntity) => void;
@@ -29,6 +23,7 @@ export class ROrderEdit extends Vue {
 
   public model: Partial<OrderEntity> = { productList: [{ count: 1 } as any] };
   public stateList = OrderStateEnumMap;
+  @Mutation alertAdd;
   @ShopState('list') shopList;
   @CustomerState('list') customerList;
   @ProductState('list') productList;
@@ -89,6 +84,7 @@ export class ROrderEdit extends Vue {
       else this.$router.push('/Order');
     } catch (e) {
       console.log('order edit error', e.response.data);
+      if (e.response.data.statusCode === 400) this.alertAdd({ type: 'error', text: serverValidationErrorMessage(e.response.data.message) });
     }
   }
 
@@ -97,4 +93,3 @@ export class ROrderEdit extends Vue {
     this.$validator.reset();
   }
 }
-
