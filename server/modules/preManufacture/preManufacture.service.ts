@@ -1,5 +1,5 @@
 import { Component, Inject } from '@nestjs/common';
-import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
+import { FindManyOptions, FindOneOptions, Repository, SaveOptions } from 'typeorm';
 
 import { AServiceBase } from '../../common/service';
 import { PreManufactureEntity } from './preManufacture.entity';
@@ -23,6 +23,18 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
       .where('preManufacture.id = :id', { id })
       .getOne();
     // return this._repository.findOneById(id, { relations: ['shop', 'manufacture'], ...opts });
+  }
+
+  async put(model: Partial<PreManufactureEntity>, opts?: SaveOptions) {
+    let instance = await this._repository.findOneById(model.id);
+    this._repository.merge(instance, model);
+    // cascade update fix
+    model.categoryList.forEach((item, index) => {
+      instance.categoryList[index].isMain = model.categoryList[index].isMain;
+      if (item.id) return;
+      instance.categoryList[index].id = undefined;
+    });
+    return this._repository.save(instance, opts);
   }
 
   async getByCategoryIds(ids: number[], shopId: number) {
