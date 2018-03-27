@@ -20,7 +20,7 @@ export class ProductEntity extends AEntityTimestamp {
   @Column('text', { nullable: true })
   description: string;
 
-  @Column('json', { default: [] })
+  @Column('jsonb', { default: [] })
   propertyList: ProductProperty[];
 
   @OneToOne(type => SeoMetaEntity, { cascadeInsert: true })

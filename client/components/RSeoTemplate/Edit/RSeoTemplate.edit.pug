@@ -1,7 +1,7 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 SeoTemplate {{ model.id? 'edit' : 'create' }}
-  v-btn(type='submit') submit
   v-form(@submit.prevent='submit')
+    v-btn(type='submit') submit
     v-layout(row wrap v-if='model' align-end)
       v-flex(md8 xs12)
         v-text-field(label='H1' v-model='model.h1' multi-line rows='2' auto-grow

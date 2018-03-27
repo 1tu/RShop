@@ -22,6 +22,22 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
       .leftJoinAndSelect('preManufacture.imageList', 'imageList')
       .where('preManufacture.id = :id', { id })
       .getOne();
-    // return this._repository.findOneById(id, { ...opts, relations: ['shop', 'manufacture'] });
+    // return this._repository.findOneById(id, { relations: ['shop', 'manufacture'], ...opts });
+  }
+
+  async getByCategoryIds(ids: number[], shopId: number) {
+    if (!shopId) return [];
+    const res = await this._repository
+      .createQueryBuilder('preManufacture')
+      .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
+      .leftJoin('manufacture.product', 'product')
+      .leftJoin('product.categoryList', 'pCategoryList')
+      .leftJoinAndSelect('pCategoryList.category', 'pCategory', `pCategory.id IN (${ids.join(',')})`)
+      .leftJoin('preManufacture.categoryList', 'categoryList')
+      .leftJoinAndSelect('categoryList.category', 'category', `category.id IN (${ids.join(',')})`)
+      .where('product.shop.id = :shopId', { shopId })
+      .getMany();
+
+    return res.filter(p => p.categoryList.length || p.manufacture.product.categoryList.length);
   }
 }

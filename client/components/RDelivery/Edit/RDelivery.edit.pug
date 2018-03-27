@@ -1,7 +1,7 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Delivery {{ model.id? 'edit' : 'create' }}
-  v-btn(type='submit') submit
   v-form(@submit.prevent='submit')
+    v-btn(type='submit') submit
     v-layout(row wrap v-if='model')
       v-flex(sm6 xs12)
         v-text-field(label='Стоимость' v-model='model.price' type='number'

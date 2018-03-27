@@ -12,7 +12,7 @@ export class DeliveryServiceEntity extends AEntityTimestamp {
   @Column({ length: 40 })
   adapter: string;
 
-  @Column('json', { nullable: true })
+  @Column('jsonb', { nullable: true })
   maxSize: DeliveryServiceMaxSizes;
 
   @Column('decimal', { precision: 14, scale: 4, nullable: true })

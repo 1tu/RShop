@@ -13,15 +13,15 @@ export class ManufactureService extends AServiceBase<ManufactureEntity> {
   }
 
   getOneById(id: number, opts?: FindOneOptions<ManufactureEntity>): Promise<ManufactureEntity> {
-    return this._repository.findOneById(id, { ...opts, relations: ['product'] });
+    return this._repository.findOneById(id, { relations: ['product'], ...opts });
   }
 
   get(opts?: FindManyOptions<ManufactureEntity>): Promise<ManufactureEntity[]> {
-    return this._repository.find({ ...opts, relations: ['product'] });
+    return this._repository.find({ relations: ['product'], ...opts });
   }
 
-  async getProps() {
-    const res = await this._repository.find();
+  async getProps(ids?: number[]) {
+    const res = ids ? await this._repository.findByIds(ids) : await this._repository.find();
     return transform(
       groupBy(flatten(res.map(m => m.schema)).filter(s => s.type !== ManufactureSchemaTypes.SELECT_IMAGE), 'key'),
       (acc, value, key) => {

@@ -15,7 +15,8 @@ export class ShopEntity extends AEntityBase {
   @Column({ length: 100 })
   host: string;
 
-  @Column('int') port: number;
+  @Column('int', { unique: true })
+  port: number;
 
   @OneToOne(type => SeoMetaEntity, { cascadeInsert: true })
   @JoinColumn()

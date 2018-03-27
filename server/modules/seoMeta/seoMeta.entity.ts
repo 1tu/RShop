@@ -4,7 +4,7 @@ import { AEntityTimestamp } from '../../common/entity';
 
 @Entity('seoMeta')
 export class SeoMetaEntity extends AEntityTimestamp {
-  @Column('json') keys: string[];
+  @Column('jsonb') keys: string[];
 
   @Column('text', { nullable: true })
   keywords: string;

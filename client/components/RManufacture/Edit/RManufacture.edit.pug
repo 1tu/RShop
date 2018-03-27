@@ -1,7 +1,7 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Manufacture {{ model.id? 'edit' : 'create' }}
-  v-btn(type='submit') submit
   v-form(@submit.prevent='submit')
+    v-btn(type='submit') submit
     v-layout(row wrap v-if='model')
       v-flex(xs12)
         v-select(label='Товар' v-model='model.product' autocomplete

@@ -10,10 +10,12 @@ export class OrderService extends AServiceBase<OrderEntity> {
   constructor(
     @Inject('OrderRepositoryToken') _repository: Repository<OrderEntity>,
     @Inject('OrderProductRepositoryToken') private _OPrepository: Repository<OrderProductEntity>
-  ) { super(_repository); }
+  ) {
+    super(_repository);
+  }
 
   getOneById(id: number, opts?: FindOneOptions<OrderEntity>): Promise<OrderEntity> {
-    return this._repository.findOneById(id, { ...opts, relations: ['shop', 'paymentList', 'rejection', 'delivery'] });
+    return this._repository.findOneById(id, { relations: ['shop', 'paymentList', 'rejection', 'delivery'], ...opts });
   }
 
   async put(model: Partial<OrderEntity>, opts?: SaveOptions) {

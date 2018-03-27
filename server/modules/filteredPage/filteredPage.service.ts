@@ -13,7 +13,7 @@ export class FilteredPageService extends AServiceBase<FilteredPageEntity> {
   }
 
   getOneById(id, opts?: FindOneOptions<FilteredPageEntity>): Promise<FilteredPageEntity> {
-    return this._repository.findOneById(id, { ...opts, relations: ['shop'] });
+    return this._repository.findOneById(id, { relations: ['shop'], ...opts });
   }
 
   async post(model: Partial<FilteredPageEntity>, opts?: SaveOptions) {
@@ -32,5 +32,14 @@ export class FilteredPageService extends AServiceBase<FilteredPageEntity> {
   private async _makeUrl(filters: FilteredPageFilters) {
     const res = await this._categoryService.getByIds(filters.categoryIdList);
     return '/' + res.map(c => c.nameTranslit).join(',') + ';' + filters.propertyKeyValueList.map(kv => `${kv.key}=${kv.valueList.join('+')}`).join(',');
+  }
+
+  async getByCategory(categoryId: number) {
+    const res = await this._repository
+      .createQueryBuilder('filteredPage')
+      .where(`filters -> 'categoryIdList' @> '${categoryId}'`)
+      .select(['filteredPage.url', 'filteredPage.name', 'filteredPage.filters'])
+      .getMany();
+    return res;
   }
 }

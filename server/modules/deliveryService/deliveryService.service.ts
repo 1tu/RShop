@@ -6,11 +6,11 @@ import { DeliveryServiceEntity } from './deliveryService.entity';
 
 @Component()
 export class DeliveryServiceService extends AServiceBase<DeliveryServiceEntity> {
-  constructor( @Inject('DeliveryServiceRepositoryToken') _repository: Repository<DeliveryServiceEntity>) {
+  constructor(@Inject('DeliveryServiceRepositoryToken') _repository: Repository<DeliveryServiceEntity>) {
     super(_repository);
   }
 
   getOneById(id, opts?: FindOneOptions<DeliveryServiceEntity>): Promise<DeliveryServiceEntity> {
-    return this._repository.findOneById(id, { ...opts, relations: ['cityList'] });
+    return this._repository.findOneById(id, { relations: ['cityList'], ...opts });
   }
 }
