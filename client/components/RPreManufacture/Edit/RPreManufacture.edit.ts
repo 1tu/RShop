@@ -101,7 +101,9 @@ export class RPreManufactureEdit extends Vue {
   }
 
   public addCategory() {
-    this.model.categoryList.push({} as any);
+    const temp = {} as any;
+    if (this.model.id) temp.preManufacture = { id: this.model.id };
+    this.model.categoryList.push(temp);
   }
   public removeCategory(index) {
     this.model.categoryList.splice(index, 1);
