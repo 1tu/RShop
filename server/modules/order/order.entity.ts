@@ -24,7 +24,7 @@ export class OrderEntity extends AEntityTimestamp {
   @Column({ default: 0 })
   state: number;
 
-  @Column('json') stateHistory: StateHistory[];
+  @Column('jsonb') stateHistory: StateHistory[];
 
   @OneToMany(type => PaymentEntity, payment => payment.order)
   paymentList: PaymentEntity[];

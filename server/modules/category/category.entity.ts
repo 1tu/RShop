@@ -24,7 +24,7 @@ export class CategoryEntity extends AEntityTimestamp {
   seoList: CategoryShopEntity[];
 
   @OneToMany(type => ProductCategoryEntity, pc => pc.category)
-  productList: ProductCategoryEntity;
+  productList: ProductCategoryEntity[];
 
   @ManyToOne(type => CategoryEntity, c => c.categoryChildList, { cascadeInsert: true, cascadeUpdate: true })
   categoryParent: CategoryEntity;

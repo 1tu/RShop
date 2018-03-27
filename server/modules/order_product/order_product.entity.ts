@@ -9,7 +9,7 @@ import { ProductEntity } from '../product/product.entity';
 export class OrderProductEntity extends AEntityBase {
   @Column() count: number;
 
-  @Column('json', { nullable: true })
+  @Column('jsonb', { nullable: true })
   config: ManufactureConfigItem[];
 
   @ManyToOne(type => ProductEntity, { eager: true })

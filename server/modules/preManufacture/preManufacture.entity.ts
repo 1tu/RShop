@@ -19,7 +19,7 @@ export class PreManufactureEntity extends AEntityTimestamp {
 
   @Column('text') description: string;
 
-  @Column('json', { default: [] })
+  @Column('jsonb', { default: [] })
   config: PreManufactureConfigItem[];
 
   @ManyToMany(type => ImageEntity, { eager: true })
@@ -34,6 +34,7 @@ export class PreManufactureEntity extends AEntityTimestamp {
   @JoinColumn()
   seoTemplate: SeoTemplateEntity;
 
+  // FIXME: not using
   @ManyToOne(type => ShopEntity, shop => shop.preManufactureList)
   shop: ShopEntity;
 

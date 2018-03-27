@@ -1,7 +1,7 @@
 v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Product {{ model.id? 'edit' : 'create' }}
-  v-btn(type='submit') submit
   v-form(@submit.prevent='submit')
+    v-btn(type='submit') submit
     v-layout(row wrap v-if='model' align-center)
       v-flex(v-if='model.manufacture' xs12)
         v-btn(@click='$router.push("/Manufacture/"+ model.manufacture.id +"/edit")') Мануфактура

@@ -1,35 +1,44 @@
-import { Body, Controller, Get, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Query, Res, UseGuards } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 import { DeepPartial } from 'typeorm/common/DeepPartial';
 
 import { makeEvent } from '../../../shared/Gateway.shared';
 import { EventGateway } from '../../common/gateway/event.gateway';
 import { ApiGuard } from '../../guards/api.guard';
+import { CategoryService } from '../category/category.service';
 import { CityService } from '../city/city.service';
 import { CustomerPostDto } from '../customer/customer.dto';
 import { CustomerService } from '../customer/customer.service';
 import { DeliveryStateEnum } from '../delivery/delivery.state.enum';
 import { DeliveryServiceService } from '../deliveryService/deliveryService.service';
+import { FilteredPageService } from '../filteredPage/filteredPage.service';
 import { ManufactureSchemaTypes } from '../manufacture/manufacture.schema';
+import { ManufactureService } from '../manufacture/manufacture.service';
 import { OrderApiPostDto } from '../order/order.dto';
 import { OrderEntity } from '../order/order.entity';
 import { OrderService } from '../order/order.service';
 import { OrderStateEnum } from '../order/order.state.enum';
+import { PreManufactureService } from '../preManufacture/preManufacture.service';
 import { ProductService } from '../product/product.service';
-import { CategoryService } from '../category/category.service';
+import { ShopService } from '../shop/shop.service';
+import { flatten } from 'lodash';
 
 @UseGuards(ApiGuard)
 @ApiUseTags('api')
 @Controller('api')
 export class ApiController {
   constructor(
+    private _shopService: ShopService,
     private _orderService: OrderService,
     private _productService: ProductService,
+    private _manufactureService: ManufactureService,
+    private _preManufactureService: PreManufactureService,
     private _customerService: CustomerService,
     private _cityService: CityService,
     private _deliveryServiceService: DeliveryServiceService,
     private _event: EventGateway,
-    private _categoryService: CategoryService
+    private _categoryService: CategoryService,
+    private _filteredPageService: FilteredPageService
   ) {}
 
   @Post('order')
@@ -52,10 +61,7 @@ export class ApiController {
           model.config.push(cfg);
         } else cfg.name = item.name;
 
-        if (
-          (item.isRequired && !cfg.value) ||
-          (cfg.value && item.type !== ManufactureSchemaTypes.TEXT && !item.optionList.some(o => o.value === cfg.value))
-        )
+        if ((item.isRequired && !cfg.value) || (cfg.value && item.type !== ManufactureSchemaTypes.TEXT && !item.optionList.some(o => o.value === cfg.value)))
           return false;
         return true;
       });
@@ -103,13 +109,72 @@ export class ApiController {
     return res.status(HttpStatus.CREATED).send();
   }
 
-  @Get('category')
-  async getGategory() {
-    return this._categoryService.get();
+  @Get('shop/byHost')
+  async getShopByDomain(@Query('host') host: string) {
+    return this._shopService.getOne({ where: { host }, relations: ['seoMeta', 'cityList'] });
   }
 
-  @Get('productsByFilter')
-  async getProductsByFilter() {
-    
+  @Get('city/byNameTranslit')
+  async getCityByNameTranslit(@Query('nameTranslit') nameTranslit: string) {
+    return this._cityService.getOne({ where: { nameTranslit } });
   }
+
+  @Get('category/listBase')
+  async getCategoryListBase(@Query('shopId') shopId: string) {
+    // TODO: когда сделаем relations shop <-> category включить shopId
+    return this._categoryService.getListBaseByShop(parseInt(shopId));
+  }
+  @Get('category/listByBaseId')
+  async getCategoryListByBaseId(@Query('categoryId') categoryId: string, @Query('shopId') shopId: string) {
+    // TODO: когда сделаем relations shop <-> category включить shopId
+    return this._categoryService.getListChildByBase(parseInt(categoryId), parseInt(shopId));
+  }
+  @Get('category/byNameTranslit')
+  async getCategoryByNameTranslit(@Query('nameTranslit') nameTranslit: string) {
+    return this._categoryService.getOneByNameTranslit(nameTranslit);
+  }
+  @Get('property/listCategoryIds')
+  async getPropertyListByBaseCategoryNameTranslit(@Query('categoryIds') categoryIds: string[], @Query('shopId') shopId: string) {
+    const productList = await this._productService.getManufactureIdsByCategoryIds(categoryIds.map(id => parseInt(id)), parseInt(shopId));
+    return this._manufactureService.getProps(productList.filter(p => p.manufacture).map(p => p.manufacture.id));
+  }
+
+  @Get('filteredPage/byUrl')
+  async getFilteredPageByUrl(@Query('url') url: string) {
+    return this._filteredPageService.getOne({ where: { url } });
+  }
+  @Get('filteredPage/listByCategoryId')
+  async getFilteredListByCategoryId(@Query('categoryId') categoryId: string) {
+    return this._filteredPageService.getByCategory(parseInt(categoryId));
+  }
+
+  @Get('product/byId')
+  async getProductById(@Query('id') id: string) {
+    if (id[0] !== 'm') return this._productService.getOneById(parseInt(id), { relations: ['seoMeta', 'seoTemplate', 'imageList'] });
+    else return this._preManufactureService.getOneById(parseInt(id.slice(1)), { relations: ['seoMeta', 'seoTemplate', 'imageList', 'manufacture'] });
+  }
+  @Get('product/listByIds')
+  async getProductListByIds(@Query('ids') ids: string[]) {
+    return Promise.all(ids.map(id => this.getProductById(id)));
+  }
+  @Get('product/listByFilter')
+  async getProductListByFilter(
+    @Query('categoryIds') categoryIds: string[],
+    @Query('propKeyValues') propKeyValues: PropKeyValue[],
+    @Query('shopId') shopId: string
+  ) {
+    // TODO: propKeyValues filter
+    const categoryIdsNum = categoryIds.map(id => parseInt(id));
+    const shopIdNum = parseInt(shopId);
+    const res = await Promise.all([
+      this._productService.getByCategoryIds(categoryIdsNum, shopIdNum),
+      this._preManufactureService.getByCategoryIds(categoryIdsNum, shopIdNum)
+    ]);
+    return flatten(res as any);
+  }
+}
+
+interface PropKeyValue {
+  key: string;
+  valueList: string[];
 }

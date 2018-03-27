@@ -14,7 +14,7 @@ export class FilteredPageEntity extends AEntityTimestamp {
   @Column({ nullable: true })
   url: string;
 
-  @Column('json') filters: FilteredPageFilters;
+  @Column('jsonb') filters: FilteredPageFilters;
 
   @OneToOne(type => SeoTemplateEntity, { cascadeInsert: true, eager: true })
   @JoinColumn()
