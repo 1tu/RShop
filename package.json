@@ -11,7 +11,7 @@
     "prestart:be:prod": "tsc -p tsconfig.server.json",
     "build:fe": "cross-env NODE_ENV=production npm run clean && npm run compile:fe",
     "build:fe:parts": "npm run sass && npm run compile",
-    "clean": "rimraf public/fonts && public/js && public/assets && rimraf coverage",
+    "clean": "rimraf public/fonts && rimraf public/js && rimraf public/assets && rimraf coverage",
     "compile:fe": "webpack --config config/webpack/webpack.config.prod.js",
     "lint": "tslint src/**/*.ts",
     "db:drop": "typeorm schema:drop",
