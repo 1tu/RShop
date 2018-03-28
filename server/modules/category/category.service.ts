@@ -84,12 +84,17 @@ export class CategoryService extends AServiceBase<CategoryEntity> {
       .where('category.categoryParent.id = :categoryId', { categoryId })
       .leftJoin('category.productList', 'productList')
       .leftJoinAndSelect('productList.product', 'product', 'product.shop.id = :shopId', { shopId })
-      .select(['category.id', 'category.name', 'category.nameTranslit', 'product.id'])
+      .leftJoin('category.preManufactureList', 'preManufactureList')
+      .leftJoinAndSelect('preManufactureList.preManufacture', 'preManufacture')
+      .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
+      .leftJoinAndSelect('manufacture.product', 'mProduct', 'mProduct.shop.id = :shopId', { shopId })
+      .select(['category.id', 'category.name', 'category.nameTranslit', 'product.id', 'mProduct.id'])
       .getMany();
 
     return res.filter(item => {
-      const res = item.productList.length;
+      const res = item.productList.length || item.preManufactureList.length;
       item.productList = undefined;
+      item.preManufactureList = undefined;
       return res;
     });
   }
