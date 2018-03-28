@@ -60,12 +60,12 @@ export class RProductEdit extends Vue {
     this.getListCategory();
     this.getListSeoMeta();
     this.getListSeoTemplate();
+    this.getListShop();
     const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
       item && (this.model = cloneDeep(item));
     } else {
-      this.getListShop();
     }
   }
 

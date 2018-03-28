@@ -13,6 +13,7 @@ export class ProductService extends AServiceBase<ProductEntity> {
   getOneById(id: number, opts?: FindOneOptions<ProductEntity>): Promise<ProductEntity> {
     return this._repository
       .createQueryBuilder('product')
+      .leftJoinAndSelect('product.manufacture', 'manufacture')
       .leftJoinAndSelect('product.shop', 'shop')
       .leftJoinAndSelect('product.seoMeta', 'seoMeta')
       .leftJoinAndSelect('product.seoTemplate', 'seoTemplate')

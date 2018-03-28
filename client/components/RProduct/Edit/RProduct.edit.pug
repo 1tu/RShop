@@ -18,10 +18,10 @@ v-container(fluid grid-list-lg text-xs-center)
         v-text-field(label='Описание' v-model='model.description' multi-line rows='2' auto-grow)
 
       v-flex(md2 sm3 xs12)
-        v-select(v-if='!model.id' label='Магазин' v-model='model.shop'  autocomplete
+        v-select(label='Магазин' v-model='model.shop'  autocomplete
           :items='shopList' item-text='name' item-value='id' return-object
           name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
-        p(v-if='model.id') {{ `${model.shop.name} (${model.shop.host})` }}
+        //- p(v-if='model.id') {{ `${model.shop.name} (${model.shop.host})` }}
 
       v-flex(md4 xs10)
         v-select(label='Метатэги' v-model='model.seoMeta' autocomplete

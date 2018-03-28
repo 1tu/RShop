@@ -135,6 +135,7 @@ export class ApiController {
   }
   @Get('property/listCategoryIds')
   async getPropertyListByBaseCategoryNameTranslit(@Query('categoryIds') categoryIds: string[], @Query('shopId') shopId: string) {
+    if (!categoryIds) return [];
     const productList = await this._productService.getManufactureIdsByCategoryIds(categoryIds.map(id => parseInt(id)), parseInt(shopId));
     return this._manufactureService.getProps(productList.filter(p => p.manufacture).map(p => p.manufacture.id));
   }
