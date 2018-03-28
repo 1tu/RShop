@@ -26,9 +26,9 @@ export class ManufactureService extends AServiceBase<ManufactureEntity> {
       groupBy(flatten(res.map(m => m.schema)).filter(s => s.type !== ManufactureSchemaTypes.SELECT_IMAGE), 'key'),
       (acc, value, key) => {
         const propList = uniqBy(flatten(value.map(v => v.optionList)).filter(v => v.value), 'value');
-        if (propList.length) acc[key] = propList;
+        if (propList.length) acc.push({ key: value[0].key, name: value[0].name, options: propList });
       },
-      {}
+      []
     );
   }
 }
