@@ -39,6 +39,7 @@ export class FilteredPageService extends AServiceBase<FilteredPageEntity> {
       .createQueryBuilder('filteredPage')
       .where(`filters -> 'categoryIdList' @> '${categoryId}'`)
       .select(['filteredPage.url', 'filteredPage.name', 'filteredPage.filters'])
+      .cache(86400000)
       .getMany();
     return res;
   }
