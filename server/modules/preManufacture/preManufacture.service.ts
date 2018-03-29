@@ -58,7 +58,7 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
       .where('product.shop.id = :shopId', { shopId })
       .andWhere(`config @> '${JSON.stringify(propKeys)}'`)
       .getMany();
-    const z = `config @> '${JSON.stringify(propKeys)}'`;
+
     return categoryIds.length ? res.filter(p => p.categoryList.length || p.manufacture.product.categoryList.length) : res;
   }
 }
