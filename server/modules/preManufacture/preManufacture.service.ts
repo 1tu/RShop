@@ -41,18 +41,24 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
   async getByFilter(categoryIds: number[], propKeyValueList: PropKeyValue[], shopId: number) {
     const propKeys = propKeyValueList.map(p => ({ key: p.key, value: p.valueList[0] }));
     if (!shopId) return [];
-    const res = await this._repository
+    let res: any = this._repository
       .createQueryBuilder('preManufacture')
       .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
-      .leftJoin('manufacture.product', 'product')
-      .leftJoin('product.categoryList', 'pCategoryList')
-      .leftJoinAndSelect('pCategoryList.category', 'pCategory', `pCategory.id IN (${categoryIds.join(',')})`)
-      .leftJoin('preManufacture.categoryList', 'categoryList')
-      .leftJoinAndSelect('categoryList.category', 'category', `category.id IN (${categoryIds.join(',')})`)
+      .leftJoin('manufacture.product', 'product');
+
+    if (categoryIds.length) {
+      res = res
+        .leftJoin('product.categoryList', 'pCategoryList')
+        .leftJoinAndSelect('pCategoryList.category', 'pCategory', `pCategory.id IN (${categoryIds.join(',')})`)
+        .leftJoin('preManufacture.categoryList', 'categoryList')
+        .leftJoinAndSelect('categoryList.category', 'category', `category.id IN (${categoryIds.join(',')})`);
+    }
+
+    res = await res
       .where('product.shop.id = :shopId', { shopId })
       .andWhere(`config @> '${JSON.stringify(propKeys)}'`)
       .getMany();
-
-    return res.filter(p => p.categoryList.length || p.manufacture.product.categoryList.length);
+    const z = `config @> '${JSON.stringify(propKeys)}'`;
+    return categoryIds.length ? res.filter(p => p.categoryList.length || p.manufacture.product.categoryList.length) : res;
   }
 }

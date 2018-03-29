@@ -166,7 +166,7 @@ export class ApiController {
   ) {
     // TODO: propKeyValues filter
     const categoryIdsNum = categoryIdList ? categoryIdList.map(id => parseInt(id)) : [];
-    propertyKeyValueList = propertyKeyValueList || [];
+    propertyKeyValueList = (propertyKeyValueList || []).map(p => JSON.parse(p as any)) as any;
     const shopIdNum = parseInt(shopId);
     const res = await Promise.all([
       this._productService.getByFilter(categoryIdsNum, propertyKeyValueList, shopIdNum),
