@@ -3,6 +3,7 @@ import { FindManyOptions, FindOneOptions, Repository, SaveOptions } from 'typeor
 
 import { AServiceBase } from '../../common/service';
 import { PreManufactureEntity } from './preManufacture.entity';
+import { PropKeyValue } from '../api/api.controller';
 
 @Component()
 export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
@@ -37,17 +38,19 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
     return this._repository.save(instance, opts);
   }
 
-  async getByCategoryIds(ids: number[], shopId: number) {
+  async getByFilter(categoryIds: number[], propKeyValueList: PropKeyValue[], shopId: number) {
+    const propKeys = propKeyValueList.map(p => ({ key: p.key, value: p.valueList[0] }));
     if (!shopId) return [];
     const res = await this._repository
       .createQueryBuilder('preManufacture')
       .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
       .leftJoin('manufacture.product', 'product')
       .leftJoin('product.categoryList', 'pCategoryList')
-      .leftJoinAndSelect('pCategoryList.category', 'pCategory', `pCategory.id IN (${ids.join(',')})`)
+      .leftJoinAndSelect('pCategoryList.category', 'pCategory', `pCategory.id IN (${categoryIds.join(',')})`)
       .leftJoin('preManufacture.categoryList', 'categoryList')
-      .leftJoinAndSelect('categoryList.category', 'category', `category.id IN (${ids.join(',')})`)
+      .leftJoinAndSelect('categoryList.category', 'category', `category.id IN (${categoryIds.join(',')})`)
       .where('product.shop.id = :shopId', { shopId })
+      .andWhere(`config @> '${JSON.stringify(propKeys)}'`)
       .getMany();
 
     return res.filter(p => p.categoryList.length || p.manufacture.product.categoryList.length);

@@ -160,22 +160,23 @@ export class ApiController {
   }
   @Get('product/listByFilter')
   async getProductListByFilter(
-    @Query('categoryIds') categoryIds: string[],
-    @Query('propKeyValues') propKeyValues: PropKeyValue[],
+    @Query('categoryIdList') categoryIdList: string[],
+    @Query('propertyKeyValueList') propertyKeyValueList: PropKeyValue[],
     @Query('shopId') shopId: string
   ) {
     // TODO: propKeyValues filter
-    const categoryIdsNum = categoryIds.map(id => parseInt(id));
+    const categoryIdsNum = categoryIdList ? categoryIdList.map(id => parseInt(id)) : [];
+    propertyKeyValueList = propertyKeyValueList || [];
     const shopIdNum = parseInt(shopId);
     const res = await Promise.all([
-      this._productService.getByCategoryIds(categoryIdsNum, shopIdNum),
-      this._preManufactureService.getByCategoryIds(categoryIdsNum, shopIdNum)
+      this._productService.getByFilter(categoryIdsNum, propertyKeyValueList, shopIdNum),
+      this._preManufactureService.getByFilter(categoryIdsNum, propertyKeyValueList, shopIdNum)
     ]);
     return flatten(res as any);
   }
 }
 
-interface PropKeyValue {
+export interface PropKeyValue {
   key: string;
   valueList: string[];
 }

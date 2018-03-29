@@ -40,13 +40,13 @@ export class ProductService extends AServiceBase<ProductEntity> {
     return res.filter(p => p.categoryList.length);
   }
 
-  async getByCategoryIds(ids: number[], shopId: number) {
+  async getByFilter(categoryIds: number[], propKeyValueList: any[], shopId: number) {
     if (!shopId) return [];
     const res = await this._repository
       .createQueryBuilder('product')
       .leftJoin('product.manufacture', 'manufacture')
       .leftJoin('product.categoryList', 'categoryList')
-      .leftJoinAndSelect('categoryList.category', 'category', `category.id IN (${ids.join(',')})`)
+      .leftJoinAndSelect('categoryList.category', 'category', `category.id IN (${categoryIds.join(',')})`)
       .where('product.shop.id = :shopId', { shopId })
       .andWhere('manufacture.id IS NULL')
       .cache(86400000)
