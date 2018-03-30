@@ -58,10 +58,11 @@ export class RFilteredPageEdit extends Vue {
   @SeoTemplateMutation('listAdd') listAddSeoTemplate;
 
   get keyList() {
-    return Object.keys(this.propList);
+    return this.propList.map(p => p.key);
   }
   public valueList(key: string) {
-    return this.propList[key];
+    if (!key) return [];
+    return this.propList.find(p => p.key === key).options;
   }
   public addProp() {
     this.model.filters.propertyKeyValueList.push({} as any);
