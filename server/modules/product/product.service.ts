@@ -20,7 +20,6 @@ export class ProductService extends AServiceBase<ProductEntity> {
       .leftJoinAndSelect('product.categoryList', 'categoryList')
       .leftJoinAndSelect('categoryList.category', 'category')
       .where('product.id = :id', { id })
-      .cache(86400000)
       .getOne();
     // return this._repository.findOneById(id, { relations: ['shop', 'seoMeta', 'seoTemplate', 'categoryList'], ...opts });
   }
@@ -34,7 +33,6 @@ export class ProductService extends AServiceBase<ProductEntity> {
       .leftJoin('categoryList.category', 'category', `category.id IN (${ids.join(',')})`)
       .select(['product.id', 'manufacture.id', 'category.id'])
       .where('product.shop.id = :shopId', { shopId })
-      .cache(86400000)
       .getMany();
 
     return res.filter(p => p.categoryList.length);
@@ -51,7 +49,6 @@ export class ProductService extends AServiceBase<ProductEntity> {
     res = await res
       .where('product.shop.id = :shopId', { shopId })
       .andWhere('manufacture.id IS NULL')
-      .cache(86400000)
       .getMany();
 
     return categoryIds.length ? res.filter(p => p.categoryList.length) : res;
