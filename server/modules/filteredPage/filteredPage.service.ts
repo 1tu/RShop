@@ -47,7 +47,7 @@ export class FilteredPageService extends AServiceBase<FilteredPageEntity> {
   async getByCategory(categoryId: number) {
     const res = await this._repository
       .createQueryBuilder('filteredPage')
-      .where(`filters -> 'categoryIdList' @> '${categoryId}'`)
+      .where(`filters -> 'baseCategoryId' @> '${categoryId}'`)
       .select(['filteredPage.url', 'filteredPage.name', 'filteredPage.filters'])
       .getMany();
     return res;
