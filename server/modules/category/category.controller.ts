@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 
 import { Permissions } from '../../guards/permission.guard';
@@ -8,12 +8,18 @@ import { CategoryService } from './category.service';
 @ApiUseTags('category')
 @Controller('category')
 export class CategoryController {
-  constructor(private _service: CategoryService) { }
+  constructor(private _service: CategoryService) {}
 
   @Get(':id')
   @Permissions('CategoryGet')
   getOneById(@Param('id') id: number) {
     return this._service.getOneById(id);
+  }
+
+  @Get('byBase/:id')
+  @Permissions('CategoryGet')
+  getByBaseId(@Param('id') id: string, @Query('shopId') shopId: string) {
+    return this._service.getListChildByBase(parseInt(id), parseInt(shopId));
   }
 
   @Get()

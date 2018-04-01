@@ -2,21 +2,26 @@ v-container(fluid grid-list-lg text-xs-center)
   h2.mb-4 Страницы на основе фильтра - {{ model.id? 'редактирование' : 'создание' }}
   v-form(@submit.prevent='submit')
     v-layout(row wrap v-if='model' align-center)
-      v-flex(md6 xs12)
+      v-flex(sm8 xs12)
         v-text-field(label='Название' v-model='model.name'
           name='name' v-validate='"required|max:200"' :error-messages='errors.collect("name")')
 
-      v-flex(md6 xs12)
-        span URL: {{ model.url }}
-
-      v-flex(sm6 xs12)
+      v-flex(sm4 xs12)
         v-select(label='Магазин' v-model='model.shop' autocomplete
           :items='shopList' item-text='name' item-value='id' return-object
           name='shop' v-validate='"required"' :error-messages='errors.collect("shop")')
 
+      v-flex(xs12)
+        span URL: {{ model.url }}
+
+      v-flex(sm6 xs12)
+        v-select(label='Главная категория' v-model='model.filters.baseCategoryId'
+          autocomplete :items='categoryListBase' item-text='name' item-value='id'
+          name='baseCategory' v-validate='"required"' :error-messages='errors.collect("baseCategory")')
+
       v-flex(sm6 xs12)
         v-select(label='Выбранные фильтры категорий' v-model='model.filters.categoryIdList'
-          multiple autocomplete chips :items='categoryList' item-text='name' item-value='id'
+          multiple autocomplete chips :items='categoryListByBase' item-text='name' item-value='id'
           name='categoryList' v-validate='"required"' :error-messages='errors.collect("categoryList")')
 
       v-flex(xs12)

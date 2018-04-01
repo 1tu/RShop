@@ -3,4 +3,5 @@ import { CategoryEntity } from '../../../../server/modules/category/category.ent
 export interface CategoryStoreState {
   item: CategoryEntity;
   list: CategoryEntity[];
+  listByBase: CategoryEntity[];
 }

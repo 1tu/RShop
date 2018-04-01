@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { FilteredPageEntity } from '../../../../server/modules/filteredPage/filteredPage.entity';
 import { SeoMetaEntity } from '../../../../server/modules/seoMeta/seoMeta.entity';
@@ -18,7 +18,8 @@ import {
   SeoTemplateMutation,
   SeoTemplateState,
   ShopAction,
-  ShopState
+  ShopState,
+  CategoryGetter
 } from '../../../store/modules';
 import { RSeoMetaEdit } from '../../RSeoMeta';
 import { RSeoTemplateEdit } from '../../RSeoTemplate';
@@ -33,16 +34,19 @@ export class RFilteredPageEdit extends Vue {
   @Prop() onSubmit: (model: FilteredPageEntity) => void;
   @Prop() id: number;
 
-  public model: Partial<FilteredPageEntity> = { filters: { categoryIdList: [], propertyKeyValueList: [] } };
+  public model: Partial<FilteredPageEntity> = { filters: { baseCategoryId: null, categoryIdList: [], propertyKeyValueList: [] } };
   public filteredPageList: FilteredPageEntity[] = [];
   public dialogSeoMeta = false;
   public dialogSeoTemplate = false;
+
   @Mutation alertAdd;
   @ShopState('list') shopList;
   @SeoMetaState('list') seoMetaList;
   @SeoTemplateState('list') seoTemplateList;
-  @CategoryState('list') categoryList;
   @ManufactureState('propList') propList;
+  @CategoryState('listByBase') categoryListByBase;
+
+  @CategoryGetter('listBase') categoryListBase;
 
   @FilteredPageAction get;
   @FilteredPageAction put;
@@ -51,8 +55,9 @@ export class RFilteredPageEdit extends Vue {
   @ShopAction('getList') getListShop;
   @SeoMetaAction('getList') getListSeoMeta;
   @SeoTemplateAction('getList') getListSeoTemplate;
-  @CategoryAction('getList') getListCategory;
   @ManufactureAction('getPropList') getPropList;
+  @CategoryAction('getList') getListCategory;
+  @CategoryAction('getListByBase') getListCategoryByBase;
 
   @SeoMetaMutation('listAdd') listAddSeoMeta;
   @SeoTemplateMutation('listAdd') listAddSeoTemplate;
@@ -71,12 +76,20 @@ export class RFilteredPageEdit extends Vue {
     this.model.filters.propertyKeyValueList.splice(index, 1);
   }
 
+  @Watch('model.shop')
+  @Watch('model.filters.baseCategoryId')
+  public getListCategoryForSelect() {
+    if (!this.model.shop || !this.model.filters.baseCategoryId) return;
+    this.getListCategoryByBase({ id: this.model.filters.baseCategoryId, shopId: this.model.shop.id });
+  }
+
   async mounted() {
     this.getListShop();
     this.getListSeoMeta();
     this.getListSeoTemplate();
     this.getListCategory();
     this.getPropList();
+    this.getListCategoryForSelect();
     const id = this.id != null ? this.id : parseInt(this.$route.params.id);
     if (id) {
       const item = await this.get(id);
@@ -109,7 +122,7 @@ export class RFilteredPageEdit extends Vue {
   }
 
   public clear() {
-    this.model = { id: this.model.id, filters: { categoryIdList: [], propertyKeyValueList: [] } };
+    this.model = { id: this.model.id, filters: { baseCategoryId: null, categoryIdList: [], propertyKeyValueList: [] } };
     this.$validator.reset();
   }
 }
