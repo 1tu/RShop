@@ -35,7 +35,6 @@ export class CategoryService extends AServiceBase<CategoryEntity> {
       .leftJoinAndSelect('seoList.seoTemplate', 'seoTemplate')
       .leftJoinAndSelect('seoList.seoMeta', 'seoMeta')
       .where('category.nameTranslit = :name', { name })
-      .cache(86400000)
       .getOne();
   }
 
@@ -58,7 +57,6 @@ export class CategoryService extends AServiceBase<CategoryEntity> {
       .leftJoin('category.productList', 'productList')
       .leftJoinAndSelect('productList.product', 'product', 'product.shop.id = :shopId', { shopId })
       .select(['category.id', 'category.name', 'category.nameTranslit', 'category.isBase', 'product.id'])
-      .cache(86400000)
       .getMany();
 
     return res.filter(item => {
@@ -91,7 +89,6 @@ export class CategoryService extends AServiceBase<CategoryEntity> {
       .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
       .leftJoinAndSelect('manufacture.product', 'mProduct', 'mProduct.shop.id = :shopId', { shopId })
       .select(['category.id', 'category.name', 'category.nameTranslit', 'product.id', 'mProduct.id'])
-      .cache(86400000)
       .getMany();
 
     return res.filter(item => {
