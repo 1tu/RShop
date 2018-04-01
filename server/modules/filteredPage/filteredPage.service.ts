@@ -30,8 +30,18 @@ export class FilteredPageService extends AServiceBase<FilteredPageEntity> {
   }
 
   private async _makeUrl(filters: FilteredPageFilters) {
-    const res = await this._categoryService.getByIds(filters.categoryIdList);
-    return '/' + res.map(c => c.nameTranslit).join(',') + ';' + filters.propertyKeyValueList.map(kv => `${kv.key}=${kv.valueList.join('+')}`).join(',');
+    const res = await this._categoryService.getByIds(filters.categoryIdList.concat(filters.baseCategoryId));
+    return (
+      '/' +
+      res.find(c => c.id === filters.baseCategoryId).nameTranslit +
+      '/' +
+      res
+        .filter(c => c.id !== filters.baseCategoryId)
+        .map(c => c.nameTranslit)
+        .join(',') +
+      ';' +
+      filters.propertyKeyValueList.map(kv => `${kv.key}=${kv.valueList.join('+')}`).join(',')
+    );
   }
 
   async getByCategory(categoryId: number) {

@@ -11,7 +11,8 @@ import { EntityType } from '../../../../shared/Entity.shared';
 const storeName: EntityType = 'Category';
 const state: CategoryStoreState = {
   item: undefined,
-  list: []
+  list: [],
+  listByBase: []
 };
 
 const getters = getter(state, {
@@ -19,13 +20,19 @@ const getters = getter(state, {
     return (id: number) => {
       let index: number;
       state.list.some((item, i) => {
-        if (item.id === id) { index = i; return true; }
+        if (item.id === id) {
+          index = i;
+          return true;
+        }
       });
       return index;
     };
   },
   itemById(state, getters) {
-    return (id: number) => state.list[getters.indexById(id)];
+    return (id: number) => state.list.find(c => c.id === id);
+  },
+  listBase(state) {
+    return state.list.filter(c => c.isBase === true);
   }
 });
 
@@ -39,6 +46,9 @@ const mutations = mutation(state, {
   list(state, list: CategoryEntity[]) {
     state.list = list;
   },
+  listByBase(state, list: CategoryEntity[]) {
+    state.listByBase = list;
+  },
   listAdd(state, e: CategoryEntity) {
     state.list = state.list.concat(e);
   }
@@ -46,15 +56,26 @@ const mutations = mutation(state, {
 
 const actions = action(state, {
   async getList({ commit, state }) {
-    const list = await categoryApi.getList().catch(e => { console.error(e); });
+    const list = await categoryApi.getList().catch(e => {
+      console.error(e);
+    });
     commit(types.mutation.list, list);
     return state.list;
   },
+  async getListByBase({ commit, state }, { id, shopId }) {
+    const listByBase = await categoryApi.getListByBase(id, shopId).catch(e => {
+      console.error(e);
+    });
+    commit(types.mutation.listByBase, listByBase);
+    return listByBase;
+  },
   async get({ commit, state }, id: number) {
     if (state.item && state.item.id === id) return state.item;
-    const item = await categoryApi.get(id).catch(e => { console.error(e); });
+    const item = await categoryApi.get(id).catch(e => {
+      console.error(e);
+    });
     commit(types.mutation.item, item);
-    return state.item;
+    return item;
   },
   async post({ dispatch }, model: Partial<CategoryEntity>) {
     return categoryApi.post(model);
@@ -63,7 +84,7 @@ const actions = action(state, {
     model = await categoryApi.put(model);
     commit(types.mutation.item, model);
     if (getters.itemById(model.id)) {
-      commit(types.mutation.list, state.list.map(item => item.id === model.id ? model : item));
+      commit(types.mutation.list, state.list.map(item => (item.id === model.id ? model : item)));
     }
     return model;
   },
@@ -81,7 +102,11 @@ const types = {
 };
 
 export const Category = {
-  namespaced: true, state, getters, mutations, actions
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
 };
 
 export const CategoryTypes = types;
