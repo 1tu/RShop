@@ -56,12 +56,17 @@ export class ProductService extends AServiceBase<ProductEntity> {
 
   async getByFilter(categoryIds: number[], propKeyValueList: any[], shopId: number) {
     if (!shopId) return [];
-    let res: any = this._repository.createQueryBuilder('product').leftJoin('product.manufacture', 'manufacture');
+    let res: any = this._repository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.manufacture', 'manufacture')
+      .leftJoinAndSelect('product.imageList', 'imageList');
+
     if (categoryIds.length) {
       res = res
         .leftJoin('product.categoryList', 'categoryList')
         .leftJoinAndSelect('categoryList.category', 'category', `category.id IN (${categoryIds.join(',')})`);
     }
+
     res = await res
       .where('product.shop.id = :shopId', { shopId })
       .andWhere('manufacture.id IS NULL')
