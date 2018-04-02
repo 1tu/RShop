@@ -26,6 +26,21 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
     // return this._repository.findOneById(id, { relations: ['shop', 'manufacture'], ...opts });
   }
 
+  getOneByNameTranslit(nameTranslit: string): Promise<PreManufactureEntity> {
+    return this._repository
+      .createQueryBuilder('preManufacture')
+      .leftJoinAndSelect('preManufacture.categoryList', 'categoryList')
+      .leftJoinAndSelect('categoryList.category', 'category')
+      .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
+      .leftJoinAndSelect('manufacture.product', 'product')
+      .leftJoinAndSelect('preManufacture.seoMeta', 'seoMeta')
+      .leftJoinAndSelect('preManufacture.seoTemplate', 'seoTemplate')
+      .leftJoinAndSelect('preManufacture.imageList', 'imageList')
+      .where('preManufacture.nameTranslit = :nameTranslit', { nameTranslit })
+      .getOne();
+    // return this._repository.findOneById(id, { relations: ['shop', 'manufacture'], ...opts });
+  }
+
   async put(model: Partial<PreManufactureEntity>, opts?: SaveOptions) {
     let instance = await this._repository.findOneById(model.id);
     this._repository.merge(instance, model);
