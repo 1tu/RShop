@@ -58,6 +58,7 @@ export class PreManufactureService extends AServiceBase<PreManufactureEntity> {
     if (!shopId) return [];
     let res: any = this._repository
       .createQueryBuilder('preManufacture')
+      .leftJoinAndSelect('preManufacture.imageList', 'imageList')
       .leftJoinAndSelect('preManufacture.manufacture', 'manufacture')
       .leftJoin('manufacture.product', 'product');
 
