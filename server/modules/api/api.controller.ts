@@ -149,10 +149,10 @@ export class ApiController {
     return this._filteredPageService.getByCategory(parseInt(categoryId));
   }
 
-  @Get('product/byId')
-  async getProductById(@Query('id') id: string) {
-    if (id[0] !== 'm') return this._productService.getOneById(parseInt(id), { relations: ['seoMeta', 'seoTemplate', 'imageList'] });
-    else return this._preManufactureService.getOneById(parseInt(id.slice(1)), { relations: ['seoMeta', 'seoTemplate', 'imageList', 'manufacture'] });
+  @Get('product/byNameTranslit')
+  async getProductById(@Query('nameTranslit') nameTranslit: string) {
+    if (nameTranslit[0] !== '+') return this._productService.getOneByNameTranslit(nameTranslit);
+    else return this._preManufactureService.getOneByNameTranslit(nameTranslit.slice(1));
   }
   @Get('product/listByIds')
   async getProductListByIds(@Query('ids') ids: string[]) {

@@ -14,12 +14,28 @@ export class ProductService extends AServiceBase<ProductEntity> {
     return this._repository
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.manufacture', 'manufacture')
+      .leftJoinAndSelect('product.imageList', 'imageList')
       .leftJoinAndSelect('product.shop', 'shop')
       .leftJoinAndSelect('product.seoMeta', 'seoMeta')
       .leftJoinAndSelect('product.seoTemplate', 'seoTemplate')
       .leftJoinAndSelect('product.categoryList', 'categoryList')
       .leftJoinAndSelect('categoryList.category', 'category')
       .where('product.id = :id', { id })
+      .getOne();
+    // return this._repository.findOneById(id, { relations: ['shop', 'seoMeta', 'seoTemplate', 'categoryList'], ...opts });
+  }
+
+  getOneByNameTranslit(nameTranslit: string): Promise<ProductEntity> {
+    return this._repository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.manufacture', 'manufacture')
+      .leftJoinAndSelect('product.imageList', 'imageList')
+      .leftJoinAndSelect('product.shop', 'shop')
+      .leftJoinAndSelect('product.seoMeta', 'seoMeta')
+      .leftJoinAndSelect('product.seoTemplate', 'seoTemplate')
+      .leftJoinAndSelect('product.categoryList', 'categoryList')
+      .leftJoinAndSelect('categoryList.category', 'category')
+      .where('product.nameTranslit = :nameTranslit', { nameTranslit })
       .getOne();
     // return this._repository.findOneById(id, { relations: ['shop', 'seoMeta', 'seoTemplate', 'categoryList'], ...opts });
   }
